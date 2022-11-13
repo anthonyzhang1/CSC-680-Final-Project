@@ -1,7 +1,7 @@
-# CSC 680: Final Project
+# Benkyou Nakama (勉強仲間)
 
 ## Team Members
-| Student Name  | Student Email          | GitHub Username |
+| Name          | Email                  | GitHub Username |
 | :---:         | :---:                  | :---:           |
 | Anthony Zhang | azhang12@mail.sfsu.edu | anthonyzhang1   |
 
