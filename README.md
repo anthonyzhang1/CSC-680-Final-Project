@@ -1,4 +1,4 @@
-# Benkyou Nakama (勉強仲間)
+# Hitoribocchi (一人ぼっち)
 
 ## Team Members
 | Name          | Email                  | GitHub Username |
@@ -6,7 +6,7 @@
 | Anthony Zhang | azhang12@mail.sfsu.edu | anthonyzhang1   |
 
 ## Proposal
-The application I am making, Benkyou Nakama, is a flashcard app that uses spaced repetition. It is inspired by the already existing Anki flashcard app which costs $25 on the App Store.\
+The application I am making, Hitoribocchi, is a flashcard app that uses spaced repetition. It is inspired by the already existing Anki flashcard app which costs $25 on the App Store.\
 Spaced repetition is a technique where incorrectly answered flashcards are shown more frequently, whereas correctly answered flashcards are shown less frequently.
 
 ### Must Have Features
