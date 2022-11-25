@@ -35,9 +35,7 @@ class ViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "Delete", style: .cancel, handler: nil))
         
         // Add the textfield asking for the deck's title to the alert box
-        alert.addTextField { textField in
-            textField.placeholder = "Deck Title"
-        }
+        alert.addTextField { textField in textField.placeholder = "Deck Title" }
         
         // show the alert
         present(alert, animated: true, completion: nil)
