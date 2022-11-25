@@ -26,7 +26,8 @@ class ViewController: UIViewController {
             guard let title = alert.textFields?.first?.text
             else { return }
             
-            let deck = Deck(title: title)
+            // autogenerate the id with UUID and take the title from the user's input
+            let deck = Deck(id: UUID().uuidString, title: title)
             self.addDeckToStore(deck)
         })
         
@@ -49,6 +50,16 @@ class ViewController: UIViewController {
             getDecksFromStore()
         } catch {
             showErrorAlert("Error", "Sorry, there was an error adding the deck.")
+        }
+    }
+    
+    /// Try to delete the deck in the argument from the CoreData store. Refresh the table on success.
+    func removeDeckFromStore(_ deck: Deck) {
+        do {
+            try store.deleteDeck(deck)
+            getDecksFromStore()
+        } catch {
+            showErrorAlert("Error", "Sorry, there was an error deleting the deck.")
         }
     }
     
@@ -82,14 +93,21 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        let deck = decks[indexPath.row]
-        
-        cell.textLabel?.text = deck.title
+        cell.textLabel?.text = decks[indexPath.row].title
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let deck = decks[indexPath.row]
-        print("tbview deck:", deck)
+        print("tbview deck:", deck) // TODO
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
+                   forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            print("remove deck:", decks[indexPath.row]) // TODO
+            removeDeckFromStore(decks[indexPath.row])
+        }
     }
 }
