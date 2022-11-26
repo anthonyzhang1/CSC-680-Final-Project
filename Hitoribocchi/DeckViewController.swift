@@ -1,6 +1,6 @@
 import UIKit
 
-class ViewController: UIViewController {
+class DeckViewController: UIViewController {
     let store = CoreDataStore()
     
     @IBOutlet weak var deckTableView: UITableView!
@@ -32,7 +32,7 @@ class ViewController: UIViewController {
         })
         
         // Add the cancel button to the alert box
-        alert.addAction(UIAlertAction(title: "Delete", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         // Add the textfield asking for the deck's title to the alert box
         alert.addTextField { textField in textField.placeholder = "Deck Title" }
@@ -41,7 +41,7 @@ class ViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
-    /// Try to add the deck in the argument to the CoreData store. Refresh the table on success.
+    /// Try to add the deck in the argument to the Core Data store. Refresh the table on success.
     func addDeckToStore(_ deck: Deck) {
         do {
             try store.insertDeck(deck)
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         }
     }
     
-    /// Try to delete the deck in the argument from the CoreData store. Refresh the table on success.
+    /// Try to delete the deck in the argument from the Core Data store. Refresh the table on success.
     func removeDeckFromStore(_ deck: Deck) {
         do {
             try store.deleteDeck(deck)
@@ -59,17 +59,6 @@ class ViewController: UIViewController {
         } catch {
             showErrorAlert("Error", "Sorry, there was an error deleting the deck.")
         }
-    }
-    
-    /// Shows an alert with the specified `title` and `message` parameters.
-    func showErrorAlert(_ title: String, _ message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        
-        // add OK button to the error
-        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
-        
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
     }
     
     override func viewDidLoad() {
@@ -81,14 +70,24 @@ class ViewController: UIViewController {
         // get the decks to display them in the table
         getDecksFromStore()
     }
+    
+    // send the clicked on Deck to the new screen
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "showCardSegue" {
+            if let cardViewController = segue.destination as? CardViewController,
+               let deckIndex = deckTableView.indexPathForSelectedRow?.row
+            { cardViewController.deck = decks[deckIndex] }
+        }
+    }
 }
 
-extension ViewController: UITableViewDelegate, UITableViewDataSource {
-    /// Returns the number of rows in the deck table
+extension DeckViewController: UITableViewDelegate, UITableViewDataSource {
+    /// Returns the number of rows in the deck table.
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return decks.count
     }
     
+    /// Loads the table cell's contents.
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
         cell.textLabel?.text = decks[indexPath.row].title
@@ -96,16 +95,34 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    /// Called when selecting a table cell. Takes the user to the card View Controller.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let deck = decks[indexPath.row]
-        print("tbview deck:", deck) // TODO
+        performSegue(withIdentifier: "showCardSegue", sender: indexPath)
+        
+        // deselect the row after we transition to the new screen
+        deckTableView.deselectRow(at: indexPath, animated: true)
     }
     
+    /// Called when swiping on a table cell. Allows the user to delete decks.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
         if editingStyle == .delete {
             print("remove deck:", decks[indexPath.row]) // TODO
             removeDeckFromStore(decks[indexPath.row])
         }
+    }
+}
+
+// Gives all UIViewController access to these helper functions.
+extension UIViewController {
+    /// Shows an alert with the specified `title` and `message` parameters.
+    func showErrorAlert(_ title: String, _ message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        // add OK button to the error
+        alert.addAction(UIAlertAction(title: "OK", style: .default) { _ in })
+        
+        // show the alert
+        self.present(alert, animated: true, completion: nil)
     }
 }

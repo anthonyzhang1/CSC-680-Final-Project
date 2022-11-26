@@ -5,6 +5,7 @@ protocol Card: Codable {
     /// Should be a UUID.
     var id: String { get }
     var prompt: String { get }
+    var solution: String { get }
     var creationDate: Date { get }
     var dueDate: Date { get }
     /** Determines when the next due date will be by multiplying some predetermined amount of time with this multiplier.
@@ -35,11 +36,11 @@ struct BasicCard: Card {
 struct MultipleChoiceCard: Card {
     let id: String
     let prompt: String
-    /// Will be stored as a string in the store by converting from an array to a string, separated with `|`.
-    let options: [String]
     /// Should be an element in `options`.
     let solution: String
     let creationDate: Date
     let dueDate: Date
     let nextDueDateMultiplier: Decimal
+    /// Will be stored as a string in the store by converting from an array to a string, separated with `|`.
+    let options: [String]
 }

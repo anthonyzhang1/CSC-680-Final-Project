@@ -5,6 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
+        <capability name="UIMenu" message="Requires Xcode 11 or later." minToolsVersion="11.0" requiredIntegratedClassName="UICommandDiff"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -27,7 +28,7 @@
         <!--Decks-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Hitoribocchi" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="DeckViewController" customModule="Hitoribocchi" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -54,14 +55,180 @@
                     </navigationItem>
                     <connections>
                         <outlet property="deckTableView" destination="Udr-ae-SjP" id="LJb-yh-I1f"/>
+                        <segue destination="BIL-GW-zmy" kind="show" identifier="showCardSegue" id="QYI-9A-jNK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-923.07692307692309" y="-87.440758293838854"/>
         </scene>
+        <!--Card View Controller-->
+        <scene sceneID="i8E-NP-Ook">
+            <objects>
+                <viewController id="BIL-GW-zmy" customClass="CardViewController" customModule="Hitoribocchi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="vge-1C-n89">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prompt" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POj-Qg-NxV">
+                                <rect key="frame" x="32" y="122.99999999999999" width="326" height="20.333333333333329"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BJC-MD-9de" userLabel="Line">
+                                <rect key="frame" x="32" y="159.33333333333334" width="326" height="1"/>
+                                <color key="backgroundColor" systemColor="labelColor"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="1" id="WUS-zl-egP"/>
+                                </constraints>
+                            </view>
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Solution" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lra-sq-n0g" userLabel="BasicCard Solution">
+                                <rect key="frame" x="32" y="176.33333333333334" width="326" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="e9S-9S-Tsh"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="e9S-9S-Tsh" firstAttribute="trailing" secondItem="POj-Qg-NxV" secondAttribute="trailing" constant="32" id="DdS-NV-MFD"/>
+                            <constraint firstItem="BJC-MD-9de" firstAttribute="top" secondItem="POj-Qg-NxV" secondAttribute="bottom" constant="16" id="OKk-PD-aTw"/>
+                            <constraint firstItem="POj-Qg-NxV" firstAttribute="top" secondItem="e9S-9S-Tsh" secondAttribute="top" constant="32" id="OX0-oi-HuI"/>
+                            <constraint firstItem="Lra-sq-n0g" firstAttribute="top" secondItem="BJC-MD-9de" secondAttribute="bottom" constant="16" id="QjT-Yp-klM"/>
+                            <constraint firstItem="POj-Qg-NxV" firstAttribute="leading" secondItem="e9S-9S-Tsh" secondAttribute="leading" constant="32" id="SSQ-qT-aSf"/>
+                            <constraint firstItem="BJC-MD-9de" firstAttribute="leading" secondItem="vge-1C-n89" secondAttribute="leadingMargin" constant="16" id="UTr-V8-s7Z"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="BJC-MD-9de" secondAttribute="trailing" constant="16" id="XtO-TO-gOU"/>
+                            <constraint firstItem="POj-Qg-NxV" firstAttribute="leading" secondItem="e9S-9S-Tsh" secondAttribute="leading" constant="32" id="hyU-94-hPF"/>
+                            <constraint firstItem="e9S-9S-Tsh" firstAttribute="trailing" secondItem="Lra-sq-n0g" secondAttribute="trailing" constant="32" id="nsh-EJ-LDZ"/>
+                            <constraint firstItem="e9S-9S-Tsh" firstAttribute="trailing" secondItem="POj-Qg-NxV" secondAttribute="trailing" constant="32" id="oGS-LG-taU"/>
+                            <constraint firstItem="Lra-sq-n0g" firstAttribute="leading" secondItem="e9S-9S-Tsh" secondAttribute="leading" constant="32" id="utq-sP-cca"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="9Oj-QJ-RH5">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Delete" id="5Ur-U2-ahQ"/>
+                            <barButtonItem title="Add" id="9Ln-4W-nW4">
+                                <connections>
+                                    <segue destination="zgG-iL-Gwo" kind="show" id="9B4-qp-uIo"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Anb-em-lZq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-148" y="-87"/>
+        </scene>
+        <!--Add Card-->
+        <scene sceneID="wUe-i3-Hdl">
+            <objects>
+                <viewController id="zgG-iL-Gwo" customClass="AddCardViewController" customModule="Hitoribocchi" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="zvM-ZH-Q7t">
+                        <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" showsMenuAsPrimaryAction="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HBr-DC-JOd">
+                                <rect key="frame" x="24" y="138" width="334" height="20"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="20" id="ofq-kA-FTb"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                <menu key="menu" id="ox8-I5-lI5">
+                                    <children>
+                                        <command title="Basic" id="isZ-lZ-LjH"/>
+                                        <command title="True/False" id="9oa-RR-GgW"/>
+                                        <command title="Multiple Choice" id="td0-kn-xPa"/>
+                                    </children>
+                                </menu>
+                                <state key="normal" title="Card Type: "/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qR5-xs-0Bu">
+                                <rect key="frame" x="24" y="107" width="334" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prompt" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hOa-Kq-LiF">
+                                <rect key="frame" x="24" y="182" width="334" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="Enter the card's question / prompt..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="nHg-jJ-bXN">
+                                <rect key="frame" x="24" y="215" width="342" height="85"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="85" id="ZwO-aV-WfU"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Solution" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="aGU-i7-B1u">
+                                <rect key="frame" x="24" y="324" width="350" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="248" contentHorizontalAlignment="left" contentVerticalAlignment="top" borderStyle="roundedRect" placeholder="Enter the question's answer / solution..." textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="z6n-Un-ref">
+                                <rect key="frame" x="24" y="357" width="342" height="68"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="68" id="06G-lp-Xwh"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DB8-Ph-VxP">
+                                <rect key="frame" x="147" y="500" width="96" height="35"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="filled" title="Add Card"/>
+                                <connections>
+                                    <action selector="addCardButtonClicked:" destination="zgG-iL-Gwo" eventType="touchUpInside" id="miE-SF-7bj"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="kWe-OF-AG3"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="qR5-xs-0Bu" firstAttribute="leading" secondItem="kWe-OF-AG3" secondAttribute="leading" constant="24" id="1Ze-it-Eq2"/>
+                            <constraint firstItem="HBr-DC-JOd" firstAttribute="leading" secondItem="kWe-OF-AG3" secondAttribute="leading" constant="24" id="6T0-ya-rzO"/>
+                            <constraint firstItem="nHg-jJ-bXN" firstAttribute="top" secondItem="hOa-Kq-LiF" secondAttribute="bottom" constant="12" id="6xz-ae-VMw"/>
+                            <constraint firstItem="hOa-Kq-LiF" firstAttribute="top" secondItem="HBr-DC-JOd" secondAttribute="bottom" constant="24" id="7UI-XJ-Yu4"/>
+                            <constraint firstItem="aGU-i7-B1u" firstAttribute="top" secondItem="nHg-jJ-bXN" secondAttribute="bottom" constant="24" id="7Vb-gf-wxH"/>
+                            <constraint firstItem="kWe-OF-AG3" firstAttribute="trailing" secondItem="z6n-Un-ref" secondAttribute="trailing" constant="24" id="9aP-G6-1ef"/>
+                            <constraint firstItem="hOa-Kq-LiF" firstAttribute="leading" secondItem="kWe-OF-AG3" secondAttribute="leading" constant="24" id="BUR-Gm-M2a"/>
+                            <constraint firstItem="z6n-Un-ref" firstAttribute="leading" secondItem="kWe-OF-AG3" secondAttribute="leading" constant="24" id="IxJ-xm-2ux"/>
+                            <constraint firstItem="kWe-OF-AG3" firstAttribute="trailing" secondItem="hOa-Kq-LiF" secondAttribute="trailing" constant="32" id="JsK-An-8jw"/>
+                            <constraint firstItem="kWe-OF-AG3" firstAttribute="trailing" secondItem="qR5-xs-0Bu" secondAttribute="trailing" constant="32" id="KeF-qG-cNx"/>
+                            <constraint firstItem="nHg-jJ-bXN" firstAttribute="leading" secondItem="kWe-OF-AG3" secondAttribute="leading" constant="24" id="LfM-IK-tTV"/>
+                            <constraint firstItem="DB8-Ph-VxP" firstAttribute="top" secondItem="z6n-Un-ref" secondAttribute="bottom" constant="75" id="VPx-tC-LHw"/>
+                            <constraint firstItem="z6n-Un-ref" firstAttribute="top" secondItem="aGU-i7-B1u" secondAttribute="bottom" constant="12" id="dXj-6B-8Pm"/>
+                            <constraint firstItem="DB8-Ph-VxP" firstAttribute="centerX" secondItem="zvM-ZH-Q7t" secondAttribute="centerX" id="gwd-Zo-xjr"/>
+                            <constraint firstItem="HBr-DC-JOd" firstAttribute="top" secondItem="qR5-xs-0Bu" secondAttribute="bottom" constant="10" id="kgy-w7-hhd"/>
+                            <constraint firstItem="kWe-OF-AG3" firstAttribute="trailing" secondItem="HBr-DC-JOd" secondAttribute="trailing" constant="32" id="mm4-YG-Mhz"/>
+                            <constraint firstItem="kWe-OF-AG3" firstAttribute="trailing" secondItem="aGU-i7-B1u" secondAttribute="trailing" constant="16" id="qa7-n9-XGq"/>
+                            <constraint firstItem="aGU-i7-B1u" firstAttribute="leading" secondItem="kWe-OF-AG3" secondAttribute="leading" constant="24" id="std-WP-b2S"/>
+                            <constraint firstItem="qR5-xs-0Bu" firstAttribute="top" secondItem="kWe-OF-AG3" secondAttribute="top" constant="16" id="und-Il-Eek"/>
+                            <constraint firstItem="kWe-OF-AG3" firstAttribute="trailing" secondItem="nHg-jJ-bXN" secondAttribute="trailing" constant="24" id="yCG-Tt-nwD"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Add Card" id="5d1-qa-6fw"/>
+                    <connections>
+                        <outlet property="deckLabel" destination="qR5-xs-0Bu" id="UZS-fj-3T2"/>
+                        <outlet property="promptInput" destination="nHg-jJ-bXN" id="4L5-T6-TFO"/>
+                        <outlet property="solutionInput" destination="z6n-Un-ref" id="H18-SM-z2k"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="lkS-pO-k7Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="717" y="-87"/>
+        </scene>
     </scenes>
     <resources>
+        <systemColor name="labelColor">
+            <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

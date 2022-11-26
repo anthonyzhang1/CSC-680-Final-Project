@@ -1,23 +1,28 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21279" systemVersion="22A400" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="BasicCardEntity" representedClassName="BasicCardEntity" parentEntity="CardEntity" syncable="YES" codeGenerationType="class">
-        <attribute name="solution" optional="YES" attributeType="String"/>
-    </entity>
-    <entity name="CardEntity" representedClassName="CardEntity" isAbstract="YES" syncable="YES" codeGenerationType="class">
+    <entity name="BasicCardEntity" representedClassName="BasicCardEntity" syncable="YES" codeGenerationType="class">
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="nextDueDateMultiplier" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="prompt" optional="YES" attributeType="String"/>
-        <relationship name="deck" maxCount="1" deletionRule="Nullify" destinationEntity="DeckEntity" inverseName="cards" inverseEntity="DeckEntity"/>
+        <attribute name="solution" optional="YES" attributeType="String"/>
+        <relationship name="deck" maxCount="1" deletionRule="Nullify" destinationEntity="DeckEntity" inverseName="basicCards" inverseEntity="DeckEntity"/>
     </entity>
     <entity name="DeckEntity" representedClassName="DeckEntity" syncable="YES" codeGenerationType="class">
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
-        <relationship name="cards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CardEntity" inverseName="deck" inverseEntity="CardEntity"/>
+        <relationship name="basicCards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BasicCardEntity" inverseName="deck" inverseEntity="BasicCardEntity"/>
+        <relationship name="multipleChoiceCards" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MultipleChoiceCardEntity" inverseName="deck" inverseEntity="MultipleChoiceCardEntity"/>
     </entity>
-    <entity name="MultipleChoiceCardEntity" representedClassName="MultipleChoiceCardEntity" parentEntity="CardEntity" syncable="YES" codeGenerationType="class">
+    <entity name="MultipleChoiceCardEntity" representedClassName="MultipleChoiceCardEntity" syncable="YES" codeGenerationType="class">
+        <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="dueDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="id" optional="YES" attributeType="String"/>
+        <attribute name="nextDueDateMultiplier" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="options" optional="YES" attributeType="String"/>
+        <attribute name="prompt" optional="YES" attributeType="String"/>
         <attribute name="solution" optional="YES" attributeType="String"/>
+        <relationship name="deck" maxCount="1" deletionRule="Nullify" destinationEntity="DeckEntity" inverseName="multipleChoiceCards" inverseEntity="DeckEntity"/>
     </entity>
 </model>
