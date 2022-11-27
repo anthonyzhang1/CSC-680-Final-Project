@@ -41,6 +41,6 @@ struct MultipleChoiceCard: Card {
     let creationDate: Date
     let dueDate: Date
     let nextDueDateMultiplier: Decimal
-    /// Will be stored as a string in the store by converting from an array to a string, separated with `|`.
-    let options: [String]
+    /// Each option will be separated with `|`, e.g. "Kennedy | Lincoln | Obama".
+    let options: String
 }

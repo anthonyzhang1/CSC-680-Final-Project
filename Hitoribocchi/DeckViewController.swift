@@ -73,7 +73,7 @@ class DeckViewController: UIViewController {
     
     // send the clicked on Deck to the new screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "showCardSegue" {
+        if segue.identifier == "cardSegue" {
             if let cardViewController = segue.destination as? CardViewController,
                let deckIndex = deckTableView.indexPathForSelectedRow?.row
             { cardViewController.deck = decks[deckIndex] }
@@ -97,7 +97,7 @@ extension DeckViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// Called when selecting a table cell. Takes the user to the card View Controller.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "showCardSegue", sender: indexPath)
+        performSegue(withIdentifier: "cardSegue", sender: indexPath)
         
         // deselect the row after we transition to the new screen
         deckTableView.deselectRow(at: indexPath, animated: true)
@@ -106,10 +106,7 @@ extension DeckViewController: UITableViewDelegate, UITableViewDataSource {
     /// Called when swiping on a table cell. Allows the user to delete decks.
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle,
                    forRowAt indexPath: IndexPath) {
-        if editingStyle == .delete {
-            print("remove deck:", decks[indexPath.row]) // TODO
-            removeDeckFromStore(decks[indexPath.row])
-        }
+        if editingStyle == .delete { removeDeckFromStore(decks[indexPath.row]) }
     }
 }
 

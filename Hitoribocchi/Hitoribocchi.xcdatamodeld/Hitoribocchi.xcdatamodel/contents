@@ -13,7 +13,7 @@
         <attribute name="id" optional="YES" attributeType="String"/>
         <attribute name="title" optional="YES" attributeType="String"/>
         <relationship name="basicCards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="BasicCardEntity" inverseName="deck" inverseEntity="BasicCardEntity"/>
-        <relationship name="multipleChoiceCards" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="MultipleChoiceCardEntity" inverseName="deck" inverseEntity="MultipleChoiceCardEntity"/>
+        <relationship name="multipleChoiceCards" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="MultipleChoiceCardEntity" inverseName="deck" inverseEntity="MultipleChoiceCardEntity"/>
     </entity>
     <entity name="MultipleChoiceCardEntity" representedClassName="MultipleChoiceCardEntity" syncable="YES" codeGenerationType="class">
         <attribute name="creationDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>

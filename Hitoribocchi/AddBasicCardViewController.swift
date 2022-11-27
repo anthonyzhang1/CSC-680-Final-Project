@@ -1,6 +1,6 @@
 import UIKit
 
-class AddCardViewController: UIViewController {
+class AddBasicCardViewController: UIViewController {
     let store = CoreDataStore()
     var deck: Deck? // retrieved from the sender
     
@@ -14,15 +14,14 @@ class AddCardViewController: UIViewController {
               let deck = deck
         else { return }
         
-        let card = BasicCard(id: UUID().uuidString, prompt: prompt, solution: solution, creationDate: .now,
-                             dueDate: .now, nextDueDateMultiplier: 0.01)
+        let card = BasicCard(id: UUID().uuidString, prompt: prompt, solution: solution, creationDate: .now, dueDate: .now, nextDueDateMultiplier: 0.01)
         self.addBasicCardToDeck(card, deck)
     }
     
     /// Try to add the card to the deck into the Core Data store.
     func addBasicCardToDeck(_ card: BasicCard, _ deck: Deck) {
         do { try store.insertBasicCard(card, deck) }
-        catch { showErrorAlert("Error", "Sorry, there was an error adding the deck.") }
+        catch { showErrorAlert("Error", "Sorry, there was an error adding to the deck.") }
     }
     
     override func viewDidLoad() {

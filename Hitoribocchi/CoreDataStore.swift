@@ -3,14 +3,24 @@ import CoreData
 protocol StoreType {
     /// Retrieves all of the decks.
     func getAllDecks() throws -> [Deck]
+    
     /// Inserts a deck into the store.
     func insertDeck(_ deck: Deck) throws
+    
     /// Deletes a deck from the store.
     func deleteDeck(_ deck: Deck) throws
+    
     /// Gets all the due basic cards from a deck.
     func getDueBasicCardsFromDeck(_ deck: Deck) throws -> [BasicCard]
+    
+    /// Gets all the due multiple choice cards from a deck.
+    func getDueMultipleChoiceCardsFromDeck(_ deck: Deck) throws -> [MultipleChoiceCard]
+    
     /// Inserts a basic card into a deck.
     func insertBasicCard(_ card: BasicCard, _ deck: Deck) throws
+    
+    /// Inserts a multiple choice card into a deck.
+    func insertMultipleChoiceCard(_ card: MultipleChoiceCard, _ deck: Deck) throws
 }
 
 struct CoreDataStore: StoreType {
@@ -43,7 +53,6 @@ struct CoreDataStore: StoreType {
         entity.id = deck.id
         entity.title = deck.title
         
-        print("entity:", entity) // TODO
         try context.save()
     }
     
@@ -86,9 +95,13 @@ struct CoreDataStore: StoreType {
                 return nil
             }
             
-            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate,
-                             dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal)
+            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal)
         }.sorted { $0.dueDate < $1.dueDate } // sort by due date, longest due cards first
+    }
+    
+    // TODO
+    func getDueMultipleChoiceCardsFromDeck(_ deck: Deck) throws -> [MultipleChoiceCard] {
+        
     }
     
     func insertBasicCard(_ card: BasicCard, _ deck: Deck) throws {
@@ -99,8 +112,6 @@ struct CoreDataStore: StoreType {
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
         let deckEntity = try context.fetch(fetchRequest)[0]
         
-        print("deck entity:", deckEntity) // TODO
-        
         let cardEntity = BasicCardEntity(context: context)
         cardEntity.id = card.id
         cardEntity.prompt = card.prompt
@@ -108,10 +119,29 @@ struct CoreDataStore: StoreType {
         cardEntity.creationDate = card.creationDate
         cardEntity.dueDate = card.dueDate
         cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier as NSDecimalNumber
-        
         cardEntity.deck = deckEntity // relationship attribute
         
-        print("card entity:", cardEntity) // TODO
+        try context.save()
+    }
+    
+    func insertMultipleChoiceCard(_ card: MultipleChoiceCard, _ deck: Deck) throws {
+        let context = Self.container.viewContext
+        
+        // get the deck entity that this card belongs to
+        let fetchRequest = DeckEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
+        let deckEntity = try context.fetch(fetchRequest)[0]
+        
+        let cardEntity = MultipleChoiceCardEntity(context: context)
+        cardEntity.id = card.id
+        cardEntity.prompt = card.prompt
+        cardEntity.solution = card.solution
+        cardEntity.creationDate = card.creationDate
+        cardEntity.dueDate = card.dueDate
+        cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier as NSDecimalNumber
+        cardEntity.options = card.options
+        cardEntity.deck = deckEntity // relationship attribute
+        
         try context.save()
     }
 }
