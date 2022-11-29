@@ -18,6 +18,9 @@ protocol StoreType {
     
     /// Inserts a multiple choice card into a deck.
     func insertMultipleChoiceCard(_ card: MultipleChoiceCard, _ deck: Deck) throws
+    
+    /// Deletes a card from the store. The card can be of any type, e.g. Basic or MultipleChoice.
+    func deleteCard(_ card: Card) throws
 }
 
 struct CoreDataStore: StoreType {
@@ -157,6 +160,28 @@ struct CoreDataStore: StoreType {
         cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier as NSDecimalNumber
         cardEntity.options = card.options
         cardEntity.deck = deckEntity // relationship attribute
+        
+        try context.save()
+    }
+    
+    func deleteCard(_ card: Card) throws {
+        let context = Self.container.viewContext
+        
+        if card is BasicCard { // basic card
+            print("basic card")
+            let fetchRequest = BasicCardEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
+            let entities = try context.fetch(fetchRequest)
+            
+            for entity in entities { context.delete(entity) } // delete all matched entities
+        } else { // multiple choice card
+            print("multiple choice card")
+            let fetchRequest = MultipleChoiceCardEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
+            let entities = try context.fetch(fetchRequest)
+            
+            for entity in entities { context.delete(entity) } // delete all matched entities
+        }
         
         try context.save()
     }

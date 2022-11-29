@@ -107,7 +107,11 @@
                     </view>
                     <navigationItem key="navigationItem" id="9Oj-QJ-RH5">
                         <rightBarButtonItems>
-                            <barButtonItem title="Delete" id="5Ur-U2-ahQ"/>
+                            <barButtonItem title="Delete" id="5Ur-U2-ahQ">
+                                <connections>
+                                    <action selector="deleteButtonClicked:" destination="BIL-GW-zmy" id="nXZ-yQ-BwC"/>
+                                </connections>
+                            </barButtonItem>
                             <barButtonItem title="Add" id="9Ln-4W-nW4">
                                 <connections>
                                     <action selector="addButtonClicked:" destination="BIL-GW-zmy" id="D8H-QK-jKi"/>
