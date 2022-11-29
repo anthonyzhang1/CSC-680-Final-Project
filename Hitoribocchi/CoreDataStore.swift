@@ -10,11 +10,8 @@ protocol StoreType {
     /// Deletes a deck from the store.
     func deleteDeck(_ deck: Deck) throws
     
-    /// Gets all the due basic cards from a deck.
-    func getDueBasicCardsFromDeck(_ deck: Deck) throws -> [BasicCard]
-    
-    /// Gets all the due multiple choice cards from a deck.
-    func getDueMultipleChoiceCardsFromDeck(_ deck: Deck) throws -> [MultipleChoiceCard]
+    /// Gets all the due cards from a deck.
+    func getDueCardsFromDeck(_ deck: Deck) throws -> [Card]
     
     /// Inserts a basic card into a deck.
     func insertBasicCard(_ card: BasicCard, _ deck: Deck) throws
@@ -69,25 +66,28 @@ struct CoreDataStore: StoreType {
         try context.save()
     }
     
-    func getDueBasicCardsFromDeck(_ deck: Deck) throws -> [BasicCard] {
+    func getDueCardsFromDeck(_ deck: Deck) throws -> [Card] {
         let context = Self.container.viewContext
+        var returnArray: [Card] // stores the cards we will return
         
         // get the deck entity for the deck provided in the argument
         let fetchRequest = DeckEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
         let deckEntity = try context.fetch(fetchRequest)[0]
         
-        // get all the basic card entities that belong to the deck
-        guard let cardEntities = deckEntity.basicCards?.allObjects as? [BasicCardEntity]
-        else { return [] } // supposedly will never be executed by xcode
+        // get all the card entities that belong to the deck
+        guard let basicCardEntities = deckEntity.basicCards?.allObjects as? [BasicCardEntity],
+              let multipleChoiceCardEntities = deckEntity.multipleChoiceCards?.allObjects as? [MultipleChoiceCardEntity]
+        else { return [] } // supposedly never executed by xcode
         
-        return cardEntities.compactMap { cardEntity in
-            guard let id = cardEntity.id,
-                  let prompt = cardEntity.prompt,
-                  let solution = cardEntity.solution,
-                  let creationDate = cardEntity.creationDate,
-                  let dueDate = cardEntity.dueDate,
-                  let nextDueDateMultiplier = cardEntity.nextDueDateMultiplier
+        // map the due basic cards into the return array
+        returnArray = basicCardEntities.compactMap { basicCardEntity in
+            guard let id = basicCardEntity.id,
+                  let prompt = basicCardEntity.prompt,
+                  let solution = basicCardEntity.solution,
+                  let creationDate = basicCardEntity.creationDate,
+                  let dueDate = basicCardEntity.dueDate,
+                  let nextDueDateMultiplier = basicCardEntity.nextDueDateMultiplier
             else { return nil }
             
             if dueDate > .now { // do not get cards not yet due
@@ -96,12 +96,28 @@ struct CoreDataStore: StoreType {
             }
             
             return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal)
-        }.sorted { $0.dueDate < $1.dueDate } // sort by due date, longest due cards first
-    }
-    
-    // TODO
-    func getDueMultipleChoiceCardsFromDeck(_ deck: Deck) throws -> [MultipleChoiceCard] {
+        }
         
+        // append to the return array the multiple choice cards
+        returnArray += multipleChoiceCardEntities.compactMap { multipleChoiceCardEntity in
+            guard let id = multipleChoiceCardEntity.id,
+                  let prompt = multipleChoiceCardEntity.prompt,
+                  let solution = multipleChoiceCardEntity.solution,
+                  let creationDate = multipleChoiceCardEntity.creationDate,
+                  let dueDate = multipleChoiceCardEntity.dueDate,
+                  let nextDueDateMultiplier = multipleChoiceCardEntity.nextDueDateMultiplier,
+                  let options = multipleChoiceCardEntity.options
+            else { return nil }
+            
+            if dueDate > .now { // do not get cards not yet due
+                print("due date > .now")
+                return nil
+            }
+            
+            return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal, options: options)
+        }
+        
+        return returnArray
     }
     
     func insertBasicCard(_ card: BasicCard, _ deck: Deck) throws {

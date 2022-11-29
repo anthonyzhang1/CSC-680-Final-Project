@@ -53,7 +53,7 @@ class CardViewController: UIViewController {
         guard let deck = deck
         else { return }
         
-        do { dueCards = try store.getDueBasicCardsFromDeck(deck) }
+        do { dueCards = try store.getDueCardsFromDeck(deck) }
         catch { showErrorAlert("Error", "Sorry, there was an error retrieving the cards.") }
     }
     

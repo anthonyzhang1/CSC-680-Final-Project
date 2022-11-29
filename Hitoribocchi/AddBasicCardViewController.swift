@@ -18,10 +18,15 @@ class AddBasicCardViewController: UIViewController {
         self.addBasicCardToDeck(card, deck)
     }
     
-    /// Try to add the card to the deck into the Core Data store.
+    /// Try to add the card to the deck into the Core Data store. Clear the input fields on success.
     func addBasicCardToDeck(_ card: BasicCard, _ deck: Deck) {
-        do { try store.insertBasicCard(card, deck) }
-        catch { showErrorAlert("Error", "Sorry, there was an error adding to the deck.") }
+        do {
+            try store.insertBasicCard(card, deck)
+            promptInput.text = ""
+            solutionInput.text = ""
+        } catch {
+            showErrorAlert("Error", "Sorry, there was an error adding to the deck.")
+        }
     }
     
     override func viewDidLoad() {

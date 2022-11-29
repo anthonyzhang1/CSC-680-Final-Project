@@ -25,13 +25,13 @@ class AddTrueFalseCardViewController: UIViewController {
         self.addMultipleChoiceCardToDeck(card, deck)
     }
     
-    /// Try to add the card to the deck into the Core Data store.
+    /// Try to add the card to the deck into the Core Data store. Clear the input fields on success.
     func addMultipleChoiceCardToDeck(_ card: MultipleChoiceCard, _ deck: Deck) {
         do {
             try store.insertMultipleChoiceCard(card, deck)
+            promptInput.text = ""
         } catch {
             showErrorAlert("Error", "Sorry, there was an error adding to the deck.")
-            print("Error:", error)
         }
     }
     
