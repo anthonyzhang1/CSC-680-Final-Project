@@ -429,6 +429,9 @@
                                 <rect key="frame" x="156.33333333333334" y="202" width="77.333333333333343" height="35"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="filled" title="Search"/>
+                                <connections>
+                                    <action selector="searchButtonClicked:" destination="0aT-1R-QOh" eventType="touchUpInside" id="0EG-dl-BFc"/>
+                                </connections>
                             </button>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" id="jYa-9V-HF6">
                                 <rect key="frame" x="0.0" y="308" width="390" height="502"/>
@@ -444,12 +447,12 @@
                                     <collectionViewCell opaque="NO" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CustomCardCell" id="Xci-R8-zjT" customClass="CustomCardCell" customModule="Hitoribocchi" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="166" height="104"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0Q8-Us-Clk" customClass="CustomCardCell" customModule="Hitoribocchi" customModuleProvider="target">
+                                        <collectionViewCellContentView key="contentView" opaque="NO" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="0Q8-Us-Clk" customClass="CustomCardCell" customModule="Hitoribocchi" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="166" height="104"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Text" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OUP-ND-vba">
-                                                    <rect key="frame" x="26" y="42" width="113" height="21"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Collection Text" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="OUP-ND-vba">
+                                                    <rect key="frame" x="26" y="8" width="113" height="88"/>
                                                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -499,6 +502,7 @@
                     <navigationItem key="navigationItem" title="Card Search" id="IXY-Lg-zMz"/>
                     <connections>
                         <outlet property="cardCollectionView" destination="jYa-9V-HF6" id="27z-e0-2q7"/>
+                        <outlet property="searchTermsInput" destination="Rr8-Ue-bm1" id="80B-fi-l6Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtO-x3-xUi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

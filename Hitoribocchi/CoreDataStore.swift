@@ -13,8 +13,8 @@ protocol StoreType {
     /// Gets all the due cards from a deck.
     func getDueCardsFromDeck(_ deck: Deck) throws -> [Card]
     
-    /// Searches for cards that contain `searchTerms` within its prompt.
-    func searchCards(_ searchTerms: String) throws -> [Card]
+    /// Searches for cards that contain `searchTerms` within its prompt. Each Card entity will return at most `fetchLimit` cards.
+    func searchCards(_ searchTerms: String, _ fetchLimit: Int) throws -> [Card]
     
     /// Inserts a basic card into a deck.
     func insertBasicCard(_ card: BasicCard, _ deck: Deck) throws
@@ -126,7 +126,7 @@ struct CoreDataStore: StoreType {
         return returnArray
     }
     
-    func searchCards(_ searchTerms: String) throws -> [Card] {
+    func searchCards(_ searchTerms: String, _ fetchLimit: Int) throws -> [Card] {
         let context = Self.container.viewContext
         var returnArray: [Card] // stores the cards we will return
         /** The search algorithm. We match all cards with a prompt that contains the search terms, ignoring case and diacritics. */
@@ -135,6 +135,7 @@ struct CoreDataStore: StoreType {
         // fetch the basic cards first
         let basicCardFetchRequest = BasicCardEntity.fetchRequest()
         basicCardFetchRequest.predicate = fetchPredicate
+        basicCardFetchRequest.fetchLimit = fetchLimit
         let basicCardEntities = try context.fetch(basicCardFetchRequest)
         
         // map the searched basic cards into the return array
@@ -153,6 +154,7 @@ struct CoreDataStore: StoreType {
         // fetch the multiple choice cards
         let multipleChoiceCardFetchRequest = MultipleChoiceCardEntity.fetchRequest()
         multipleChoiceCardFetchRequest.predicate = fetchPredicate
+        multipleChoiceCardFetchRequest.fetchLimit = fetchLimit
         let multipleChoiceCardEntities = try context.fetch(multipleChoiceCardFetchRequest)
         
         // append to the return array the searched multiple choice cards
