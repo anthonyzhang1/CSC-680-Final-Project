@@ -13,7 +13,12 @@ protocol StoreType {
     /// Gets all the due cards from a deck.
     func getDueCardsFromDeck(_ deck: Deck) throws -> [Card]
     
-    /// Searches for cards that contain `searchTerms` within its prompt. Each Card entity will return at most `fetchLimit` cards.
+    /** Gets all cards. Each Card entity will return at most `fetchLimit` cards.
+        The returned array will be sorted by creation date from newest to oldest. */
+    func getAllCards(_ fetchLimit: Int) throws -> [Card]
+    
+    /** Searches for cards that contain `searchTerms` within its prompt. Each Card entity will return at most `fetchLimit` cards.
+        The returned array will be sorted by creation date from newest to oldest. */
     func searchCards(_ searchTerms: String, _ fetchLimit: Int) throws -> [Card]
     
     /// Inserts a basic card into a deck.
@@ -126,6 +131,51 @@ struct CoreDataStore: StoreType {
         return returnArray
     }
     
+    func getAllCards(_ fetchLimit: Int) throws -> [Card] {
+        let context = Self.container.viewContext
+        var returnArray: [Card] // stores the cards we will return
+        
+        // fetch the basic cards first
+        let basicCardFetchRequest = BasicCardEntity.fetchRequest()
+        basicCardFetchRequest.fetchLimit = fetchLimit
+        let basicCardEntities = try context.fetch(basicCardFetchRequest)
+        
+        // map the searched basic cards into the return array
+        returnArray = basicCardEntities.compactMap { basicCardEntity in
+            guard let id = basicCardEntity.id,
+                  let prompt = basicCardEntity.prompt,
+                  let solution = basicCardEntity.solution,
+                  let creationDate = basicCardEntity.creationDate,
+                  let dueDate = basicCardEntity.dueDate,
+                  let nextDueDateMultiplier = basicCardEntity.nextDueDateMultiplier
+            else { return nil }
+            
+            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal)
+        }
+        
+        // fetch the multiple choice cards
+        let multipleChoiceCardFetchRequest = MultipleChoiceCardEntity.fetchRequest()
+        multipleChoiceCardFetchRequest.fetchLimit = fetchLimit
+        let multipleChoiceCardEntities = try context.fetch(multipleChoiceCardFetchRequest)
+        
+        // append to the return array the searched multiple choice cards
+        returnArray += multipleChoiceCardEntities.compactMap { multipleChoiceCardEntity in
+            guard let id = multipleChoiceCardEntity.id,
+                  let prompt = multipleChoiceCardEntity.prompt,
+                  let solution = multipleChoiceCardEntity.solution,
+                  let creationDate = multipleChoiceCardEntity.creationDate,
+                  let dueDate = multipleChoiceCardEntity.dueDate,
+                  let nextDueDateMultiplier = multipleChoiceCardEntity.nextDueDateMultiplier,
+                  let options = multipleChoiceCardEntity.options
+            else { return nil }
+            
+            return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal, options: options)
+        }
+        
+        // Sorts the array such that the newest cards at the beginning, oldest cards at the end, then returns it
+        return returnArray.sorted { $0.creationDate > $1.creationDate }
+    }
+    
     func searchCards(_ searchTerms: String, _ fetchLimit: Int) throws -> [Card] {
         let context = Self.container.viewContext
         var returnArray: [Card] // stores the cards we will return
@@ -171,7 +221,8 @@ struct CoreDataStore: StoreType {
             return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal, options: options)
         }
         
-        return returnArray
+        // Sorts the array such that the newest cards at the beginning, oldest cards at the end, then returns it
+        return returnArray.sorted { $0.creationDate > $1.creationDate }
     }
 
     

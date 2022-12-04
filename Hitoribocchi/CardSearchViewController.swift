@@ -1,78 +1,79 @@
 import UIKit
 
 class CardSearchViewController: UIViewController {
+    /// The maximum number of cards returned in each Card entity when searching. The actual number of results can be up to N times greater than this value, where N is the number of card entities that exist.
+    let SEARCH_FETCH_LIMIT = 50
+    
     let store = CoreDataStore()
-    /// The maximum number of cards returned in each Card entity when searching. The actual number of results can be up to 2 times greater than this value, since we have 2 card entities.
-    let SEARCH_FETCH_LIMIT = 25
-
-    var cards: [Card] = [] // the collection of cards will be displayed
+    var cards: [Card] = [] // the cards to display
     
-    @IBOutlet weak var cardCollectionView: UICollectionView!
-    @IBOutlet weak var searchTermsInput: UITextField!
+    @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var cardTableView: UITableView!
     
-    /// Search the store for matching prompts when the search button is clicked.
-    @IBAction func searchButtonClicked(_ sender: UIButton) {
-        guard let searchTerms = searchTermsInput.text
-        else { return }
-        
-        self.getMatchedCardsFromStore(terms: searchTerms, limit: SEARCH_FETCH_LIMIT)
+    /// Get the most recently created cards.
+    func getRecentCards() {
+        do { cards = try store.getAllCards(SEARCH_FETCH_LIMIT) }
+        catch { showErrorAlert("Error", "Sorry, there was an error fetching the cards.") }
     }
     
-    /** Gets the matched cards from the store and updates the table with the cards. The maximum number of cards returned per entity is determined by `limit`. */
-    func getMatchedCardsFromStore(terms searchTerms: String, limit entityFetchLimit: Int) {
+    /// Try to delete the selected card.
+    func deleteCard(_ card: Card) {
         do {
-            cards = try store.searchCards(searchTerms, entityFetchLimit)
-            DispatchQueue.main.async { self.cardCollectionView.reloadData() }
+            try store.deleteCard(card)
+            searchBarSearchButtonClicked(searchBar) // update the table so that the deleted cards disappears
+        } catch {
+            showErrorAlert("Error", "Sorry, there was an error deleting the card.")
+        }
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        searchBar.delegate = self
+        cardTableView.delegate = self
+        cardTableView.dataSource = self
+        
+        getRecentCards()
+    }
+}
+
+extension CardSearchViewController: UISearchBarDelegate {
+    /** Executes the search when the user presses Return.
+        Gets the matched cards from the store and updates the table with the cards. The maximum number of cards returned per entity is determined by `limit`. */
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let searchTerms = searchBar.text
+        else { return }
+        
+        do {
+            cards = try store.searchCards(searchTerms, SEARCH_FETCH_LIMIT)
+            DispatchQueue.main.async { self.cardTableView.reloadData() }
         } catch {
             showErrorAlert("Error", "Sorry, there was an error retrieving the cards.")
         }
     }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        cardCollectionView.delegate = self
-        cardCollectionView.dataSource = self
-    }
 }
 
-extension CardSearchViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    /** Returns 2 times the number of cards in the cards array, since we want to show the prompt in one cell, and the solution in another.
-        Therefore, we need two cells for every card. */
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return cards.count * 2
-    }
+extension CardSearchViewController: UITableViewDelegate, UITableViewDataSource {
+    /// Returns the number of cards in the cards array.
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { return cards.count }
     
-    /// Show the cell's contents in the collection.
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        // initialize our custom created cell
-        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "CustomCardCell", for: indexPath) as? CustomCardCell
-        else { fatalError("Failed to display the card cells.") }
-        
-        // Even index means the left column, so show the prompt. Odd index means the right column, so show the solution.
-        if (indexPath.item % 2 == 0) { cell.cellLabel.text = cards[indexPath.item / 2].prompt }
-        else { cell.cellLabel.text = cards[indexPath.item / 2].solution }
-        
-        // Adds the border outline and border color (black) for each cell
-        cell.layer.borderWidth = 1
-        cell.layer.borderColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1).cgColor
+    /// Loads the table cell's contents.
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = UITableViewCell()
+        cell.textLabel?.text = cards[indexPath.row].prompt
         
         return cell
     }
     
-    /// Determines the number of rows and columns within the collection view.
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let COLLECTION_NUM_ROWS: CGFloat = 4
-        let COLLECTION_NUM_COLS: CGFloat = 2
-        let PADDING: CGFloat = 10
-        let collectionViewSize = collectionView.frame.size.width - PADDING
-                
-        return CGSize(width: collectionViewSize / COLLECTION_NUM_COLS, height: collectionViewSize / COLLECTION_NUM_ROWS)
+    /// Called when selecting a table cell. Takes the user to the card View Controller.
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "viewCardDetailsSegue", sender: indexPath)
+        
+        // deselect the row after we transition to the new screen
+        cardTableView.deselectRow(at: indexPath, animated: true)
     }
-}
-
-/// The class for the cell in the search collection view.
-class CustomCardCell: UICollectionViewCell {
-    /// The label inside of the cell.
-    @IBOutlet weak var cellLabel: UILabel!
+    
+    /// Called when swiping on a table cell. Allows the user to delete the card.
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete { deleteCard(cards[indexPath.row]) }
+    }
 }
