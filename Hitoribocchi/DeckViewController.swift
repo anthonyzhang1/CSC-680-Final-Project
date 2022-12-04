@@ -74,7 +74,7 @@ class DeckViewController: UIViewController {
     // send the clicked on Deck to the new screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "cardSegue" {
-            if let cardViewController = segue.destination as? CardViewController,
+            if let cardViewController = segue.destination as? CardsViewController,
                let deckIndex = deckTableView.indexPathForSelectedRow?.row
             { cardViewController.deck = decks[deckIndex] }
         }

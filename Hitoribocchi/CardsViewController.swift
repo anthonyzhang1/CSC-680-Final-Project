@@ -1,6 +1,6 @@
 import UIKit
 
-class CardViewController: UIViewController {
+class CardsViewController: UIViewController {
     let store = CoreDataStore()
     var deck: Deck? // retrieved from the sender
     var dueCards: [Card] = [] // retrieved from the store and displayed to the user
