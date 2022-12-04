@@ -1,5 +1,15 @@
 import UIKit
 
+/// Holds constants that are used in various controllers.
+struct Constants {
+    /// Used to represent the correct solution for a true/false question card.
+    static let TRUE_STRING = "True"
+    /// Used to represent the correct solution for a true/false question card.
+    static let FALSE_STRING = "False"
+    /// The options value for true/false cards, i.e. "True | False".
+    static let TRUE_FALSE_OPTIONS = "\(Constants.TRUE_STRING) | \(Constants.FALSE_STRING)"
+}
+
 class DeckViewController: UIViewController {
     let store = CoreDataStore()
     
@@ -74,9 +84,9 @@ class DeckViewController: UIViewController {
     // send the clicked on Deck to the new screen
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "cardSegue" {
-            if let cardViewController = segue.destination as? CardsViewController,
+            if let cardsViewController = segue.destination as? CardsViewController,
                let deckIndex = deckTableView.indexPathForSelectedRow?.row
-            { cardViewController.deck = decks[deckIndex] }
+            { cardsViewController.deck = decks[deckIndex] }
         }
     }
 }

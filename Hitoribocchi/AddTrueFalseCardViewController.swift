@@ -1,11 +1,6 @@
 import UIKit
 
 class AddTrueFalseCardViewController: UIViewController {
-    /// Used to represent the correct solution for a true/false question card.
-    let TRUE_STRING = "True"
-    /// Used to represent the correct solution for a true/false question card.
-    let FALSE_STRING = "False"
-    
     let store = CoreDataStore()
     var deck: Deck? // retrieved from the sender
     
@@ -19,9 +14,9 @@ class AddTrueFalseCardViewController: UIViewController {
         else { return }
         
         /// Gets the string in the segmented control's selection
-        let solutionString = trueFalseSegmentedControl.selectedSegmentIndex == 1 ? TRUE_STRING : FALSE_STRING
+        let solutionString = trueFalseSegmentedControl.selectedSegmentIndex == 1 ? Constants.TRUE_STRING : Constants.FALSE_STRING
         
-        let card = MultipleChoiceCard(id: UUID().uuidString, prompt: prompt, solution: solutionString, creationDate: .now, dueDate: .now, nextDueDateMultiplier: 0.01, options: "\(TRUE_STRING) | \(FALSE_STRING)")
+        let card = MultipleChoiceCard(id: UUID().uuidString, prompt: prompt, solution: solutionString, creationDate: .now, dueDate: .now, nextDueDateMultiplier: 0.01, options: "\(Constants.TRUE_STRING) | \(Constants.FALSE_STRING)")
         self.addMultipleChoiceCardToDeck(card, deck)
     }
     

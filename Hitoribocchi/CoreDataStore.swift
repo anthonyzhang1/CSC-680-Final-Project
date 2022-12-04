@@ -67,7 +67,7 @@ struct CoreDataStore: StoreType {
             let matchedCardEntity = try context.fetch(fetchRequest)[0]
             
             guard let deckTitle = matchedCardEntity.deck?.title
-            else { return "" }
+            else { return "Error!" }
             
             return deckTitle
             
@@ -77,7 +77,7 @@ struct CoreDataStore: StoreType {
             let matchedCardEntity = try context.fetch(fetchRequest)[0]
             
             guard let deckTitle = matchedCardEntity.deck?.title
-            else { return "" }
+            else { return "Error!" }
             
             return deckTitle
         }
@@ -129,10 +129,8 @@ struct CoreDataStore: StoreType {
                   let nextDueDateMultiplier = basicCardEntity.nextDueDateMultiplier
             else { return nil }
             
-            if dueDate > .now { // do not get cards not yet due
-                print("due date > .now")
-                return nil
-            }
+            // do not get cards not yet due
+            if .now < dueDate { return nil }
             
             return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal)
         }
@@ -148,10 +146,8 @@ struct CoreDataStore: StoreType {
                   let options = multipleChoiceCardEntity.options
             else { return nil }
             
-            if dueDate > .now { // do not get cards not yet due
-                print("due date > .now")
-                return nil
-            }
+            // do not get cards not yet due
+            if .now < dueDate { return nil }
             
             return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal, options: options)
         }
