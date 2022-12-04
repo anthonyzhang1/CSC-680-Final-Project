@@ -65,7 +65,7 @@
             </objects>
             <point key="canvasLocation" x="-923.07692307692309" y="-87.440758293838854"/>
         </scene>
-        <!--Card View Controller-->
+        <!--Cards-->
         <scene sceneID="i8E-NP-Ook">
             <objects>
                 <viewController id="BIL-GW-zmy" customClass="CardViewController" customModule="Hitoribocchi" customModuleProvider="target" sceneMemberID="viewController">
@@ -73,13 +73,13 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prompt" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POj-Qg-NxV">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prompt" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="POj-Qg-NxV">
                                 <rect key="frame" x="32" y="122.99999999999999" width="326" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BJC-MD-9de" userLabel="Line">
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="BJC-MD-9de" userLabel="Line">
                                 <rect key="frame" x="32" y="159.33333333333334" width="326" height="1"/>
                                 <color key="backgroundColor" systemColor="labelColor"/>
                                 <constraints>
@@ -95,6 +95,7 @@
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e9S-9S-Tsh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="e9S-9S-Tsh" firstAttribute="trailing" secondItem="POj-Qg-NxV" secondAttribute="trailing" constant="32" id="DdS-NV-MFD"/>
                             <constraint firstItem="BJC-MD-9de" firstAttribute="top" secondItem="POj-Qg-NxV" secondAttribute="bottom" constant="16" id="OKk-PD-aTw"/>
@@ -108,15 +109,18 @@
                             <constraint firstItem="e9S-9S-Tsh" firstAttribute="trailing" secondItem="POj-Qg-NxV" secondAttribute="trailing" constant="32" id="oGS-LG-taU"/>
                             <constraint firstItem="Lra-sq-n0g" firstAttribute="leading" secondItem="e9S-9S-Tsh" secondAttribute="leading" constant="32" id="utq-sP-cca"/>
                         </constraints>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="ANv-jM-cxZ" appends="YES" id="yP6-bs-hZM"/>
+                        </connections>
                     </view>
-                    <navigationItem key="navigationItem" id="9Oj-QJ-RH5">
+                    <navigationItem key="navigationItem" title="Cards" id="9Oj-QJ-RH5">
                         <rightBarButtonItems>
-                            <barButtonItem title="Delete" id="5Ur-U2-ahQ">
+                            <barButtonItem systemItem="trash" id="5Ur-U2-ahQ">
                                 <connections>
                                     <action selector="deleteButtonClicked:" destination="BIL-GW-zmy" id="nXZ-yQ-BwC"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem title="Add" id="9Ln-4W-nW4">
+                            <barButtonItem systemItem="add" id="9Ln-4W-nW4">
                                 <connections>
                                     <action selector="addButtonClicked:" destination="BIL-GW-zmy" id="D8H-QK-jKi"/>
                                 </connections>
@@ -124,12 +128,20 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="cardPrompt" destination="POj-Qg-NxV" id="xCd-ie-7P4"/>
+                        <outlet property="promptSolutionSeparatorBar" destination="BJC-MD-9de" id="wj4-eW-rRa"/>
+                        <outlet property="solutionLabel" destination="Lra-sq-n0g" id="Lbn-Kc-H7q"/>
                         <segue destination="zgG-iL-Gwo" kind="show" identifier="addBasicCardSegue" id="9el-zZ-V5V"/>
                         <segue destination="19Y-cv-tR2" kind="show" identifier="addTrueFalseCardSegue" id="8T8-ag-L7h"/>
                         <segue destination="0Sc-ll-oDJ" kind="show" identifier="addMultipleChoiceCardSegue" id="aJz-LV-R43"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Anb-em-lZq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <tapGestureRecognizer id="ANv-jM-cxZ">
+                    <connections>
+                        <action selector="screenTapped:" destination="BIL-GW-zmy" id="NWH-ex-H3b"/>
+                    </connections>
+                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-143" y="-87"/>
         </scene>
