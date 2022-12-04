@@ -93,8 +93,7 @@ class CardViewController: UIViewController {
         do {
             try store.deleteCard(card)
             getDueCardsFromDeck()
-            dueCards = dueCards.shuffled()
-            print("card deleted") // TODO
+            dueCards = dueCards.shuffled() // shuffle the due cards
         } catch {
             showErrorAlert("Error", "Sorry, there was an error deleting the card.")
         }

@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		D2130D602932BB7600BBF4F4 /* AddTrueFalseCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2130D5F2932BB7600BBF4F4 /* AddTrueFalseCardViewController.swift */; };
 		D2130D622933039100BBF4F4 /* AddMultipleChoiceCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2130D612933039100BBF4F4 /* AddMultipleChoiceCardViewController.swift */; };
+		D22EC9D8293C0C5500E05AC7 /* CardSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D22EC9D7293C0C5500E05AC7 /* CardSearchViewController.swift */; };
 		D25E3F8A293025F0000AA438 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25E3F89293025F0000AA438 /* AppDelegate.swift */; };
 		D25E3F8C293025F0000AA438 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = D25E3F8B293025F0000AA438 /* SceneDelegate.swift */; };
 		D25E3F91293025F0000AA438 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D25E3F8F293025F0000AA438 /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 /* Begin PBXFileReference section */
 		D2130D5F2932BB7600BBF4F4 /* AddTrueFalseCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddTrueFalseCardViewController.swift; sourceTree = "<group>"; };
 		D2130D612933039100BBF4F4 /* AddMultipleChoiceCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddMultipleChoiceCardViewController.swift; sourceTree = "<group>"; };
+		D22EC9D7293C0C5500E05AC7 /* CardSearchViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardSearchViewController.swift; sourceTree = "<group>"; };
 		D25E3F86293025F0000AA438 /* Hitoribocchi.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hitoribocchi.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D25E3F89293025F0000AA438 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D25E3F8B293025F0000AA438 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +79,7 @@
 				D2B7F1EF2932AC7600A15ABC /* AddBasicCardViewController.swift */,
 				D2130D5F2932BB7600BBF4F4 /* AddTrueFalseCardViewController.swift */,
 				D2130D612933039100BBF4F4 /* AddMultipleChoiceCardViewController.swift */,
+				D22EC9D7293C0C5500E05AC7 /* CardSearchViewController.swift */,
 				D2B7F1F12932AC8300A15ABC /* CardViewController.swift */,
 				D2B7F1F32932AC8900A15ABC /* DeckViewController.swift */,
 				D25E3F8F293025F0000AA438 /* Main.storyboard */,
@@ -164,6 +167,7 @@
 				D25E3F8C293025F0000AA438 /* SceneDelegate.swift in Sources */,
 				D2130D622933039100BBF4F4 /* AddMultipleChoiceCardViewController.swift in Sources */,
 				D2B7F1F22932AC8300A15ABC /* CardViewController.swift in Sources */,
+				D22EC9D8293C0C5500E05AC7 /* CardSearchViewController.swift in Sources */,
 				D2EEEBC32930357500AEEC55 /* Models.swift in Sources */,
 				D2EEEBC529303E7D00AEEC55 /* CoreDataStore.swift in Sources */,
 				D2130D602932BB7600BBF4F4 /* AddTrueFalseCardViewController.swift in Sources */,

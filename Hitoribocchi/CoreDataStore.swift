@@ -13,6 +13,9 @@ protocol StoreType {
     /// Gets all the due cards from a deck.
     func getDueCardsFromDeck(_ deck: Deck) throws -> [Card]
     
+    /// Searches for cards that contain `searchTerms` within its prompt.
+    func searchCards(_ searchTerms: String) throws -> [Card]
+    
     /// Inserts a basic card into a deck.
     func insertBasicCard(_ card: BasicCard, _ deck: Deck) throws
     
@@ -123,6 +126,53 @@ struct CoreDataStore: StoreType {
         return returnArray
     }
     
+    func searchCards(_ searchTerms: String) throws -> [Card] {
+        let context = Self.container.viewContext
+        var returnArray: [Card] // stores the cards we will return
+        /** The search algorithm. We match all cards with a prompt that contains the search terms, ignoring case and diacritics. */
+        let fetchPredicate = NSPredicate(format: "prompt CONTAINS[cd] %@", searchTerms)
+        
+        // fetch the basic cards first
+        let basicCardFetchRequest = BasicCardEntity.fetchRequest()
+        basicCardFetchRequest.predicate = fetchPredicate
+        let basicCardEntities = try context.fetch(basicCardFetchRequest)
+        
+        // map the searched basic cards into the return array
+        returnArray = basicCardEntities.compactMap { basicCardEntity in
+            guard let id = basicCardEntity.id,
+                  let prompt = basicCardEntity.prompt,
+                  let solution = basicCardEntity.solution,
+                  let creationDate = basicCardEntity.creationDate,
+                  let dueDate = basicCardEntity.dueDate,
+                  let nextDueDateMultiplier = basicCardEntity.nextDueDateMultiplier
+            else { return nil }
+            
+            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal)
+        }
+        
+        // fetch the multiple choice cards
+        let multipleChoiceCardFetchRequest = MultipleChoiceCardEntity.fetchRequest()
+        multipleChoiceCardFetchRequest.predicate = fetchPredicate
+        let multipleChoiceCardEntities = try context.fetch(multipleChoiceCardFetchRequest)
+        
+        // append to the return array the searched multiple choice cards
+        returnArray += multipleChoiceCardEntities.compactMap { multipleChoiceCardEntity in
+            guard let id = multipleChoiceCardEntity.id,
+                  let prompt = multipleChoiceCardEntity.prompt,
+                  let solution = multipleChoiceCardEntity.solution,
+                  let creationDate = multipleChoiceCardEntity.creationDate,
+                  let dueDate = multipleChoiceCardEntity.dueDate,
+                  let nextDueDateMultiplier = multipleChoiceCardEntity.nextDueDateMultiplier,
+                  let options = multipleChoiceCardEntity.options
+            else { return nil }
+            
+            return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal, options: options)
+        }
+        
+        return returnArray
+    }
+
+    
     func insertBasicCard(_ card: BasicCard, _ deck: Deck) throws {
         let context = Self.container.viewContext
         
@@ -168,18 +218,18 @@ struct CoreDataStore: StoreType {
         let context = Self.container.viewContext
         
         if card is BasicCard { // basic card
-            print("basic card")
             let fetchRequest = BasicCardEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
             let entities = try context.fetch(fetchRequest)
             
+            print("deleted entity:", entities) // TODO
             for entity in entities { context.delete(entity) } // delete all matched entities
         } else { // multiple choice card
-            print("multiple choice card")
             let fetchRequest = MultipleChoiceCardEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
             let entities = try context.fetch(fetchRequest)
             
+            print("deleted entity:", entities) // TODO
             for entity in entities { context.delete(entity) } // delete all matched entities
         }
         
