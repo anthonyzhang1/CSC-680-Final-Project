@@ -9,29 +9,41 @@ struct Constants {
     /// The options value for true/false cards, i.e. "True | False".
     static let TRUE_FALSE_OPTIONS = "\(TRUE_STRING) | \(FALSE_STRING)"
     
+    /// The tag value for the "Retry" button in the Due Cards screen, for basic cards.
+    static let RETRY_BUTTON_TAG = 0
+    
+    /// The tag value for the "Hard" button in the Due Cards screen, for basic cards.
+    static let HARD_BUTTON_TAG = 1
+    
+    /// The tag value for the "Okay" button in the Due Cards screen, for basic cards.
+    static let OKAY_BUTTON_TAG = 2
+    
+    /// The tag value for the "Easy" button in the Due Cards screen, for basic cards.
+    static let EASY_BUTTON_TAG = 3
+
     /// How many seconds there are in a minute.
-    static let SECONDS_IN_ONE_MINUTE = 60.0
+    static let SECONDS_IN_ONE_MINUTE = 60
     
     /// How many hours there are in a day, roughly. Not used for precise calculations.
-    static let HOURS_IN_ONE_DAY = 24.0
+    static let HOURS_IN_ONE_DAY = 24
     
     /// How many days there are in a month, roughly. Not used for precise calculations.
-    static let DAYS_IN_ONE_MONTH = 30.0
+    static let DAYS_IN_ONE_MONTH = 30
     
     /// How many months there are in a year.
-    static let MONTHS_IN_ONE_YEAR = 12.0
+    static let MONTHS_IN_ONE_YEAR = 12
     
     /// How many minutes there are in an hour.
-    static let MINUTES_IN_ONE_HOUR = 60.0
+    static let MINUTES_IN_ONE_HOUR = 60
     
     /// How many minutes there are in a day, roughly. Not used for precise calculations.
-    static let MINUTES_IN_ONE_DAY = MINUTES_IN_ONE_HOUR * HOURS_IN_ONE_DAY
+    static let MINUTES_IN_ONE_DAY: Int = MINUTES_IN_ONE_HOUR * HOURS_IN_ONE_DAY
     
     /// How many minutes there are in a month, roughly. Not used for precise calculations.
-    static let MINUTES_IN_ONE_MONTH = MINUTES_IN_ONE_DAY * DAYS_IN_ONE_MONTH
+    static let MINUTES_IN_ONE_MONTH: Int = MINUTES_IN_ONE_DAY * DAYS_IN_ONE_MONTH
     
     /// How many minutes there are in a year, roughly. Not used for precise calculations.
-    static let MINUTES_IN_ONE_YEAR = MINUTES_IN_ONE_MONTH * MONTHS_IN_ONE_YEAR
+    static let MINUTES_IN_ONE_YEAR: Int = MINUTES_IN_ONE_MONTH * MONTHS_IN_ONE_YEAR
     
     /// The due date multiplier that new cards are initialized with.
     static let NEW_CARD_DUE_DATE_MULTIPLIER = 0.10

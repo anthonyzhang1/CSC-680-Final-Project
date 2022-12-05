@@ -101,7 +101,7 @@
                                         </constraints>
                                         <color key="tintColor" red="0.74701446786369252" green="0.24354796338335646" blue="0.18857787467566034" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Retry">
+                                        <buttonConfiguration key="configuration" style="filled" title="Retry" titleAlignment="center">
                                             <color key="baseBackgroundColor" red="0.74701446790000003" green="0.24354796340000001" blue="0.18857787470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -115,7 +115,7 @@
                                         </constraints>
                                         <color key="tintColor" red="0.82955460695876293" green="0.59736399920927041" blue="0.37526627409724927" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Hard">
+                                        <buttonConfiguration key="configuration" style="filled" title="Hard" titleAlignment="center">
                                             <color key="baseBackgroundColor" red="0.82955460700000005" green="0.59736399920000005" blue="0.37526627410000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -128,7 +128,7 @@
                                             <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Sn8-VY-NcZ"/>
                                         </constraints>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Okay">
+                                        <buttonConfiguration key="configuration" style="filled" title="Okay" titleAlignment="center">
                                             <color key="baseBackgroundColor" red="0.20895016559999999" green="0.76942896839999997" blue="0.15946532120000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         </buttonConfiguration>
                                         <connections>
@@ -142,7 +142,7 @@
                                         </constraints>
                                         <color key="tintColor" systemColor="tintColor"/>
                                         <state key="normal" title="Button"/>
-                                        <buttonConfiguration key="configuration" style="filled" title="Easy"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Easy" titleAlignment="center"/>
                                         <connections>
                                             <action selector="basicCardButtonClicked:" destination="BIL-GW-zmy" eventType="touchUpInside" id="DO3-hv-zJq"/>
                                         </connections>
@@ -527,7 +527,7 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </tableView>
                             <searchBar contentMode="redraw" fixedFrame="YES" placeholder="Search for cards by prompt..." translatesAutoresizingMaskIntoConstraints="NO" id="NKZ-rZ-Jx6">
-                                <rect key="frame" x="0.0" y="91" width="390" height="56"/>
+                                <rect key="frame" x="-1" y="91" width="390" height="56"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
                                 <textInputTraits key="textInputTraits"/>
                                 <scopeButtonTitles>
@@ -561,49 +561,43 @@
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Deck:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7w-E1-uMt">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Deck:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c7w-E1-uMt">
                                 <rect key="frame" x="16" y="107" width="358" height="20.333333333333329"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card ID:" textAlignment="natural" lineBreakMode="characterWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsLetterSpacingToFitWidth="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Sqh-uR-Emr">
-                                <rect key="frame" x="16" y="179.66666666666666" width="358" height="19.333333333333343"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="top" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Prompt:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gDY-Fb-Gbq">
-                                <rect key="frame" x="16" y="215" width="358" height="20.333333333333343"/>
+                                <rect key="frame" x="16" y="179.66666666666666" width="358" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Options/Solution:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Iip-mF-Iiy">
-                                <rect key="frame" x="16" y="251.33333333333334" width="358" height="20.333333333333343"/>
+                                <rect key="frame" x="16" y="216" width="358" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Creation Date:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ihP-4j-Urf">
-                                <rect key="frame" x="16" y="287.66666666666669" width="358" height="20.333333333333314"/>
+                                <rect key="frame" x="16" y="252.33333333333334" width="358" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Due Date:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="L0V-xa-gyE">
-                                <rect key="frame" x="16" y="324" width="358" height="20.333333333333314"/>
+                                <rect key="frame" x="16" y="288.66666666666669" width="358" height="20.333333333333314"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Next Due Date Multiplier:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ELp-cz-yzk">
-                                <rect key="frame" x="16" y="360.33333333333331" width="358" height="20.333333333333314"/>
+                                <rect key="frame" x="16" y="325" width="358" height="20.333333333333314"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Type:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GOC-wQ-QBF">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Card Type:" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GOC-wQ-QBF">
                                 <rect key="frame" x="16" y="143.33333333333334" width="358" height="20.333333333333343"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -616,15 +610,11 @@
                             <constraint firstItem="Iip-mF-Iiy" firstAttribute="leading" secondItem="nVw-M3-OHx" secondAttribute="leading" constant="16" id="1P4-Zj-YPy"/>
                             <constraint firstItem="ELp-cz-yzk" firstAttribute="leading" secondItem="nVw-M3-OHx" secondAttribute="leading" constant="16" id="2HH-YZ-WTv"/>
                             <constraint firstItem="nVw-M3-OHx" firstAttribute="trailing" secondItem="ihP-4j-Urf" secondAttribute="trailing" constant="16" id="5uT-rv-7lW"/>
-                            <constraint firstItem="Sqh-uR-Emr" firstAttribute="top" secondItem="GOC-wQ-QBF" secondAttribute="bottom" constant="16" id="Av1-8r-nNh"/>
                             <constraint firstItem="gDY-Fb-Gbq" firstAttribute="leading" secondItem="nVw-M3-OHx" secondAttribute="leading" constant="16" id="EJS-gV-0JB"/>
                             <constraint firstItem="nVw-M3-OHx" firstAttribute="trailing" secondItem="GOC-wQ-QBF" secondAttribute="trailing" constant="16" id="Hxd-fa-Hlw"/>
-                            <constraint firstItem="Sqh-uR-Emr" firstAttribute="leading" secondItem="nVw-M3-OHx" secondAttribute="leading" constant="16" id="J4x-ap-SRc"/>
-                            <constraint firstItem="nVw-M3-OHx" firstAttribute="trailing" secondItem="Sqh-uR-Emr" secondAttribute="trailing" constant="16" id="JcT-YN-n2K"/>
                             <constraint firstItem="nVw-M3-OHx" firstAttribute="trailing" secondItem="ELp-cz-yzk" secondAttribute="trailing" constant="16" id="L5X-Zt-y6t"/>
                             <constraint firstItem="ihP-4j-Urf" firstAttribute="leading" secondItem="nVw-M3-OHx" secondAttribute="leading" constant="16" id="Lus-WM-hJI"/>
                             <constraint firstItem="ihP-4j-Urf" firstAttribute="top" secondItem="Iip-mF-Iiy" secondAttribute="bottom" constant="16" id="Py3-ox-ju2"/>
-                            <constraint firstItem="gDY-Fb-Gbq" firstAttribute="top" secondItem="Sqh-uR-Emr" secondAttribute="bottom" constant="16" id="RDa-j0-r4s"/>
                             <constraint firstItem="nVw-M3-OHx" firstAttribute="trailing" secondItem="L0V-xa-gyE" secondAttribute="trailing" constant="16" id="Rki-zC-Rvh"/>
                             <constraint firstItem="Iip-mF-Iiy" firstAttribute="top" secondItem="gDY-Fb-Gbq" secondAttribute="bottom" constant="16" id="UWB-hk-K5j"/>
                             <constraint firstItem="GOC-wQ-QBF" firstAttribute="leading" secondItem="nVw-M3-OHx" secondAttribute="leading" constant="16" id="WSA-ar-YJH"/>
@@ -637,6 +627,7 @@
                             <constraint firstItem="nVw-M3-OHx" firstAttribute="trailing" secondItem="c7w-E1-uMt" secondAttribute="trailing" constant="16" id="pZL-16-E6z"/>
                             <constraint firstItem="c7w-E1-uMt" firstAttribute="top" secondItem="nVw-M3-OHx" secondAttribute="top" constant="16" id="pfJ-jS-2PE"/>
                             <constraint firstItem="L0V-xa-gyE" firstAttribute="top" secondItem="ihP-4j-Urf" secondAttribute="bottom" constant="16" id="x4r-Qo-yg8"/>
+                            <constraint firstItem="gDY-Fb-Gbq" firstAttribute="top" secondItem="GOC-wQ-QBF" secondAttribute="bottom" constant="16" id="ztR-HZ-JgA"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Card Details" id="3ih-NE-Ylp">
@@ -647,7 +638,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cardIdLabel" destination="Sqh-uR-Emr" id="XXP-v2-qeP"/>
                         <outlet property="cardTypeLabel" destination="GOC-wQ-QBF" id="SCD-r2-7zz"/>
                         <outlet property="createdOnLabel" destination="ihP-4j-Urf" id="0uP-4O-N5C"/>
                         <outlet property="deckLabel" destination="c7w-E1-uMt" id="BNs-JM-4XO"/>

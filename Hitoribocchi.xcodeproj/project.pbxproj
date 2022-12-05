@@ -15,10 +15,10 @@
 		D25E3F91293025F0000AA438 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D25E3F8F293025F0000AA438 /* Main.storyboard */; };
 		D25E3F93293025F1000AA438 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D25E3F92293025F1000AA438 /* Assets.xcassets */; };
 		D25E3F96293025F1000AA438 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = D25E3F94293025F1000AA438 /* LaunchScreen.storyboard */; };
+		D2973B07293DC96B00B765CB /* Hitoribocchi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2973B05293DC96B00B765CB /* Hitoribocchi.xcdatamodeld */; };
 		D2B7F1F02932AC7600A15ABC /* AddBasicCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7F1EF2932AC7600A15ABC /* AddBasicCardViewController.swift */; };
 		D2B7F1F22932AC8300A15ABC /* CardsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7F1F12932AC8300A15ABC /* CardsViewController.swift */; };
 		D2B7F1F42932AC8900A15ABC /* DeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7F1F32932AC8900A15ABC /* DeckViewController.swift */; };
-		D2B7F1F72932AC9100A15ABC /* Hitoribocchi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2B7F1F52932AC9100A15ABC /* Hitoribocchi.xcdatamodeld */; };
 		D2E54B13293D18E300F1E2F2 /* CardDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E54B12293D18E300F1E2F2 /* CardDetailsViewController.swift */; };
 		D2E54B15293D9ECB00F1E2F2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E54B14293D9ECB00F1E2F2 /* Constants.swift */; };
 		D2EEEBC32930357500AEEC55 /* ModelStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EEEBC22930357500AEEC55 /* ModelStructs.swift */; };
@@ -36,10 +36,10 @@
 		D25E3F92293025F1000AA438 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D25E3F95293025F1000AA438 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		D25E3F97293025F1000AA438 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D2973B06293DC96B00B765CB /* Hitoribocchi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Hitoribocchi.xcdatamodel; sourceTree = "<group>"; };
 		D2B7F1EF2932AC7600A15ABC /* AddBasicCardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AddBasicCardViewController.swift; sourceTree = "<group>"; };
 		D2B7F1F12932AC8300A15ABC /* CardsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CardsViewController.swift; sourceTree = "<group>"; };
 		D2B7F1F32932AC8900A15ABC /* DeckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckViewController.swift; sourceTree = "<group>"; };
-		D2B7F1F62932AC9100A15ABC /* Hitoribocchi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Hitoribocchi.xcdatamodel; sourceTree = "<group>"; };
 		D2E54B12293D18E300F1E2F2 /* CardDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsViewController.swift; sourceTree = "<group>"; };
 		D2E54B14293D9ECB00F1E2F2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D2EEEBC22930357500AEEC55 /* ModelStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStructs.swift; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 				D25E3F94293025F1000AA438 /* LaunchScreen.storyboard */,
 				D25E3F92293025F1000AA438 /* Assets.xcassets */,
 				D25E3F97293025F1000AA438 /* Info.plist */,
-				D2B7F1F52932AC9100A15ABC /* Hitoribocchi.xcdatamodeld */,
+				D2973B05293DC96B00B765CB /* Hitoribocchi.xcdatamodeld */,
 			);
 			path = Hitoribocchi;
 			sourceTree = "<group>";
@@ -173,13 +173,13 @@
 				D25E3F8A293025F0000AA438 /* AppDelegate.swift in Sources */,
 				D25E3F8C293025F0000AA438 /* SceneDelegate.swift in Sources */,
 				D2130D622933039100BBF4F4 /* AddMultipleChoiceCardViewController.swift in Sources */,
+				D2973B07293DC96B00B765CB /* Hitoribocchi.xcdatamodeld in Sources */,
 				D2B7F1F22932AC8300A15ABC /* CardsViewController.swift in Sources */,
 				D22EC9D8293C0C5500E05AC7 /* CardSearchViewController.swift in Sources */,
 				D2E54B15293D9ECB00F1E2F2 /* Constants.swift in Sources */,
 				D2EEEBC32930357500AEEC55 /* ModelStructs.swift in Sources */,
 				D2EEEBC529303E7D00AEEC55 /* CoreDataStore.swift in Sources */,
 				D2130D602932BB7600BBF4F4 /* AddTrueFalseCardViewController.swift in Sources */,
-				D2B7F1F72932AC9100A15ABC /* Hitoribocchi.xcdatamodeld in Sources */,
 				D2B7F1F42932AC8900A15ABC /* DeckViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -402,12 +402,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		D2B7F1F52932AC9100A15ABC /* Hitoribocchi.xcdatamodeld */ = {
+		D2973B05293DC96B00B765CB /* Hitoribocchi.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				D2B7F1F62932AC9100A15ABC /* Hitoribocchi.xcdatamodel */,
+				D2973B06293DC96B00B765CB /* Hitoribocchi.xcdatamodel */,
 			);
-			currentVersion = D2B7F1F62932AC9100A15ABC /* Hitoribocchi.xcdatamodel */;
+			currentVersion = D2973B06293DC96B00B765CB /* Hitoribocchi.xcdatamodel */;
 			path = Hitoribocchi.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

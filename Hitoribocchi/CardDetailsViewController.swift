@@ -1,12 +1,15 @@
 import UIKit
 
 class CardDetailsViewController: UIViewController {
+    /// Used to format the dates into a human-readable format.
+    let dateFormatter = DateFormatter()
+    /// Used to format double values such that they only have 2 digits after the dot.
+    let numberFormatter = NumberFormatter()
     let store = CoreDataStore()
     var currentCard: Card? // retrieved from the sender
     
     @IBOutlet weak var deckLabel: UILabel!
     @IBOutlet weak var cardTypeLabel: UILabel!
-    @IBOutlet weak var cardIdLabel: UILabel!
     @IBOutlet weak var promptLabel: UILabel!
     @IBOutlet weak var optionsSolutionLabel: UILabel!
     @IBOutlet weak var createdOnLabel: UILabel!
@@ -43,7 +46,7 @@ class CardDetailsViewController: UIViewController {
         else { return }
         
         do { // get the name of the card's deck
-            deckLabel.text = try "Deck: \(store.getACardsDeckTitle(fromCard: currentCard))"
+            deckLabel.text = try "Card Deck: \(store.getACardsDeckTitle(fromCard: currentCard))"
         } catch {
             self.showErrorAlert("Error", "Sorry, there was an error getting the deck's title.")
             return
@@ -51,16 +54,15 @@ class CardDetailsViewController: UIViewController {
         
         /* Display the type of the current card, e.g. true/false. */
         if currentCard is BasicCard { // basic card type
-            cardTypeLabel.text = "Type: Basic"
+            cardTypeLabel.text = "Card Type: Basic"
         } else if let multipleChoiceCard = currentCard as? MultipleChoiceCard { // can be true/false or multiple choice
             if multipleChoiceCard.options == Constants.TRUE_FALSE_OPTIONS { // true/false card type
-                cardTypeLabel.text = "Type: True/False"
+                cardTypeLabel.text = "Card Type: True/False"
             } else { // multiple choice card type
-                cardTypeLabel.text = "Type: Multiple Choice"
+                cardTypeLabel.text = "Card Type: Multiple Choice"
             }
         }
         
-        cardIdLabel.text = "Card ID:\n\(currentCard.id)"
         promptLabel.text = "Prompt:\n\(currentCard.prompt)"
         
         /* Display the current card's solution and multiple choice options, if there are any */
@@ -80,8 +82,6 @@ class CardDetailsViewController: UIViewController {
             }
         }
         
-        /// Formats the dates in a human-readable format.
-        let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd, HH:mm:ss" // e.g. 2022-09-18, 18:32:10
         
         createdOnLabel.text = "Creation Date:\n\(dateFormatter.string(from: currentCard.creationDate))"
@@ -93,6 +93,11 @@ class CardDetailsViewController: UIViewController {
             dueOnLabel.text = "Due Date:\n\(dateFormatter.string(from: currentCard.dueDate))"
         }
         
-        dueDateMultiplierLabel.text = "Due Date Multiplier:\nx\(currentCard.nextDueDateMultiplier)"
+        numberFormatter.maximumFractionDigits = 2
+                
+        dueDateMultiplierLabel.text = """
+        Next Due Date Multiplier:
+        x\(numberFormatter.string(for: currentCard.nextDueDateMultiplier) ?? "")
+        """
     }
 }

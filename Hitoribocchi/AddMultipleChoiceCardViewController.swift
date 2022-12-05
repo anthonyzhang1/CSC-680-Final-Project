@@ -27,7 +27,7 @@ class AddMultipleChoiceViewController: UIViewController {
             return
         }
         
-        let card = MultipleChoiceCard(id: UUID().uuidString, prompt: prompt, solution: solution, creationDate: .now, dueDate: .now, nextDueDateMultiplier: 0.01, options: options)
+        let card = MultipleChoiceCard(id: UUID().uuidString, prompt: prompt, solution: solution, creationDate: .now, dueDate: .now, nextDueDateMultiplier: Constants.NEW_CARD_DUE_DATE_MULTIPLIER, options: options)
         self.addMultipleChoiceCardToDeck(card, deck)
     }
     

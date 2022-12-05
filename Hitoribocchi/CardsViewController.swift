@@ -97,38 +97,69 @@ class CardsViewController: UIViewController {
     }
     
     @IBAction func basicCardButtonClicked(_ sender: UIButton) {
-
         /// The current card being displayed to the user.
         var currentCard = dueCards[currentCardIndex]
-        /// The new due date of the card.
-        var newDueDate: Date?
-        
-        newDueDate = calendar.date(byAdding: .minute, value: 1, to: .now)
-        //getTimeUntilCardDueAsString
         
         switch (sender.tag) {
-        case 0:
-            print("retry")
+        case Constants.RETRY_BUTTON_TAG: // retry button clicked
+            guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.RETRY_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
+            else { return }
             
-            currentCard.dueDate = .now
+            // TODO
+            print("retry mins until next:", Int(currentCard.nextDueDateMultiplier * Constants.RETRY_BASE_MINUTES_UNTIL_DUE_DATE))
+            print("retry new due date:", newDueDate)
             
+            currentCard.dueDate = newDueDate
+            currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.RETRY_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: 0)
+            
+            updateCardAndAdvance(currentCard)
             break
-        case 1:
-            print("hard")
+            
+        case Constants.HARD_BUTTON_TAG: // hard button clicked
+            guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.HARD_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
+            else { return }
+            
+            // TODO
+            print("hard mins until next:", Int(currentCard.nextDueDateMultiplier * Constants.HARD_BASE_MINUTES_UNTIL_DUE_DATE))
+            print("hard new due date:", newDueDate)
+            
+            currentCard.dueDate = newDueDate
+            currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.HARD_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: 0)
+            
+            updateCardAndAdvance(currentCard)
             break
-        case 2:
-            print("okay")
+            
+        case Constants.OKAY_BUTTON_TAG: // okay button clicked
+            guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.OKAY_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
+            else { return }
+            
+            // TODO
+            print("okay mins until next:", Int(currentCard.nextDueDateMultiplier * Constants.OKAY_BASE_MINUTES_UNTIL_DUE_DATE))
+            print("okay new due date:", newDueDate)
+            
+            currentCard.dueDate = newDueDate
+            currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.OKAY_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: Constants.OKAY_DUE_DATE_MULTIPLIER_INCREMENT)
+            
+            updateCardAndAdvance(currentCard)
             break
-        case 3:
-            print("easy")
+            
+        case Constants.EASY_BUTTON_TAG:
+            guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.EASY_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
+            else { return }
+            
+            // TODO
+            print("easy mins until next:", Int(currentCard.nextDueDateMultiplier * Constants.EASY_BASE_MINUTES_UNTIL_DUE_DATE))
+            print("easy new due date:", newDueDate)
+            
+            currentCard.dueDate = newDueDate
+            currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.EASY_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: Constants.EASY_DUE_DATE_MULTIPLIER_INCREMENT)
+            
+            updateCardAndAdvance(currentCard)
             break
+            
         default:
-            print("Error")
+            showErrorAlert("Error", "Sorry, there was an error updating your card.")
         }
-    }
-    
-    func calculateNextDueDate(card: Card) {
-        
     }
 
     @IBAction func screenTapped(_ sender: UITapGestureRecognizer) {
@@ -142,13 +173,19 @@ class CardsViewController: UIViewController {
         if currentCard is BasicCard {  // Handle the on click display for a basic card
             seperatorBar.isHidden = false
             solutionOptionsLabel.isHidden = false
-            basicCardView.isHidden = false
             solutionOptionsLabel.text = currentCard.solution
+            basicCardView.isHidden = false
             
-            print(currentCard.nextDueDateMultiplier * Constants.RETRY_BASE_MINUTES_UNTIL_DUE_DATE)
-            retryButton.setTitle("Retry\n22d", for: .normal)
+            /* Sets the buttons' text so that it shows how long until the current card will be due if that button was pressed. */
+            retryButton.setTitle("Retry\n\(getTimeUntilCardDueAsString(Int(currentCard.nextDueDateMultiplier * Constants.RETRY_BASE_MINUTES_UNTIL_DUE_DATE)))", for: .normal)
+            
+            hardButton.setTitle("Hard\n\(getTimeUntilCardDueAsString(Int(currentCard.nextDueDateMultiplier * Constants.HARD_BASE_MINUTES_UNTIL_DUE_DATE)))", for: .normal)
+            
+            okayButton.setTitle("Okay\n\(getTimeUntilCardDueAsString(Int(currentCard.nextDueDateMultiplier * Constants.OKAY_BASE_MINUTES_UNTIL_DUE_DATE)))", for: .normal)
+            
+            easyButton.setTitle("Easy\n\(getTimeUntilCardDueAsString(Int(currentCard.nextDueDateMultiplier * Constants.EASY_BASE_MINUTES_UNTIL_DUE_DATE)))", for: .normal)
         } else if let currentCard = currentCard as? MultipleChoiceCard {
-            
+            print(currentCard) // TODO
         }
     }
     
@@ -173,20 +210,46 @@ class CardsViewController: UIViewController {
         }
     }
     
-    /// Gets a string representing how long it will take for a card to be due again, e.g. 20 min, 18 hr, or 3 d
-    func getTimeUntilCardDueAsString(_ minutesUntilDue: Double) -> String {
-        if minutesUntilDue < 1 { // < 1 mins until due
-            return "< 1 min"
+    /// Gets a string representing how long it will take for a card to be due again, e.g. 20 m, 18 h, or 3 d
+    func getTimeUntilCardDueAsString(_ minutesUntilDue: Int) -> String {
+        if minutesUntilDue < 1 { // < 1 min until due
+            return "< 1 m"
         } else if minutesUntilDue < Constants.MINUTES_IN_ONE_HOUR { // 1-59 mins until due
-            return "\(minutesUntilDue) min"
+            return "\(minutesUntilDue) m"
         } else if minutesUntilDue < Constants.MINUTES_IN_ONE_DAY { // 1-23 hours until due
-            return "\(Int(floor(minutesUntilDue / Constants.MINUTES_IN_ONE_HOUR))) hr"
+            return "\(minutesUntilDue / Constants.MINUTES_IN_ONE_HOUR) h"
         } else if minutesUntilDue < Constants.MINUTES_IN_ONE_MONTH { // 1-29 days until due
-            return "\(Int(floor(minutesUntilDue / Constants.MINUTES_IN_ONE_DAY))) d"
+            return "\(minutesUntilDue / Constants.MINUTES_IN_ONE_DAY) d"
         } else if minutesUntilDue < Constants.MINUTES_IN_ONE_YEAR { // 1-11 months until due
-            return "\(Int(floor(minutesUntilDue / Constants.MINUTES_IN_ONE_MONTH))) mo"
+            return "\(minutesUntilDue / Constants.MINUTES_IN_ONE_MONTH) mo"
         } else { // 1+ years until due
-            return "\(Int(floor(minutesUntilDue / Constants.MINUTES_IN_ONE_YEAR))) yr"
+            return "\(minutesUntilDue / Constants.MINUTES_IN_ONE_YEAR) y"
+        }
+    }
+    
+    /// Gets the new due date multiplier for a card. The returned double will always be positive.
+    func getNewDueDateMultiplier(oldMultiplier: Double, multiplierFactor: Double, multiplierIncrement: Double) -> Double {
+        let newMultiplier = (oldMultiplier * multiplierFactor) + multiplierIncrement
+        return newMultiplier >= 0.01 ? newMultiplier : 0.01
+    }
+    
+    func updateCardAndAdvance(_ card: Card) {
+        do { // update the card's due date in the store and proceed to the next card
+            try store.updateCardDueDate(card)
+            currentCardIndex += 1
+            
+            if currentCardIndex >= dueCards.count {
+                print("End of deck. Deck refreshed.") // TODO
+                // refresh the deck after reaching the end of the due cards
+                getDueCardsFromDeck()
+                currentCardIndex = 0
+            }
+            
+            displayCurrentCard()
+            return
+
+        } catch {
+            showErrorAlert("Error", "Sorry, there was an error updating your card.")
         }
     }
     
@@ -217,15 +280,16 @@ class CardsViewController: UIViewController {
         if solutionOptionsLabel.isHidden { seperatorBar.isHidden = true }
         basicCardView.isHidden = true
 
-        // Ensure there are due cards in the array
-        guard currentCardIndex < dueCards.count
-        else {
+        // Ensure that the card index will not be out of bounds
+        if (currentCardIndex >= dueCards.count) {
             promptLabel.text = """
             No cards are due yet.
 
             You can add more cards to this deck by pressing the + button above!
             """
             
+            solutionOptionsLabel.isHidden = true
+            seperatorBar.isHidden = true
             return
         }
         
@@ -234,6 +298,8 @@ class CardsViewController: UIViewController {
         
         if currentCard is BasicCard { // Handle the display for a basic card
             promptLabel.text = currentCard.prompt
+            solutionOptionsLabel.isHidden = true
+            seperatorBar.isHidden = true
         } else if currentCard is MultipleChoiceCard { // handle multiple choice card display
             promptLabel.text = currentCard.prompt
         }

@@ -14,7 +14,7 @@ class AddBasicCardViewController: UIViewController {
               let deck = deck
         else { return }
         
-        let card = BasicCard(id: UUID().uuidString, prompt: prompt, solution: solution, creationDate: .now, dueDate: .now, nextDueDateMultiplier: 0.01)
+        let card = BasicCard(id: UUID().uuidString, prompt: prompt, solution: solution, creationDate: .now, dueDate: .now, nextDueDateMultiplier: Constants.NEW_CARD_DUE_DATE_MULTIPLIER)
         
         do { // Try to add the card to the deck into the Core Data store. Clear the input fields on success.
             try store.insertBasicCard(card, deck)
