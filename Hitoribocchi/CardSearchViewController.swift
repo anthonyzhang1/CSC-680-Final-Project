@@ -12,11 +12,9 @@ class CardSearchViewController: UIViewController {
     
     // send the clicked on Card to the new view
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "viewCardDetailsSegue" {
-            if let cardDetailsViewController = segue.destination as? CardDetailsViewController,
-               let cardIndex = cardTableView.indexPathForSelectedRow?.row
-            { cardDetailsViewController.currentCard = cards[cardIndex] }
-        }
+        if let cardDetailsViewController = segue.destination as? CardDetailsViewController,
+           let cardIndex = cardTableView.indexPathForSelectedRow?.row
+        { cardDetailsViewController.currentCard = cards[cardIndex] }
     }
     
     override func viewDidLoad() {
@@ -64,7 +62,7 @@ extension CardSearchViewController: UITableViewDelegate, UITableViewDataSource {
     
     /// Called when selecting a table cell. Takes the user to the card View Controller.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "viewCardDetailsSegue", sender: indexPath)
+        performSegue(withIdentifier: "searchToCardDetailsSegue", sender: indexPath)
         
         // deselect the row after we transition to the new screen
         cardTableView.deselectRow(at: indexPath, animated: true)

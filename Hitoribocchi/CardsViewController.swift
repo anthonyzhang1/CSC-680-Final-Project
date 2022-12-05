@@ -65,6 +65,22 @@ class CardsViewController: UIViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    @IBAction func viewDetailsButtonClicked(_ sender: UIBarButtonItem) {
+        // handle the case where there is no card being shown, therefore there is no card to view
+        if currentCardIndex >= dueCards.count {
+            let alert = UIAlertController(title: "There is no card to view the details of.", message: "You need to be viewing a card in order to view its details.", preferredStyle: .alert)
+            
+            // Add the OK button to the alert box
+            alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+
+            // Show the alert, and return so that we do not execute the rest of the function
+            present(alert, animated: true, completion: nil)
+            return
+        }
+
+        performSegue(withIdentifier: "cardsToCardDetailsSegue", sender: sender)
+    }
+    
     @IBAction func screenTapped(_ sender: UITapGestureRecognizer) {
         // make sure that we do not get an out of bounds error
         guard currentCardIndex < dueCards.count
@@ -81,6 +97,7 @@ class CardsViewController: UIViewController {
     }
     
     /// Sends the deck to one of the Add Card windows, depending on which option the user pressed.
+    /// Or, segue to the view card details page if the View Details button was pressed.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addBasicCardSegue" { // add basic cards
             if let addCardViewController = segue.destination as? AddBasicCardViewController,
@@ -94,6 +111,9 @@ class CardsViewController: UIViewController {
             if let addCardViewController = segue.destination as? AddMultipleChoiceViewController,
                let deck = deck
             { addCardViewController.deck = deck }
+        } else if segue.identifier == "cardsToCardDetailsSegue" {
+            if let cardDetailsViewController = segue.destination as? CardDetailsViewController
+            { cardDetailsViewController.currentCard = dueCards[currentCardIndex] }
         }
     }
     
@@ -126,6 +146,7 @@ class CardsViewController: UIViewController {
         // need to get due cards in case user made a new card and went back to the card view
         getDueCardsFromDeck()
         cardPrompt.isHidden = false
+        solutionLabel.isHidden = true
         displayCurrentCard()
     }
     

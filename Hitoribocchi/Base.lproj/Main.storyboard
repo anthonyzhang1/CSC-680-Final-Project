@@ -113,18 +113,27 @@
                         </connections>
                     </view>
                     <navigationItem key="navigationItem" title="Cards" id="9Oj-QJ-RH5">
-                        <rightBarButtonItems>
-                            <barButtonItem systemItem="trash" id="5Ur-U2-ahQ">
-                                <connections>
-                                    <action selector="deleteButtonClicked:" destination="BIL-GW-zmy" id="nXZ-yQ-BwC"/>
-                                </connections>
-                            </barButtonItem>
-                            <barButtonItem systemItem="add" id="9Ln-4W-nW4">
-                                <connections>
-                                    <action selector="addButtonClicked:" destination="BIL-GW-zmy" id="D8H-QK-jKi"/>
-                                </connections>
-                            </barButtonItem>
-                        </rightBarButtonItems>
+                        <centerItemGroups>
+                            <barButtonItemGroup customizationDisposition="fixed" id="sok-0Q-CTF">
+                                <barButtonItems>
+                                    <barButtonItem title="Card Details" image="list.bullet" catalog="system" id="aKF-ia-b3R" userLabel="View Details">
+                                        <connections>
+                                            <action selector="viewDetailsButtonClicked:" destination="BIL-GW-zmy" id="OZw-z0-sZv"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem title="Delete Card" image="trash" catalog="system" id="5Ur-U2-ahQ">
+                                        <connections>
+                                            <action selector="deleteButtonClicked:" destination="BIL-GW-zmy" id="nXZ-yQ-BwC"/>
+                                        </connections>
+                                    </barButtonItem>
+                                </barButtonItems>
+                            </barButtonItemGroup>
+                        </centerItemGroups>
+                        <barButtonItem key="rightBarButtonItem" title="Add Card" image="plus" catalog="system" id="9Ln-4W-nW4">
+                            <connections>
+                                <action selector="addButtonClicked:" destination="BIL-GW-zmy" id="D8H-QK-jKi"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="cardPrompt" destination="POj-Qg-NxV" id="xCd-ie-7P4"/>
@@ -133,6 +142,7 @@
                         <segue destination="zgG-iL-Gwo" kind="show" identifier="addBasicCardSegue" id="9el-zZ-V5V"/>
                         <segue destination="19Y-cv-tR2" kind="show" identifier="addTrueFalseCardSegue" id="8T8-ag-L7h"/>
                         <segue destination="0Sc-ll-oDJ" kind="show" identifier="addMultipleChoiceCardSegue" id="aJz-LV-R43"/>
+                        <segue destination="3Kd-jb-QLw" kind="show" identifier="cardsToCardDetailsSegue" id="Fpb-ba-mE2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Anb-em-lZq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -450,7 +460,7 @@
                     <connections>
                         <outlet property="cardTableView" destination="Dtd-fa-Kts" id="s1c-QG-fkN"/>
                         <outlet property="searchBar" destination="NKZ-rZ-Jx6" id="Ms2-rk-ssr"/>
-                        <segue destination="3Kd-jb-QLw" kind="show" identifier="viewCardDetailsSegue" id="seb-3J-Gkw"/>
+                        <segue destination="3Kd-jb-QLw" kind="show" identifier="searchToCardDetailsSegue" id="seb-3J-Gkw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtO-x3-xUi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -566,7 +576,13 @@
             <point key="canvasLocation" x="713.84615384615381" y="-923.45971563981038"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="Fpb-ba-mE2"/>
+    </inferredMetricsTieBreakers>
     <resources>
+        <image name="list.bullet" catalog="system" width="128" height="87"/>
+        <image name="plus" catalog="system" width="128" height="113"/>
+        <image name="trash" catalog="system" width="117" height="128"/>
         <systemColor name="labelColor">
             <color red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>

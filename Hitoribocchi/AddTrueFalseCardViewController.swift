@@ -16,13 +16,9 @@ class AddTrueFalseCardViewController: UIViewController {
         /// Gets the string in the segmented control's selection
         let solutionString = trueFalseSegmentedControl.selectedSegmentIndex == 1 ? Constants.TRUE_STRING : Constants.FALSE_STRING
         
-        let card = MultipleChoiceCard(id: UUID().uuidString, prompt: prompt, solution: solutionString, creationDate: .now, dueDate: .now, nextDueDateMultiplier: 0.01, options: "\(Constants.TRUE_STRING) | \(Constants.FALSE_STRING)")
-        self.addMultipleChoiceCardToDeck(card, deck)
-    }
-    
-    /// Try to add the card to the deck into the Core Data store. Clear the input fields on success.
-    func addMultipleChoiceCardToDeck(_ card: MultipleChoiceCard, _ deck: Deck) {
-        do {
+        let card = MultipleChoiceCard(id: UUID().uuidString, prompt: prompt, solution: solutionString, creationDate: .now, dueDate: .now, nextDueDateMultiplier: 0.01, options: Constants.TRUE_FALSE_OPTIONS)
+        
+        do { // Try to add the card to the deck into the Core Data store. Clear the input fields on success.
             try store.insertMultipleChoiceCard(card, deck)
             promptInput.text = ""
         } catch {
