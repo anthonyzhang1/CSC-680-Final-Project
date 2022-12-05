@@ -20,6 +20,7 @@
 		D2B7F1F42932AC8900A15ABC /* DeckViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2B7F1F32932AC8900A15ABC /* DeckViewController.swift */; };
 		D2B7F1F72932AC9100A15ABC /* Hitoribocchi.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = D2B7F1F52932AC9100A15ABC /* Hitoribocchi.xcdatamodeld */; };
 		D2E54B13293D18E300F1E2F2 /* CardDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E54B12293D18E300F1E2F2 /* CardDetailsViewController.swift */; };
+		D2E54B15293D9ECB00F1E2F2 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2E54B14293D9ECB00F1E2F2 /* Constants.swift */; };
 		D2EEEBC32930357500AEEC55 /* ModelStructs.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EEEBC22930357500AEEC55 /* ModelStructs.swift */; };
 		D2EEEBC529303E7D00AEEC55 /* CoreDataStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = D2EEEBC429303E7D00AEEC55 /* CoreDataStore.swift */; };
 /* End PBXBuildFile section */
@@ -40,6 +41,7 @@
 		D2B7F1F32932AC8900A15ABC /* DeckViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeckViewController.swift; sourceTree = "<group>"; };
 		D2B7F1F62932AC9100A15ABC /* Hitoribocchi.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Hitoribocchi.xcdatamodel; sourceTree = "<group>"; };
 		D2E54B12293D18E300F1E2F2 /* CardDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailsViewController.swift; sourceTree = "<group>"; };
+		D2E54B14293D9ECB00F1E2F2 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		D2EEEBC22930357500AEEC55 /* ModelStructs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelStructs.swift; sourceTree = "<group>"; };
 		D2EEEBC429303E7D00AEEC55 /* CoreDataStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStore.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -76,6 +78,7 @@
 			children = (
 				D25E3F89293025F0000AA438 /* AppDelegate.swift */,
 				D25E3F8B293025F0000AA438 /* SceneDelegate.swift */,
+				D2E54B14293D9ECB00F1E2F2 /* Constants.swift */,
 				D2EEEBC22930357500AEEC55 /* ModelStructs.swift */,
 				D2EEEBC429303E7D00AEEC55 /* CoreDataStore.swift */,
 				D2B7F1EF2932AC7600A15ABC /* AddBasicCardViewController.swift */,
@@ -172,6 +175,7 @@
 				D2130D622933039100BBF4F4 /* AddMultipleChoiceCardViewController.swift in Sources */,
 				D2B7F1F22932AC8300A15ABC /* CardsViewController.swift in Sources */,
 				D22EC9D8293C0C5500E05AC7 /* CardSearchViewController.swift in Sources */,
+				D2E54B15293D9ECB00F1E2F2 /* Constants.swift in Sources */,
 				D2EEEBC32930357500AEEC55 /* ModelStructs.swift in Sources */,
 				D2EEEBC529303E7D00AEEC55 /* CoreDataStore.swift in Sources */,
 				D2130D602932BB7600BBF4F4 /* AddTrueFalseCardViewController.swift in Sources */,

@@ -1,15 +1,5 @@
 import UIKit
 
-/// Holds constants that are used in various controllers.
-struct Constants {
-    /// Used to represent the correct solution for a true/false question card.
-    static let TRUE_STRING = "True"
-    /// Used to represent the correct solution for a true/false question card.
-    static let FALSE_STRING = "False"
-    /// The options value for true/false cards, i.e. "True | False".
-    static let TRUE_FALSE_OPTIONS = "\(TRUE_STRING) | \(FALSE_STRING)"
-}
-
 class DeckViewController: UIViewController {
     let store = CoreDataStore()
     

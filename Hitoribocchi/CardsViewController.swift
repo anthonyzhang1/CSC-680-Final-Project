@@ -7,9 +7,12 @@ class CardsViewController: UIViewController {
     /// The index of the currently shown card.
     var currentCardIndex = 0
     
-    @IBOutlet weak var cardPrompt: UILabel!
-    @IBOutlet weak var promptSolutionSeparatorBar: UIView!
-    @IBOutlet weak var solutionLabel: UILabel!
+    @IBOutlet weak var promptLabel: UILabel!
+    @IBOutlet weak var seperatorBar: UIView!
+    @IBOutlet weak var solutionOptionsLabel: UILabel!
+    
+    /// Used to hide/show the basic card response buttons.
+    @IBOutlet weak var basicCardView: UIView!
     
     /// Show an action sheet prompting the user what type of flashcard to add when they click the Add button.
     @IBAction func addButtonClicked(_ sender: UIBarButtonItem) {
@@ -56,9 +59,15 @@ class CardsViewController: UIViewController {
         // Add the cancel button to the alert box
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
-        // Add the delete button to the alert box. When it is clicked, delete the currently shown card.
+        // Add the delete button to the alert box. When it is clicked, try to delete the currently shown card. The deck is refreshed to update the deck's cards.
         alert.addAction(UIAlertAction(title: "Delete", style: .destructive) { _ in
-            self.deleteCurrentlyShownCard(self.dueCards[self.currentCardIndex])
+            do {
+                try self.store.deleteCard(self.dueCards[self.currentCardIndex])
+                self.getDueCardsFromDeck()
+                self.displayCurrentCard()
+            } catch {
+                self.showErrorAlert("Error", "Sorry, there was an error deleting the card.")
+            }
         })
         
         // show the alert
@@ -81,6 +90,29 @@ class CardsViewController: UIViewController {
         performSegue(withIdentifier: "cardsToCardDetailsSegue", sender: sender)
     }
     
+    @IBAction func basicCardButtonClicked(_ sender: UIButton) {
+        /// The current card being displayed to the user.
+        let currentCard = dueCards[currentCardIndex]
+        
+        switch (sender.tag) {
+        case 0:
+            print("retry")
+            break
+        case 1:
+            print("hard")
+            break
+        case 2:
+            print("okay")
+            break
+        case 3:
+            print("easy")
+            break
+        default:
+            print("Error")
+        }
+    }
+
+    
     @IBAction func screenTapped(_ sender: UITapGestureRecognizer) {
         // make sure that we do not get an out of bounds error
         guard currentCardIndex < dueCards.count
@@ -90,9 +122,12 @@ class CardsViewController: UIViewController {
         let currentCard = dueCards[currentCardIndex]
         
         if currentCard is BasicCard {  // Handle the on click display for a basic card
-            promptSolutionSeparatorBar.isHidden = false
-            solutionLabel.isHidden = false
-            solutionLabel.text = currentCard.solution
+            seperatorBar.isHidden = false
+            solutionOptionsLabel.isHidden = false
+            basicCardView.isHidden = false
+            solutionOptionsLabel.text = currentCard.solution
+        } else if let currentCard = currentCard as? MultipleChoiceCard {
+            
         }
     }
     
@@ -111,7 +146,7 @@ class CardsViewController: UIViewController {
             if let addCardViewController = segue.destination as? AddMultipleChoiceViewController,
                let deck = deck
             { addCardViewController.deck = deck }
-        } else if segue.identifier == "cardsToCardDetailsSegue" {
+        } else if segue.identifier == "cardsToCardDetailsSegue" { // view details segue
             if let cardDetailsViewController = segue.destination as? CardDetailsViewController
             { cardDetailsViewController.currentCard = dueCards[currentCardIndex] }
         }
@@ -130,37 +165,29 @@ class CardsViewController: UIViewController {
         }
     }
     
-    /// Try to delete the currently shown card.
-    func deleteCurrentlyShownCard(_ card: Card) {
-        do {
-            try store.deleteCard(card)
-            getDueCardsFromDeck()
-            displayCurrentCard()
-        } catch {
-            showErrorAlert("Error", "Sorry, there was an error deleting the card.")
-        }
-    }
-    
     override func viewDidAppear(_ animated: Bool) {
         // get the due cards to display on the screen after shuffling them
         // need to get due cards in case user made a new card and went back to the card view
         getDueCardsFromDeck()
-        cardPrompt.isHidden = false
-        solutionLabel.isHidden = true
+        promptLabel.isHidden = false
+        solutionOptionsLabel.isHidden = true
         displayCurrentCard()
     }
     
     func displayCurrentCard() {
-        if solutionLabel.isHidden { promptSolutionSeparatorBar.isHidden = true }
+        // Do not show the separator bar if the solution is not shown
+        if solutionOptionsLabel.isHidden { seperatorBar.isHidden = true }
+        basicCardView.isHidden = true
 
-        // Check if there are any due cards in the array
+        // Ensure there are due cards in the array
         guard currentCardIndex < dueCards.count
         else {
-            cardPrompt.text = """
+            promptLabel.text = """
             No cards are due yet.
 
             You can add more cards to this deck by pressing the + button above!
             """
+            
             return
         }
         
@@ -168,9 +195,9 @@ class CardsViewController: UIViewController {
         let currentCard = dueCards[currentCardIndex]
         
         if currentCard is BasicCard { // Handle the display for a basic card
-            cardPrompt.text = currentCard.prompt
+            promptLabel.text = currentCard.prompt
         } else if currentCard is MultipleChoiceCard { // handle multiple choice card display
-            cardPrompt.text = currentCard.prompt
+            promptLabel.text = currentCard.prompt
         }
     }
 }

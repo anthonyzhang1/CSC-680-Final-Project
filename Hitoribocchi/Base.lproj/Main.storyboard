@@ -85,23 +85,104 @@
                                     <constraint firstAttribute="height" constant="1" id="WUS-zl-egP"/>
                                 </constraints>
                             </view>
-                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Solution" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lra-sq-n0g" userLabel="BasicCard Solution">
+                            <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Solution / Options" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lra-sq-n0g" userLabel="BasicCard Solution">
                                 <rect key="frame" x="32" y="176.33333333333334" width="326" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rk5-F5-YDZ" userLabel="Basic Card View">
+                                <rect key="frame" x="0.0" y="660" width="390" height="150"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="f5h-MG-MD8">
+                                        <rect key="frame" x="6" y="12" width="90" height="126"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="cFd-wY-cdZ"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.74701446786369252" green="0.24354796338335646" blue="0.18857787467566034" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Retry">
+                                            <color key="baseBackgroundColor" red="0.74701446790000003" green="0.24354796340000001" blue="0.18857787470000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="basicCardButtonClicked:" destination="BIL-GW-zmy" eventType="touchUpInside" id="f4U-wu-lX8"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hdR-9b-WDL" userLabel="Hard">
+                                        <rect key="frame" x="102" y="12" width="90" height="126"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Phu-xE-XdR"/>
+                                        </constraints>
+                                        <color key="tintColor" red="0.82955460695876293" green="0.59736399920927041" blue="0.37526627409724927" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Hard">
+                                            <color key="baseBackgroundColor" red="0.82955460700000005" green="0.59736399920000005" blue="0.37526627410000002" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="basicCardButtonClicked:" destination="BIL-GW-zmy" eventType="touchUpInside" id="TfK-T2-dOI"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QQq-TP-vWw">
+                                        <rect key="frame" x="198" y="12" width="90" height="126"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="Sn8-VY-NcZ"/>
+                                        </constraints>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Okay">
+                                            <color key="baseBackgroundColor" red="0.20895016559999999" green="0.76942896839999997" blue="0.15946532120000001" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                        </buttonConfiguration>
+                                        <connections>
+                                            <action selector="basicCardButtonClicked:" destination="BIL-GW-zmy" eventType="touchUpInside" id="Trt-TN-R9N"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" tag="3" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Stl-D6-XpK">
+                                        <rect key="frame" x="294" y="12" width="90" height="126"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="90" id="kI7-To-DPP"/>
+                                        </constraints>
+                                        <color key="tintColor" systemColor="tintColor"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="filled" title="Easy"/>
+                                        <connections>
+                                            <action selector="basicCardButtonClicked:" destination="BIL-GW-zmy" eventType="touchUpInside" id="DO3-hv-zJq"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" red="0.86826927433576662" green="0.87227758397347444" blue="0.88430251288659789" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                                <constraints>
+                                    <constraint firstAttribute="bottom" secondItem="f5h-MG-MD8" secondAttribute="bottom" constant="12" id="3Fa-gg-NmG"/>
+                                    <constraint firstItem="hdR-9b-WDL" firstAttribute="leading" secondItem="f5h-MG-MD8" secondAttribute="trailing" constant="6" id="4pr-SA-SaY"/>
+                                    <constraint firstItem="hdR-9b-WDL" firstAttribute="leading" secondItem="f5h-MG-MD8" secondAttribute="trailing" constant="6" id="71E-1z-ziw"/>
+                                    <constraint firstItem="hdR-9b-WDL" firstAttribute="top" secondItem="Rk5-F5-YDZ" secondAttribute="top" constant="12" id="8EZ-ff-V7x"/>
+                                    <constraint firstItem="f5h-MG-MD8" firstAttribute="top" secondItem="Rk5-F5-YDZ" secondAttribute="top" constant="12" id="Cav-5F-OXt"/>
+                                    <constraint firstItem="QQq-TP-vWw" firstAttribute="leading" secondItem="hdR-9b-WDL" secondAttribute="trailing" constant="6" id="Clh-bF-aE5"/>
+                                    <constraint firstAttribute="bottom" secondItem="QQq-TP-vWw" secondAttribute="bottom" constant="12" id="I0W-C8-skC"/>
+                                    <constraint firstItem="f5h-MG-MD8" firstAttribute="leading" secondItem="Rk5-F5-YDZ" secondAttribute="leading" constant="6" id="KcM-Lt-JBl"/>
+                                    <constraint firstAttribute="height" constant="150" id="O43-0q-99o"/>
+                                    <constraint firstItem="Stl-D6-XpK" firstAttribute="leading" secondItem="QQq-TP-vWw" secondAttribute="trailing" constant="6" id="bcs-W9-5XF"/>
+                                    <constraint firstItem="Stl-D6-XpK" firstAttribute="top" secondItem="Rk5-F5-YDZ" secondAttribute="top" constant="12" id="d2c-4W-w3w"/>
+                                    <constraint firstItem="QQq-TP-vWw" firstAttribute="top" secondItem="Rk5-F5-YDZ" secondAttribute="top" constant="12" id="dfD-p4-hNj"/>
+                                    <constraint firstAttribute="bottom" secondItem="Stl-D6-XpK" secondAttribute="bottom" constant="12" id="iAI-im-dsA"/>
+                                    <constraint firstAttribute="bottom" secondItem="hdR-9b-WDL" secondAttribute="bottom" constant="12" id="kJk-0N-be2"/>
+                                    <constraint firstItem="QQq-TP-vWw" firstAttribute="leading" secondItem="hdR-9b-WDL" secondAttribute="trailing" constant="6" id="phl-oH-ZIY"/>
+                                    <constraint firstItem="Stl-D6-XpK" firstAttribute="leading" secondItem="QQq-TP-vWw" secondAttribute="trailing" constant="6" id="shR-Ll-khx"/>
+                                    <constraint firstAttribute="trailing" secondItem="Stl-D6-XpK" secondAttribute="trailing" constant="6" id="uHN-iK-9KR"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="e9S-9S-Tsh"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <gestureRecognizers/>
                         <constraints>
+                            <constraint firstItem="Rk5-F5-YDZ" firstAttribute="trailing" secondItem="e9S-9S-Tsh" secondAttribute="trailing" id="4BI-Yb-w2I"/>
                             <constraint firstItem="e9S-9S-Tsh" firstAttribute="trailing" secondItem="POj-Qg-NxV" secondAttribute="trailing" constant="32" id="DdS-NV-MFD"/>
                             <constraint firstItem="BJC-MD-9de" firstAttribute="top" secondItem="POj-Qg-NxV" secondAttribute="bottom" constant="16" id="OKk-PD-aTw"/>
                             <constraint firstItem="POj-Qg-NxV" firstAttribute="top" secondItem="e9S-9S-Tsh" secondAttribute="top" constant="32" id="OX0-oi-HuI"/>
                             <constraint firstItem="Lra-sq-n0g" firstAttribute="top" secondItem="BJC-MD-9de" secondAttribute="bottom" constant="16" id="QjT-Yp-klM"/>
                             <constraint firstItem="POj-Qg-NxV" firstAttribute="leading" secondItem="e9S-9S-Tsh" secondAttribute="leading" constant="32" id="SSQ-qT-aSf"/>
+                            <constraint firstItem="Rk5-F5-YDZ" firstAttribute="leading" secondItem="e9S-9S-Tsh" secondAttribute="leading" id="SV0-eW-RhR"/>
                             <constraint firstItem="BJC-MD-9de" firstAttribute="leading" secondItem="vge-1C-n89" secondAttribute="leadingMargin" constant="16" id="UTr-V8-s7Z"/>
+                            <constraint firstItem="e9S-9S-Tsh" firstAttribute="bottom" secondItem="Rk5-F5-YDZ" secondAttribute="bottom" id="VFd-QD-NEa"/>
                             <constraint firstAttribute="trailingMargin" secondItem="BJC-MD-9de" secondAttribute="trailing" constant="16" id="XtO-TO-gOU"/>
                             <constraint firstItem="POj-Qg-NxV" firstAttribute="leading" secondItem="e9S-9S-Tsh" secondAttribute="leading" constant="32" id="hyU-94-hPF"/>
                             <constraint firstItem="e9S-9S-Tsh" firstAttribute="trailing" secondItem="Lra-sq-n0g" secondAttribute="trailing" constant="32" id="nsh-EJ-LDZ"/>
@@ -136,9 +217,10 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cardPrompt" destination="POj-Qg-NxV" id="xCd-ie-7P4"/>
-                        <outlet property="promptSolutionSeparatorBar" destination="BJC-MD-9de" id="wj4-eW-rRa"/>
-                        <outlet property="solutionLabel" destination="Lra-sq-n0g" id="Lbn-Kc-H7q"/>
+                        <outlet property="basicCardView" destination="Rk5-F5-YDZ" id="WK5-Tw-sC3"/>
+                        <outlet property="promptLabel" destination="POj-Qg-NxV" id="cfu-Do-839"/>
+                        <outlet property="seperatorBar" destination="BJC-MD-9de" id="u4R-QL-P4t"/>
+                        <outlet property="solutionOptionsLabel" destination="Lra-sq-n0g" id="O1r-I8-GOs"/>
                         <segue destination="zgG-iL-Gwo" kind="show" identifier="addBasicCardSegue" id="9el-zZ-V5V"/>
                         <segue destination="19Y-cv-tR2" kind="show" identifier="addTrueFalseCardSegue" id="8T8-ag-L7h"/>
                         <segue destination="0Sc-ll-oDJ" kind="show" identifier="addMultipleChoiceCardSegue" id="aJz-LV-R43"/>
@@ -152,7 +234,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="-143" y="-87"/>
+            <point key="canvasLocation" x="-143.07692307692307" y="-87.440758293838854"/>
         </scene>
         <!--Add Basic Card-->
         <scene sceneID="wUe-i3-Hdl">
@@ -588,6 +670,9 @@
         </systemColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="tintColor">
+            <color red="0.0" green="0.47843137254901963" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>

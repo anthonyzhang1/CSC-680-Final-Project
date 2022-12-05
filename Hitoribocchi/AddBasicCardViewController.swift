@@ -15,12 +15,8 @@ class AddBasicCardViewController: UIViewController {
         else { return }
         
         let card = BasicCard(id: UUID().uuidString, prompt: prompt, solution: solution, creationDate: .now, dueDate: .now, nextDueDateMultiplier: 0.01)
-        self.addBasicCardToDeck(card, deck)
-    }
-    
-    /// Try to add the card to the deck into the Core Data store. Clear the input fields on success.
-    func addBasicCardToDeck(_ card: BasicCard, _ deck: Deck) {
-        do {
+        
+        do { // Try to add the card to the deck into the Core Data store. Clear the input fields on success.
             try store.insertBasicCard(card, deck)
             promptInput.text = ""
             solutionInput.text = ""
@@ -32,9 +28,7 @@ class AddBasicCardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        guard let deck = deck
+        if let deck = deck { deckLabel.text = "Deck: \(deck.title)" }
         else { return }
-        
-        deckLabel.text = "Deck: \(deck.title)"
     }
 }

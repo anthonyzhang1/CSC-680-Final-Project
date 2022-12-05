@@ -30,6 +30,9 @@ protocol StoreType {
     /// Inserts a multiple choice card into a deck.
     func insertMultipleChoiceCard(_ card: MultipleChoiceCard, _ deck: Deck) throws
     
+    /// Update the card's due date and due date multiplier in the store, according to the values in the Card object.
+    func updateCardDueDate(_ card: Card) throws
+    
     /// Deletes a card from the store. The card can be of any type, e.g. Basic or MultipleChoice.
     func deleteCard(_ card: Card) throws
 }
@@ -289,6 +292,10 @@ struct CoreDataStore: StoreType {
         cardEntity.deck = deckEntity // relationship attribute
         
         try context.save()
+    }
+    
+    func updateCardDueDate(_ card: Card) throws {
+        // TODO
     }
     
     func deleteCard(_ card: Card) throws {
