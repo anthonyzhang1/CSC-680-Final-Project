@@ -9,6 +9,30 @@ struct Constants {
     /// The options value for true/false cards, i.e. "True | False".
     static let TRUE_FALSE_OPTIONS = "\(TRUE_STRING) | \(FALSE_STRING)"
     
+    /// How many seconds there are in a minute.
+    static let SECONDS_IN_ONE_MINUTE = 60.0
+    
+    /// How many hours there are in a day, roughly. Not used for precise calculations.
+    static let HOURS_IN_ONE_DAY = 24.0
+    
+    /// How many days there are in a month, roughly. Not used for precise calculations.
+    static let DAYS_IN_ONE_MONTH = 30.0
+    
+    /// How many months there are in a year.
+    static let MONTHS_IN_ONE_YEAR = 12.0
+    
+    /// How many minutes there are in an hour.
+    static let MINUTES_IN_ONE_HOUR = 60.0
+    
+    /// How many minutes there are in a day, roughly. Not used for precise calculations.
+    static let MINUTES_IN_ONE_DAY = MINUTES_IN_ONE_HOUR * HOURS_IN_ONE_DAY
+    
+    /// How many minutes there are in a month, roughly. Not used for precise calculations.
+    static let MINUTES_IN_ONE_MONTH = MINUTES_IN_ONE_DAY * DAYS_IN_ONE_MONTH
+    
+    /// How many minutes there are in a year, roughly. Not used for precise calculations.
+    static let MINUTES_IN_ONE_YEAR = MINUTES_IN_ONE_MONTH * MONTHS_IN_ONE_YEAR
+    
     /// The due date multiplier that new cards are initialized with.
     static let NEW_CARD_DUE_DATE_MULTIPLIER = 0.10
     

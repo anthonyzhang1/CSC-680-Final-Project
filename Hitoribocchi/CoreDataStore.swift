@@ -102,9 +102,10 @@ struct CoreDataStore: StoreType {
         // Find the deck in the store with the corresponding id
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
         
-        let entities = try context.fetch(fetchRequest)
-        for entity in entities { context.delete(entity) } // delete all matched entities
+        guard let entity = try context.fetch(fetchRequest).first
+        else { return }
         
+        context.delete(entity) // delete the deck entity
         try context.save()
     }
     
@@ -115,12 +116,13 @@ struct CoreDataStore: StoreType {
         // get the deck entity for the deck provided in the argument
         let fetchRequest = DeckEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
-        let deckEntity = try context.fetch(fetchRequest)[0]
+        guard let deckEntity = try context.fetch(fetchRequest).first
+        else { return [] }
         
         // get all the card entities that belong to the deck
         guard let basicCardEntities = deckEntity.basicCards?.allObjects as? [BasicCardEntity],
               let multipleChoiceCardEntities = deckEntity.multipleChoiceCards?.allObjects as? [MultipleChoiceCardEntity]
-        else { return [] } // supposedly never executed by xcode
+        else { return [] } // fatalError is supposedly never executed by xcode here
         
         // map the due basic cards into the return array
         returnArray = basicCardEntities.compactMap { basicCardEntity in
@@ -128,14 +130,13 @@ struct CoreDataStore: StoreType {
                   let prompt = basicCardEntity.prompt,
                   let solution = basicCardEntity.solution,
                   let creationDate = basicCardEntity.creationDate,
-                  let dueDate = basicCardEntity.dueDate,
-                  let nextDueDateMultiplier = basicCardEntity.nextDueDateMultiplier
-            else { return nil }
+                  let dueDate = basicCardEntity.dueDate
+            else { fatalError("A basic card entity in Core Data is corrupted.") }
             
             // do not get cards not yet due
             if .now < dueDate { return nil }
             
-            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal)
+            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: basicCardEntity.nextDueDateMultiplier)
         }
         
         // append to the return array the multiple choice cards
@@ -145,14 +146,13 @@ struct CoreDataStore: StoreType {
                   let solution = multipleChoiceCardEntity.solution,
                   let creationDate = multipleChoiceCardEntity.creationDate,
                   let dueDate = multipleChoiceCardEntity.dueDate,
-                  let nextDueDateMultiplier = multipleChoiceCardEntity.nextDueDateMultiplier,
                   let options = multipleChoiceCardEntity.options
-            else { return nil }
+            else { fatalError("A multiple choice card entity in Core Data is corrupted.") }
             
             // do not get cards not yet due
             if .now < dueDate { return nil }
             
-            return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal, options: options)
+            return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: multipleChoiceCardEntity.nextDueDateMultiplier, options: options)
         }
         
         return returnArray
@@ -173,11 +173,10 @@ struct CoreDataStore: StoreType {
                   let prompt = basicCardEntity.prompt,
                   let solution = basicCardEntity.solution,
                   let creationDate = basicCardEntity.creationDate,
-                  let dueDate = basicCardEntity.dueDate,
-                  let nextDueDateMultiplier = basicCardEntity.nextDueDateMultiplier
-            else { return nil }
+                  let dueDate = basicCardEntity.dueDate
+            else { fatalError("A basic card entity in Core Data is corrupted.") }
             
-            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal)
+            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: basicCardEntity.nextDueDateMultiplier)
         }
         
         // fetch the multiple choice cards
@@ -192,11 +191,10 @@ struct CoreDataStore: StoreType {
                   let solution = multipleChoiceCardEntity.solution,
                   let creationDate = multipleChoiceCardEntity.creationDate,
                   let dueDate = multipleChoiceCardEntity.dueDate,
-                  let nextDueDateMultiplier = multipleChoiceCardEntity.nextDueDateMultiplier,
                   let options = multipleChoiceCardEntity.options
-            else { return nil }
+            else { fatalError("A multiple choice card entity in Core Data is corrupted.") }
             
-            return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal, options: options)
+            return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: multipleChoiceCardEntity.nextDueDateMultiplier, options: options)
         }
         
         // Sorts the array such that the newest cards at the beginning, oldest cards at the end, then returns it
@@ -221,11 +219,10 @@ struct CoreDataStore: StoreType {
                   let prompt = basicCardEntity.prompt,
                   let solution = basicCardEntity.solution,
                   let creationDate = basicCardEntity.creationDate,
-                  let dueDate = basicCardEntity.dueDate,
-                  let nextDueDateMultiplier = basicCardEntity.nextDueDateMultiplier
-            else { return nil }
+                  let dueDate = basicCardEntity.dueDate
+            else { fatalError("A basic card entity in Core Data is corrupted.") }
             
-            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal)
+            return BasicCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: basicCardEntity.nextDueDateMultiplier)
         }
         
         // fetch the multiple choice cards
@@ -241,11 +238,10 @@ struct CoreDataStore: StoreType {
                   let solution = multipleChoiceCardEntity.solution,
                   let creationDate = multipleChoiceCardEntity.creationDate,
                   let dueDate = multipleChoiceCardEntity.dueDate,
-                  let nextDueDateMultiplier = multipleChoiceCardEntity.nextDueDateMultiplier,
                   let options = multipleChoiceCardEntity.options
-            else { return nil }
+            else { fatalError("A multiple choice card entity in Core Data is corrupted.") }
             
-            return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: nextDueDateMultiplier as Decimal, options: options)
+            return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: multipleChoiceCardEntity.nextDueDateMultiplier, options: options)
         }
         
         // Sorts the array such that the newest cards at the beginning, oldest cards at the end, then returns it
@@ -259,7 +255,7 @@ struct CoreDataStore: StoreType {
         // get the deck entity that this card belongs to
         let fetchRequest = DeckEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
-        let deckEntity = try context.fetch(fetchRequest)[0]
+        let deckEntity = try context.fetch(fetchRequest).first
         
         let cardEntity = BasicCardEntity(context: context)
         cardEntity.id = card.id
@@ -267,7 +263,7 @@ struct CoreDataStore: StoreType {
         cardEntity.solution = card.solution
         cardEntity.creationDate = card.creationDate
         cardEntity.dueDate = card.dueDate
-        cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier as NSDecimalNumber
+        cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier
         cardEntity.deck = deckEntity // relationship attribute
         
         try context.save()
@@ -279,7 +275,7 @@ struct CoreDataStore: StoreType {
         // get the deck entity that this card belongs to
         let fetchRequest = DeckEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
-        let deckEntity = try context.fetch(fetchRequest)[0]
+        let deckEntity = try context.fetch(fetchRequest).first
         
         let cardEntity = MultipleChoiceCardEntity(context: context)
         cardEntity.id = card.id
@@ -287,7 +283,7 @@ struct CoreDataStore: StoreType {
         cardEntity.solution = card.solution
         cardEntity.creationDate = card.creationDate
         cardEntity.dueDate = card.dueDate
-        cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier as NSDecimalNumber
+        cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier
         cardEntity.options = card.options
         cardEntity.deck = deckEntity // relationship attribute
         
@@ -295,7 +291,29 @@ struct CoreDataStore: StoreType {
     }
     
     func updateCardDueDate(_ card: Card) throws {
-        // TODO
+        let context = Self.container.viewContext
+        
+        if card is BasicCard { // basic card
+            let fetchRequest = BasicCardEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
+            
+            guard let cardEntity = try context.fetch(fetchRequest).first
+            else { return }
+            
+            cardEntity.dueDate = card.dueDate
+            cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier
+        } else if card is MultipleChoiceCard { // multiple choice card
+            let fetchRequest = MultipleChoiceCardEntity.fetchRequest()
+            fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
+            
+            guard let cardEntity = try context.fetch(fetchRequest).first
+            else { return }
+            
+            cardEntity.dueDate = card.dueDate
+            cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier
+        }
+        
+        try context.save()
     }
     
     func deleteCard(_ card: Card) throws {
@@ -304,15 +322,15 @@ struct CoreDataStore: StoreType {
         if card is BasicCard { // basic card
             let fetchRequest = BasicCardEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
-            let entities = try context.fetch(fetchRequest)
+            let entity = try context.fetch(fetchRequest)[0]
             
-            for entity in entities { context.delete(entity) } // delete all matched entities
+            context.delete(entity) // delete the matched entity
         } else { // multiple choice card
             let fetchRequest = MultipleChoiceCardEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
-            let entities = try context.fetch(fetchRequest)
+            let entity = try context.fetch(fetchRequest)[0]
             
-            for entity in entities { context.delete(entity) } // delete all matched entities
+            context.delete(entity) // delete the matched entity
         }
         
         try context.save()

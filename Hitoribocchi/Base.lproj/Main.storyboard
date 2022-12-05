@@ -22,7 +22,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dtP-Nm-12P" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1648" y="-87"/>
+            <point key="canvasLocation" x="-1734" y="-87"/>
         </scene>
         <!--Decks-->
         <scene sceneID="tne-QT-ifu">
@@ -62,7 +62,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-923.07692307692309" y="-87.440758293838854"/>
+            <point key="canvasLocation" x="-974" y="-87"/>
         </scene>
         <!--Cards-->
         <scene sceneID="i8E-NP-Ook">
@@ -218,7 +218,11 @@
                     </navigationItem>
                     <connections>
                         <outlet property="basicCardView" destination="Rk5-F5-YDZ" id="WK5-Tw-sC3"/>
+                        <outlet property="easyButton" destination="Stl-D6-XpK" id="aE7-nr-Ird"/>
+                        <outlet property="hardButton" destination="hdR-9b-WDL" id="KlU-5b-xQI"/>
+                        <outlet property="okayButton" destination="QQq-TP-vWw" id="cNL-w9-IOs"/>
                         <outlet property="promptLabel" destination="POj-Qg-NxV" id="cfu-Do-839"/>
+                        <outlet property="retryButton" destination="f5h-MG-MD8" id="vil-yB-Kta"/>
                         <outlet property="seperatorBar" destination="BJC-MD-9de" id="u4R-QL-P4t"/>
                         <outlet property="solutionOptionsLabel" destination="Lra-sq-n0g" id="O1r-I8-GOs"/>
                         <segue destination="zgG-iL-Gwo" kind="show" identifier="addBasicCardSegue" id="9el-zZ-V5V"/>
@@ -318,7 +322,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lkS-pO-k7Z" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1506" y="134"/>
+            <point key="canvasLocation" x="1609" y="-87"/>
         </scene>
         <!--Add True/False Card-->
         <scene sceneID="qgz-zj-Phq">
@@ -547,7 +551,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gtO-x3-xUi" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-143.07692307692307" y="-785.54502369668239"/>
+            <point key="canvasLocation" x="-143" y="-814"/>
         </scene>
         <!--Card Details-->
         <scene sceneID="FdK-kn-Fkc">
@@ -655,7 +659,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zet-Dp-ami" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="713.84615384615381" y="-923.45971563981038"/>
+            <point key="canvasLocation" x="720" y="-878"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>

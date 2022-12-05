@@ -10,7 +10,7 @@ protocol Card: Codable {
     var dueDate: Date { get set }
     /** Determines when the next due date will be by multiplying some predetermined amount of time with this multiplier.
         Example value: 1.5. */
-    var nextDueDateMultiplier: Decimal { get set }
+    var nextDueDateMultiplier: Double { get set }
 }
 
 /// A deck of cards.
@@ -27,7 +27,7 @@ struct BasicCard: Card {
     let solution: String
     let creationDate: Date
     var dueDate: Date
-    var nextDueDateMultiplier: Decimal
+    var nextDueDateMultiplier: Double
 }
 
 /** A card that allows for multiple options, of which only one is correct. This struct includes True or False cards.
@@ -40,7 +40,7 @@ struct MultipleChoiceCard: Card {
     let solution: String
     let creationDate: Date
     var dueDate: Date
-    var nextDueDateMultiplier: Decimal
+    var nextDueDateMultiplier: Double
     /// Each option will be separated with `|`, e.g. "Kennedy | Lincoln | Obama".
     let options: String
 }

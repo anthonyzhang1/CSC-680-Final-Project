@@ -1,6 +1,7 @@
 import UIKit
 
 class CardsViewController: UIViewController {
+    let calendar = Calendar.current // used to calculate the new due dates after answering a card
     let store = CoreDataStore()
     var deck: Deck? // retrieved from the sender
     var dueCards: [Card] = [] // retrieved from the store and displayed to the user
@@ -10,6 +11,11 @@ class CardsViewController: UIViewController {
     @IBOutlet weak var promptLabel: UILabel!
     @IBOutlet weak var seperatorBar: UIView!
     @IBOutlet weak var solutionOptionsLabel: UILabel!
+    
+    @IBOutlet weak var retryButton: UIButton!
+    @IBOutlet weak var hardButton: UIButton!
+    @IBOutlet weak var okayButton: UIButton!
+    @IBOutlet weak var easyButton: UIButton!
     
     /// Used to hide/show the basic card response buttons.
     @IBOutlet weak var basicCardView: UIView!
@@ -91,12 +97,21 @@ class CardsViewController: UIViewController {
     }
     
     @IBAction func basicCardButtonClicked(_ sender: UIButton) {
+
         /// The current card being displayed to the user.
-        let currentCard = dueCards[currentCardIndex]
+        var currentCard = dueCards[currentCardIndex]
+        /// The new due date of the card.
+        var newDueDate: Date?
+        
+        newDueDate = calendar.date(byAdding: .minute, value: 1, to: .now)
+        //getTimeUntilCardDueAsString
         
         switch (sender.tag) {
         case 0:
             print("retry")
+            
+            currentCard.dueDate = .now
+            
             break
         case 1:
             print("hard")
@@ -111,8 +126,11 @@ class CardsViewController: UIViewController {
             print("Error")
         }
     }
-
     
+    func calculateNextDueDate(card: Card) {
+        
+    }
+
     @IBAction func screenTapped(_ sender: UITapGestureRecognizer) {
         // make sure that we do not get an out of bounds error
         guard currentCardIndex < dueCards.count
@@ -126,6 +144,9 @@ class CardsViewController: UIViewController {
             solutionOptionsLabel.isHidden = false
             basicCardView.isHidden = false
             solutionOptionsLabel.text = currentCard.solution
+            
+            print(currentCard.nextDueDateMultiplier * Constants.RETRY_BASE_MINUTES_UNTIL_DUE_DATE)
+            retryButton.setTitle("Retry\n22d", for: .normal)
         } else if let currentCard = currentCard as? MultipleChoiceCard {
             
         }
@@ -149,6 +170,23 @@ class CardsViewController: UIViewController {
         } else if segue.identifier == "cardsToCardDetailsSegue" { // view details segue
             if let cardDetailsViewController = segue.destination as? CardDetailsViewController
             { cardDetailsViewController.currentCard = dueCards[currentCardIndex] }
+        }
+    }
+    
+    /// Gets a string representing how long it will take for a card to be due again, e.g. 20 min, 18 hr, or 3 d
+    func getTimeUntilCardDueAsString(_ minutesUntilDue: Double) -> String {
+        if minutesUntilDue < 1 { // < 1 mins until due
+            return "< 1 min"
+        } else if minutesUntilDue < Constants.MINUTES_IN_ONE_HOUR { // 1-59 mins until due
+            return "\(minutesUntilDue) min"
+        } else if minutesUntilDue < Constants.MINUTES_IN_ONE_DAY { // 1-23 hours until due
+            return "\(Int(floor(minutesUntilDue / Constants.MINUTES_IN_ONE_HOUR))) hr"
+        } else if minutesUntilDue < Constants.MINUTES_IN_ONE_MONTH { // 1-29 days until due
+            return "\(Int(floor(minutesUntilDue / Constants.MINUTES_IN_ONE_DAY))) d"
+        } else if minutesUntilDue < Constants.MINUTES_IN_ONE_YEAR { // 1-11 months until due
+            return "\(Int(floor(minutesUntilDue / Constants.MINUTES_IN_ONE_MONTH))) mo"
+        } else { // 1+ years until due
+            return "\(Int(floor(minutesUntilDue / Constants.MINUTES_IN_ONE_YEAR))) yr"
         }
     }
     
