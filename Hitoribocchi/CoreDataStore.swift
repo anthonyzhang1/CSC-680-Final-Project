@@ -19,12 +19,16 @@ protocol StoreType {
     /// Gets all the due cards from a deck.
     func getDueCardsFromDeck(_ deck: Deck) throws -> [Card]
     
-    /** Gets all cards. Each Card entity will return at most `fetchLimit` cards.
-     The returned array will be sorted by creation date from newest to oldest. */
+    /**
+     Gets all cards. Each Card entity will return at most `fetchLimit` cards.
+     The returned array will be sorted by creation date from newest to oldest.
+     */
     func getAllCards(_ fetchLimit: Int) throws -> [Card]
     
-    /** Searches for cards that contain `searchTerms` within its prompt. Each Card entity will return at most `fetchLimit` cards.
-     The returned array will be sorted by creation date from newest to oldest. */
+    /**
+     Searches for cards that contain `searchTerms` within its prompt. Each Card entity will return at most `fetchLimit` cards.
+     The returned array will be sorted by creation date from newest to oldest.
+     */
     func searchCards(_ searchTerms: String, _ fetchLimit: Int) throws -> [Card]
     
     /// Inserts a basic card into a deck.

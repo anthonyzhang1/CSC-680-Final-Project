@@ -171,7 +171,7 @@ class CardsViewController: UIViewController {
         else { return }
         
         /// The multiple choice options.
-        let options = currentCard.options.split(separator: "|").map({$0.trimmingCharacters(in: .whitespaces)})
+        let options = currentCard.options.split(separator: "|").map({ $0.trimmingCharacters(in: .whitespaces) })
         
         // Gets the index of the solution within the multiple choice options.
         guard let solutionIndex = options.firstIndex(of: currentCard.solution)
@@ -259,10 +259,13 @@ class CardsViewController: UIViewController {
         }
     }
     
-    /// Gets the new due date multiplier for a card. The returned double will always be positive.
+    /**
+     Gets the new due date multiplier for a card. The returned double will always be positive.
+     The old due date multiplier is retrieved from the card's attribute. The multiplier factor and increment are determined by the user's response, e.g. how confident they were with a basic card or whether they got a multiple choice question right.
+     */
     func getNewDueDateMultiplier(oldMultiplier: Double, multiplierFactor: Double, multiplierIncrement: Double) -> Double {
         let newMultiplier = (oldMultiplier * multiplierFactor) + multiplierIncrement
-        return newMultiplier >= 0.01 ? newMultiplier : 0.01
+        return newMultiplier >= 0.01 ? newMultiplier : 0.01 // do not allow <= 0.00 as the new multiplier
     }
     
     /// Handle the displaying of the current card.
@@ -274,7 +277,7 @@ class CardsViewController: UIViewController {
         basicCardView.isHidden = true
         multipleChoiceCardView.isHidden = true
         
-        if getDeckCardCount() == 0 { // the deck has no cards
+        if getDeckCardCount() == 0 { // if the deck has no cards
             promptLabel.text = """
             This deck has no cards.
             
@@ -282,7 +285,7 @@ class CardsViewController: UIViewController {
             """
             
             return
-        } else if (currentCardIndex >= dueCards.count) { // no cards are due yet
+        } else if (currentCardIndex >= dueCards.count) { // if no cards are due yet
             promptLabel.text = """
             No cards are due yet.
             
@@ -394,7 +397,7 @@ class CardsViewController: UIViewController {
             if let addCardViewController = segue.destination as? AddMultipleChoiceViewController,
                let deck = deck
             { addCardViewController.deck = deck }
-        } else if segue.identifier == "cardsToCardDetailsSegue" { // view details segue
+        } else if segue.identifier == "cardsToCardDetailsSegue" { // view card details screen
             if let cardDetailsViewController = segue.destination as? CardDetailsViewController
             { cardDetailsViewController.currentCard = dueCards[currentCardIndex] }
         }

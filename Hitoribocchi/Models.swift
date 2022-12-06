@@ -12,8 +12,8 @@ protocol Card: Codable {
     var creationDate: Date { get }
     /// The date the card is next due.
     var dueDate: Date { get set }
-    /** Determines when the next due date will be by multiplying some predetermined amount of time with this multiplier.
-     Example values: 0.1, 0.8, 2.1. */
+    /// Determines when the next due date will be by multiplying some predetermined amount of time with this multiplier.
+    /// Example values: 0.1, 0.8, 2.1.
     var nextDueDateMultiplier: Double { get set }
 }
 
@@ -35,8 +35,10 @@ struct BasicCard: Card {
     var nextDueDateMultiplier: Double
 }
 
-/** A card that allows for multiple options, of which only one is correct. This struct is also used for True / False cards.
- The user will not be able to specify whether they were correct or not; it is determined by the app. */
+/**
+ A card that allows for multiple options, of which only one is correct. This struct is also used for True / False cards.
+ The user will not be able to specify whether they were correct or not; it is determined by the app.
+ */
 struct MultipleChoiceCard: Card {
     let id: String
     let prompt: String

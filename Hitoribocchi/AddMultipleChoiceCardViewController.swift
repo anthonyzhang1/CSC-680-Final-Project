@@ -11,7 +11,7 @@ class AddMultipleChoiceViewController: UIViewController {
     
     @IBAction func addCardButtonClicked(_ sender: UIButton) {
         guard let prompt = promptInput.text,
-              let trimmedSolution = solutionInput.text?.trimmingCharacters(in: .whitespaces),
+              let trimmedSolution = solutionInput.text?.trimmingCharacters(in: .whitespaces), // trim whitespace
               let options = optionsInput.text,
               let deck = deck
         else { return }
@@ -19,7 +19,7 @@ class AddMultipleChoiceViewController: UIViewController {
         // Split the options into an array of options for input validation
         let splitOptions = options.split(separator: "|").map({ $0.trimmingCharacters(in: .whitespaces) })
         
-        if splitOptions.count > 4 { // Only 4 multiple choice options allowed
+        if splitOptions.count > 4 { // At most 4 multiple choice options allowed
             showErrorAlert("Error", "Multiple choice cards can have at most 4 options, i.e. 3 '|' characters.")
             return
         } else if !splitOptions.map({ String($0) }).contains(trimmedSolution) { // the solution must be one of the provided options

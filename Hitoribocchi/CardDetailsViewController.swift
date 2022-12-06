@@ -90,7 +90,7 @@ class CardDetailsViewController: UIViewController {
         /* Display the current card's due date, and indicate as such if it is due. */
         if .now >= currentCard.dueDate { // if the current card is due
             dueOnLabel.text = "Due Date:\n\(dateFormatter.string(from: currentCard.dueDate)) (card is due)"
-        } else { // not due yet
+        } else { // current card is not due yet
             dueOnLabel.text = "Due Date:\n\(dateFormatter.string(from: currentCard.dueDate))"
         }
         

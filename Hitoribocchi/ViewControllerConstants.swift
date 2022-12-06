@@ -1,3 +1,7 @@
+/* This file holds constants and functions used by the multiple view controller files. */
+
+import UIKit
+
 /// Holds constants that are used throughout the project. We have a lot of constants because there is a lot of numbers used to calculate the card's next due date.
 struct Constants {
     /* ----------- Card Search Values --------------- */
@@ -114,4 +118,29 @@ struct Constants {
     
     /// How many minutes (before applying the due date multiplier) until a multiple choice card is due again after getting it right.
     static let CORRECT_BASE_MINUTES_UNTIL_DUE_DATE = 100.0
+}
+
+/* Gives all UIViewControllers access to these helper functions. */
+extension UIViewController {
+    /// Shows an alert with the specified `title` and `message` parameters.
+    func showErrorAlert(_ title: String, _ message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        // add OK button to the error
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+        
+        self.present(alert, animated: true, completion: nil) // show the alert
+    }
+    
+    /// Hides the on-screen keyboard when clicking anywhere on the screen that is not the keyboard.
+    func dismissKeyboardOnOutsideClick() {
+        let click = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        
+        // Allows the user to interact with the screen even when the keyboard is active. The click will dismiss the keyboard though.
+        click.cancelsTouchesInView = false
+        view.addGestureRecognizer(click)
+    }
+    
+    /// Closes the keyboard.
+    @objc func dismissKeyboard() { view.endEditing(true) }
 }

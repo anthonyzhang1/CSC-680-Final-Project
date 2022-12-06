@@ -7,7 +7,7 @@ class CardSearchViewController: UIViewController {
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var cardTableView: UITableView!
     
-    /// Sends the clicked on Card to the new view.
+    /// Sends the clicked on Card to the Card Details view.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cardDetailsViewController = segue.destination as? CardDetailsViewController,
            let cardIndex = cardTableView.indexPathForSelectedRow?.row
@@ -36,7 +36,8 @@ extension CardSearchViewController: UISearchBarDelegate {
         else { return }
         
         do {
-            // If search terms were provided, execute the search. If no search terms were provided, retrieve all recently created cards.
+            // If search terms were provided, execute the search.
+            // If no search terms were provided, retrieve all recently created cards.
             if (searchTerms.count > 0) { cards = try store.searchCards(searchTerms, Constants.SEARCH_FETCH_LIMIT) }
             else { cards = try store.getAllCards(Constants.SEARCH_FETCH_LIMIT) }
             

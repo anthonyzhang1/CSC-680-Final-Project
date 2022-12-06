@@ -13,7 +13,7 @@ class AddTrueFalseCardViewController: UIViewController {
               let deck = deck
         else { return }
         
-        /// Gets the string in the segmented control's selection
+        /// Gets the string in the segmented control's selection.
         let solutionString = trueFalseSegmentedControl.selectedSegmentIndex == 1 ? Constants.TRUE_STRING : Constants.FALSE_STRING
         
         let card = MultipleChoiceCard(id: UUID().uuidString, prompt: prompt, solution: solutionString, creationDate: .now, dueDate: .now, nextDueDateMultiplier: Constants.NEW_CARD_DUE_DATE_MULTIPLIER, options: Constants.TRUE_FALSE_OPTIONS)
