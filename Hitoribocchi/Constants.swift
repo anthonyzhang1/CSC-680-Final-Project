@@ -48,33 +48,54 @@ struct Constants {
     /// The due date multiplier that new cards are initialized with.
     static let NEW_CARD_DUE_DATE_MULTIPLIER = 0.10
     
-    /// Sets the card's due date interval to 20% of its orignal value when clicking "Retry".
+    /// The due date multiplier that new multiple choice cards are initialized with.
+    //static let NEW_MULTIPLE_CHOICE_CARD_DUE_DATE_MULTIPLIER = 1.00
+
+    /// Sets the card's due date interval to 20% of its orignal value when clicking "Retry". For basic cards.
     static let RETRY_DUE_DATE_MULTIPLIER_FACTOR = 0.20
     
-    /// Sets the card's due date interval to 80% of its orignal value when clicking "Hard".
+    /// Sets the card's due date interval to 80% of its orignal value when clicking "Hard". For basic cards.
     static let HARD_DUE_DATE_MULTIPLIER_FACTOR = 0.80
     
-    /// Sets the card's due date interval to 130% of its original value when clicking "Okay".
+    /// Sets the card's due date interval to 130% of its original value when clicking "Okay". For basic cards.
     static let OKAY_DUE_DATE_MULTIPLIER_FACTOR = 1.30
     
-    /// Sets the card's due date interval to 170% of its original value when clicking "Easy".
+    /// Sets the card's due date interval to 170% of its original value when clicking "Easy". For basic cards.
     static let EASY_DUE_DATE_MULTIPLIER_FACTOR = 1.70
     
-    /// Increases the card's due date interval by 30% when clicking "Okay".
+    /// Sets the card's due date interval to 20% of its original value when getting a multiple choice card wrong. For multiple choice cards.
+    static let INCORRECT_DUE_DATE_MULTIPLIER_FACTOR = 0.20
+
+    /// Sets the card's due date interval to 150% of its original value when getting a multiple choice card right. For multiple choice cards.
+    static let CORRECT_DUE_DATE_MULTIPLIER_FACTOR = 1.50
+    
+    /// Increases the card's due date interval by a flat 30% when clicking "Okay". For basic cards.
     static let OKAY_DUE_DATE_MULTIPLIER_INCREMENT = 0.30
     
-    /// Increases the card's due date interval by 100% when clicking "Easy".
-    static let EASY_DUE_DATE_MULTIPLIER_INCREMENT = 1.00
+    /// Increases the card's due date interval by a flat 80% when clicking "Easy". For basic cards.
+    static let EASY_DUE_DATE_MULTIPLIER_INCREMENT = 0.80
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Retry".
+    /// Increases the card's due date interval by a flat 0% when getting a multiple choice card wrong. For multiple choice cards.
+    static let INCORRECT_DUE_DATE_MULTIPLIER_INCREMENT = 0.00
+    
+    /// Increases the card's due date interval by a flat 60% when getting a multiple choice card right. For multiple choice cards.
+    static let CORRECT_DUE_DATE_MULTIPLIER_INCREMENT = 0.60
+    
+    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Retry". For basic cards.
     static let RETRY_BASE_MINUTES_UNTIL_DUE_DATE = 0.0
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Hard".
+    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Hard". For basic cards.
     static let HARD_BASE_MINUTES_UNTIL_DUE_DATE = 20.0
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Okay".
+    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Okay". For basic cards.
     static let OKAY_BASE_MINUTES_UNTIL_DUE_DATE = 100.0
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Easy".
+    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Easy". For basic cards.
     static let EASY_BASE_MINUTES_UNTIL_DUE_DATE = 300.0
+    
+    /// How many minutes (before applying the due date multiplier) until the card is due again after getting a multiple choice card wrong. For multiple choice cards.
+    static let INCORRECT_BASE_MINUTES_UNTIL_DUE_DATE = 0.0
+    
+    /// How many minutes (before applying the due date multiplier) until the card is due again after getting a multiple choice card right. For multiple choice cards.
+    static let CORRECT_BASE_MINUTES_UNTIL_DUE_DATE = 100.0
 }

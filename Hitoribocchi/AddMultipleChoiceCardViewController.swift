@@ -5,13 +5,13 @@ class AddMultipleChoiceViewController: UIViewController {
     var deck: Deck? // retrieved from the sender
     
     @IBOutlet weak var deckLabel: UILabel!
-    @IBOutlet weak var promptInput: UITextField!
-    @IBOutlet weak var optionsInput: UITextField!
-    @IBOutlet weak var solutionInput: UITextField!
+    @IBOutlet weak var promptInput: UITextView!
+    @IBOutlet weak var optionsInput: UITextView!
+    @IBOutlet weak var solutionInput: UITextView!
     
     @IBAction func addCardButtonClicked(_ sender: UIButton) {
         guard let prompt = promptInput.text,
-              let solution = solutionInput.text,
+              let trimmedSolution = solutionInput.text?.trimmingCharacters(in: .whitespaces),
               let options = optionsInput.text,
               let deck = deck
         else { return }
@@ -22,12 +22,12 @@ class AddMultipleChoiceViewController: UIViewController {
         if splitOptions.count > 4 { // Only 4 multiple choice options allowed
             showErrorAlert("Error", "Multiple choice cards can have at most 4 options, i.e. 3 '|' characters.")
             return
-        } else if !splitOptions.map({String($0)}).contains(solution) { // the solution must be one of the provided options
+        } else if !splitOptions.map({String($0)}).contains(trimmedSolution) { // the solution must be one of the provided options
             showErrorAlert("Error", "The solution must be one of the multiple choice options.")
             return
         }
         
-        let card = MultipleChoiceCard(id: UUID().uuidString, prompt: prompt, solution: solution, creationDate: .now, dueDate: .now, nextDueDateMultiplier: Constants.NEW_CARD_DUE_DATE_MULTIPLIER, options: options)
+        let card = MultipleChoiceCard(id: UUID().uuidString, prompt: prompt, solution: trimmedSolution, creationDate: .now, dueDate: .now, nextDueDateMultiplier: Constants.NEW_CARD_DUE_DATE_MULTIPLIER, options: options)
         self.addMultipleChoiceCardToDeck(card, deck)
     }
     
@@ -45,10 +45,50 @@ class AddMultipleChoiceViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dismissKeyboardOnOutsideClick()
         
-        guard let deck = deck
+        if let deck = deck { deckLabel.text = "Deck: \(deck.title)" }
         else { return }
         
-        deckLabel.text = "Deck: \(deck.title)"
+        /* Make the UITextViews have placeholder text and a border somewhat like UITextField does. */
+        promptInput.layer.borderColor = UIColor.systemGray.cgColor
+        promptInput.layer.borderWidth = 1.0
+        promptInput.layer.cornerRadius = 5.0
+        promptInput.textColor = .lightGray
+        promptInput.text = "Enter the card's question / prompt."
+        promptInput.delegate = self
+        
+        optionsInput.layer.borderColor = UIColor.systemGray.cgColor
+        optionsInput.layer.borderWidth = 1.0
+        optionsInput.layer.cornerRadius = 5.0
+        optionsInput.textColor = .lightGray
+        optionsInput.text = "Enter the possible choices separated by |,\ne.g. Corn | Tree | Dog. Max 4 options."
+        optionsInput.delegate = self
+        
+        solutionInput.layer.borderColor = UIColor.systemGray.cgColor
+        solutionInput.layer.borderWidth = 1.0
+        solutionInput.layer.cornerRadius = 5.0
+        solutionInput.textColor = .lightGray
+        solutionInput.text = "Enter the correct choice from the provided options."
+        solutionInput.delegate = self
+    }
+}
+
+extension AddMultipleChoiceViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .lightGray {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            if textView == promptInput { textView.text = "Enter the card's question / prompt." }
+            else if textView == optionsInput { textView.text = "Enter the possible choices separated by |,\ne.g. Corn | Tree | Dog. Max 4 options." }
+            else if textView == solutionInput { textView.text = "Enter the correct choice from the provided options." }
+            
+            textView.textColor = .lightGray
+        }
     }
 }

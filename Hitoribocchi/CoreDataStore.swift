@@ -7,6 +7,9 @@ protocol StoreType {
     /// Gets the title of the deck that a card belongs to.
     func getACardsDeckTitle(fromCard card: Card) throws -> String
     
+    /// Gets the number of cards in a deck.
+    func getDeckCardCount(_ deck: Deck) throws -> Int
+    
     /// Inserts a deck into the store.
     func insertDeck(_ deck: Deck) throws
     
@@ -17,11 +20,11 @@ protocol StoreType {
     func getDueCardsFromDeck(_ deck: Deck) throws -> [Card]
     
     /** Gets all cards. Each Card entity will return at most `fetchLimit` cards.
-        The returned array will be sorted by creation date from newest to oldest. */
+     The returned array will be sorted by creation date from newest to oldest. */
     func getAllCards(_ fetchLimit: Int) throws -> [Card]
     
     /** Searches for cards that contain `searchTerms` within its prompt. Each Card entity will return at most `fetchLimit` cards.
-        The returned array will be sorted by creation date from newest to oldest. */
+     The returned array will be sorted by creation date from newest to oldest. */
     func searchCards(_ searchTerms: String, _ fetchLimit: Int) throws -> [Card]
     
     /// Inserts a basic card into a deck.
@@ -83,6 +86,25 @@ struct CoreDataStore: StoreType {
             else { return "Error!" }
             
             return deckTitle
+        }
+    }
+    
+    func getDeckCardCount(_ deck: Deck) throws -> Int {
+        let context = Self.container.viewContext
+        
+        // get the deck entity for the deck provided in the argument
+        let fetchRequest = DeckEntity.fetchRequest()
+        fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
+        
+        guard let deckEntity = try context.fetch(fetchRequest).first
+        else { return 0 } // supposedly never executed by xcode if you try to throw an error here
+        
+        /* Counts the number of cards in a deck and returns it. */
+        if let basicCardCount = deckEntity.basicCards?.count,
+           let multipleChoiceCardCount = deckEntity.multipleChoiceCards?.count
+        { return basicCardCount + multipleChoiceCardCount }
+        else {
+            return 0
         }
     }
     
@@ -247,7 +269,7 @@ struct CoreDataStore: StoreType {
         // Sorts the array such that the newest cards at the beginning, oldest cards at the end, then returns it
         return returnArray.sorted { $0.creationDate > $1.creationDate }
     }
-
+    
     
     func insertBasicCard(_ card: BasicCard, _ deck: Deck) throws {
         let context = Self.container.viewContext

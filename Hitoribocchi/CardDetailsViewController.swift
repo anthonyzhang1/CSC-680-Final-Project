@@ -57,7 +57,7 @@ class CardDetailsViewController: UIViewController {
             cardTypeLabel.text = "Card Type: Basic"
         } else if let multipleChoiceCard = currentCard as? MultipleChoiceCard { // can be true/false or multiple choice
             if multipleChoiceCard.options == Constants.TRUE_FALSE_OPTIONS { // true/false card type
-                cardTypeLabel.text = "Card Type: True/False"
+                cardTypeLabel.text = "Card Type: True / False"
             } else { // multiple choice card type
                 cardTypeLabel.text = "Card Type: Multiple Choice"
             }

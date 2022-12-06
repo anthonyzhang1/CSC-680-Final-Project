@@ -109,4 +109,12 @@ extension UIViewController {
         // show the alert
         self.present(alert, animated: true, completion: nil)
     }
+    
+    func dismissKeyboardOnOutsideClick() {
+        let click = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        click.cancelsTouchesInView = false
+        view.addGestureRecognizer(click)
+    }
+    
+    @objc func dismissKeyboard() { view.endEditing(true) }
 }

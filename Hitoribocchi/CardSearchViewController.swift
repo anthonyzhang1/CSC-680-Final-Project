@@ -19,6 +19,8 @@ class CardSearchViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dismissKeyboardOnOutsideClick()
+
         searchBar.delegate = self
         cardTableView.delegate = self
         cardTableView.dataSource = self

@@ -5,7 +5,7 @@ class AddTrueFalseCardViewController: UIViewController {
     var deck: Deck? // retrieved from the sender
     
     @IBOutlet weak var deckLabel: UILabel!
-    @IBOutlet weak var promptInput: UITextField!
+    @IBOutlet weak var promptInput: UITextView!
     @IBOutlet weak var trueFalseSegmentedControl: UISegmentedControl!
     
     @IBAction func addCardButtonClicked(_ sender: UIButton) {
@@ -28,10 +28,33 @@ class AddTrueFalseCardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dismissKeyboardOnOutsideClick()
         
-        guard let deck = deck
+        if let deck = deck { deckLabel.text = "Deck: \(deck.title)" }
         else { return }
         
-        deckLabel.text = "Deck: \(deck.title)"
+        /* Make the UITextViews have placeholder text and a border somewhat like UITextField does. */
+        promptInput.layer.borderColor = UIColor.systemGray.cgColor
+        promptInput.layer.borderWidth = 1.0
+        promptInput.layer.cornerRadius = 5.0
+        promptInput.textColor = .lightGray
+        promptInput.text = "Enter the card's question / prompt."
+        promptInput.delegate = self
+    }
+}
+
+extension AddTrueFalseCardViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .lightGray {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Enter the answer to the prompt."
+            textView.textColor = .lightGray
+        }
     }
 }

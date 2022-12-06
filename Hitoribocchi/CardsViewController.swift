@@ -12,13 +12,23 @@ class CardsViewController: UIViewController {
     @IBOutlet weak var seperatorBar: UIView!
     @IBOutlet weak var solutionOptionsLabel: UILabel!
     
+    /// Used to hide/show the basic card response buttons.
+    @IBOutlet weak var basicCardView: UIView!
+    
+    /* Buttons for basic cards. */
     @IBOutlet weak var retryButton: UIButton!
     @IBOutlet weak var hardButton: UIButton!
     @IBOutlet weak var okayButton: UIButton!
     @IBOutlet weak var easyButton: UIButton!
     
-    /// Used to hide/show the basic card response buttons.
-    @IBOutlet weak var basicCardView: UIView!
+    /// Used to hide/show the multiple choice options.
+    @IBOutlet weak var multipleChoiceCardView: UIView!
+    
+    /* Buttons for the multiple choice options. */
+    @IBOutlet weak var optionAButton: UIButton!
+    @IBOutlet weak var optionBButton: UIButton!
+    @IBOutlet weak var optionCButton: UIButton!
+    @IBOutlet weak var optionDButton: UIButton!
     
     /// Show an action sheet prompting the user what type of flashcard to add when they click the Add button.
     @IBAction func addButtonClicked(_ sender: UIBarButtonItem) {
@@ -54,14 +64,14 @@ class CardsViewController: UIViewController {
             
             // Add the OK button to the alert box
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-
+            
             // Show the alert, and return so that we do not execute the rest of the function
             present(alert, animated: true, completion: nil)
             return
         }
         
         let alert = UIAlertController(title: "Delete Current Card", message: "Are you sure you want to delete this card?", preferredStyle: .alert)
-            
+        
         // Add the cancel button to the alert box
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
@@ -87,12 +97,12 @@ class CardsViewController: UIViewController {
             
             // Add the OK button to the alert box
             alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
-
+            
             // Show the alert, and return so that we do not execute the rest of the function
             present(alert, animated: true, completion: nil)
             return
         }
-
+        
         performSegue(withIdentifier: "cardsToCardDetailsSegue", sender: sender)
     }
     
@@ -105,10 +115,6 @@ class CardsViewController: UIViewController {
             guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.RETRY_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
             else { return }
             
-            // TODO
-            print("retry mins until next:", Int(currentCard.nextDueDateMultiplier * Constants.RETRY_BASE_MINUTES_UNTIL_DUE_DATE))
-            print("retry new due date:", newDueDate)
-            
             currentCard.dueDate = newDueDate
             currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.RETRY_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: 0)
             
@@ -118,10 +124,6 @@ class CardsViewController: UIViewController {
         case Constants.HARD_BUTTON_TAG: // hard button clicked
             guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.HARD_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
             else { return }
-            
-            // TODO
-            print("hard mins until next:", Int(currentCard.nextDueDateMultiplier * Constants.HARD_BASE_MINUTES_UNTIL_DUE_DATE))
-            print("hard new due date:", newDueDate)
             
             currentCard.dueDate = newDueDate
             currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.HARD_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: 0)
@@ -133,10 +135,6 @@ class CardsViewController: UIViewController {
             guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.OKAY_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
             else { return }
             
-            // TODO
-            print("okay mins until next:", Int(currentCard.nextDueDateMultiplier * Constants.OKAY_BASE_MINUTES_UNTIL_DUE_DATE))
-            print("okay new due date:", newDueDate)
-            
             currentCard.dueDate = newDueDate
             currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.OKAY_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: Constants.OKAY_DUE_DATE_MULTIPLIER_INCREMENT)
             
@@ -146,10 +144,6 @@ class CardsViewController: UIViewController {
         case Constants.EASY_BUTTON_TAG:
             guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.EASY_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
             else { return }
-            
-            // TODO
-            print("easy mins until next:", Int(currentCard.nextDueDateMultiplier * Constants.EASY_BASE_MINUTES_UNTIL_DUE_DATE))
-            print("easy new due date:", newDueDate)
             
             currentCard.dueDate = newDueDate
             currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.EASY_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: Constants.EASY_DUE_DATE_MULTIPLIER_INCREMENT)
@@ -161,7 +155,48 @@ class CardsViewController: UIViewController {
             showErrorAlert("Error", "Sorry, there was an error updating your card.")
         }
     }
-
+    
+    @IBAction func multipleChoiceOptionClicked(_ sender: UIButton) {
+        /// The current multiple choice card being displayed to the user.
+        guard var currentCard = dueCards[currentCardIndex] as? MultipleChoiceCard
+        else { return }
+        
+        let options = currentCard.options.split(separator: "|").map({$0.trimmingCharacters(in: .whitespaces)})
+        
+        guard let solutionIndex = options.firstIndex(of: currentCard.solution)
+        else { return }
+        
+        if solutionIndex != sender.tag { // incorrect answer provided
+            solutionOptionsLabel.isHidden = false
+            solutionOptionsLabel.text = "\"\(options[sender.tag])\" is incorrect. This card is now due again."
+            solutionOptionsLabel.textColor = .red
+        }
+        else if solutionIndex == sender.tag,
+                !solutionOptionsLabel.isHidden
+        { // correct answer provided after getting the question wrong
+            guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.INCORRECT_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
+            else { return }
+            
+            currentCard.dueDate = newDueDate
+            currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.INCORRECT_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: Constants.INCORRECT_DUE_DATE_MULTIPLIER_INCREMENT)
+            
+            solutionOptionsLabel.textColor = .black
+            
+            updateCardAndAdvance(currentCard)
+        }
+        else if solutionIndex == sender.tag,
+                solutionOptionsLabel.isHidden
+        { // correct answer provided the first time; never got the question wrong
+            guard let newDueDate = calendar.date(byAdding: .minute, value: Int(currentCard.nextDueDateMultiplier * Constants.CORRECT_BASE_MINUTES_UNTIL_DUE_DATE), to: .now)
+            else { return }
+            
+            currentCard.dueDate = newDueDate
+            currentCard.nextDueDateMultiplier = getNewDueDateMultiplier(oldMultiplier: currentCard.nextDueDateMultiplier, multiplierFactor: Constants.CORRECT_DUE_DATE_MULTIPLIER_FACTOR, multiplierIncrement: Constants.CORRECT_DUE_DATE_MULTIPLIER_INCREMENT)
+            
+            updateCardAndAdvance(currentCard)
+        }
+    }
+    
     @IBAction func screenTapped(_ sender: UITapGestureRecognizer) {
         // make sure that we do not get an out of bounds error
         guard currentCardIndex < dueCards.count
@@ -170,7 +205,7 @@ class CardsViewController: UIViewController {
         /// The current card being displayed to the user.
         let currentCard = dueCards[currentCardIndex]
         
-        if currentCard is BasicCard {  // Handle the on click display for a basic card
+        if currentCard is BasicCard { // Handle the on click display for a basic card
             seperatorBar.isHidden = false
             solutionOptionsLabel.isHidden = false
             solutionOptionsLabel.text = currentCard.solution
@@ -184,8 +219,6 @@ class CardsViewController: UIViewController {
             okayButton.setTitle("Okay\n\(getTimeUntilCardDueAsString(Int(currentCard.nextDueDateMultiplier * Constants.OKAY_BASE_MINUTES_UNTIL_DUE_DATE)))", for: .normal)
             
             easyButton.setTitle("Easy\n\(getTimeUntilCardDueAsString(Int(currentCard.nextDueDateMultiplier * Constants.EASY_BASE_MINUTES_UNTIL_DUE_DATE)))", for: .normal)
-        } else if let currentCard = currentCard as? MultipleChoiceCard {
-            print(currentCard) // TODO
         }
     }
     
@@ -233,21 +266,20 @@ class CardsViewController: UIViewController {
         return newMultiplier >= 0.01 ? newMultiplier : 0.01
     }
     
+    /// update the card's due date in the store and proceed to the next card
     func updateCardAndAdvance(_ card: Card) {
-        do { // update the card's due date in the store and proceed to the next card
+        do {
             try store.updateCardDueDate(card)
             currentCardIndex += 1
             
-            if currentCardIndex >= dueCards.count {
-                print("End of deck. Deck refreshed.") // TODO
-                // refresh the deck after reaching the end of the due cards
+            if currentCardIndex >= dueCards.count { // refresh the deck after reaching the end of the due cards
                 getDueCardsFromDeck()
                 currentCardIndex = 0
             }
             
             displayCurrentCard()
             return
-
+            
         } catch {
             showErrorAlert("Error", "Sorry, there was an error updating your card.")
         }
@@ -261,8 +293,22 @@ class CardsViewController: UIViewController {
         do {
             dueCards = try store.getDueCardsFromDeck(deck)
             dueCards = dueCards.shuffled()
+            currentCardIndex = 0
         } catch {
             showErrorAlert("Error", "Sorry, there was an error retrieving the cards.")
+        }
+    }
+    
+    /// Gets the number of cards in `deck`, including non-due ones.
+    func getDeckCardCount() -> Int {
+        guard let deck = deck
+        else { return 0 }
+        
+        do {
+            return try store.getDeckCardCount(deck)
+        } catch {
+            self.showErrorAlert("Error", "Sorry, there was an error getting the deck's card count.")
+            return 0
         }
     }
     
@@ -270,38 +316,66 @@ class CardsViewController: UIViewController {
         // get the due cards to display on the screen after shuffling them
         // need to get due cards in case user made a new card and went back to the card view
         getDueCardsFromDeck()
-        promptLabel.isHidden = false
-        solutionOptionsLabel.isHidden = true
         displayCurrentCard()
     }
     
     func displayCurrentCard() {
-        // Do not show the separator bar if the solution is not shown
-        if solutionOptionsLabel.isHidden { seperatorBar.isHidden = true }
+        promptLabel.isHidden = false
+        seperatorBar.isHidden = true
+        solutionOptionsLabel.isHidden = true
         basicCardView.isHidden = true
-
-        // Ensure that the card index will not be out of bounds
-        if (currentCardIndex >= dueCards.count) {
+        multipleChoiceCardView.isHidden = true
+        
+        if getDeckCardCount() == 0 { // the deck has no cards
             promptLabel.text = """
-            No cards are due yet.
-
-            You can add more cards to this deck by pressing the + button above!
+            This deck has no cards.
+            
+            You can add more cards to this deck by pressing the + button above.
             """
             
-            solutionOptionsLabel.isHidden = true
-            seperatorBar.isHidden = true
+            return
+        } else if (currentCardIndex >= dueCards.count) { // Ensure that the card index will not be out of bounds
+            promptLabel.text = """
+            No cards are due yet.
+            
+            You can wait for cards to become due, or you can add more cards to this deck.
+            """
+            
             return
         }
         
         /// The current card being displayed to the user.
         let currentCard = dueCards[currentCardIndex]
         
-        if currentCard is BasicCard { // Handle the display for a basic card
-            promptLabel.text = currentCard.prompt
-            solutionOptionsLabel.isHidden = true
-            seperatorBar.isHidden = true
-        } else if currentCard is MultipleChoiceCard { // handle multiple choice card display
-            promptLabel.text = currentCard.prompt
+        promptLabel.text = currentCard.prompt
+        
+        /* Multiple choice cards need special handling when displaying them. */
+        if let currentCard = currentCard as? MultipleChoiceCard { // handle multiple choice card display
+            multipleChoiceCardView.isHidden = false
+            optionAButton.isHidden = true
+            optionBButton.isHidden = true
+            optionCButton.isHidden = true
+            optionDButton.isHidden = true
+            
+            let options = currentCard.options.split(separator: "|").map({$0.trimmingCharacters(in: .whitespaces)})
+            
+            /* Display the multiple choice options. */
+            if options.count >= 1 {
+                optionAButton.isHidden = false
+                optionAButton.setTitle(options[0], for: .normal)
+            }
+            if options.count >= 2 {
+                optionBButton.isHidden = false
+                optionBButton.setTitle(options[1], for: .normal)
+            }
+            if options.count >= 3 {
+                optionCButton.isHidden = false
+                optionCButton.setTitle(options[2], for: .normal)
+            }
+            if options.count >= 4 {
+                optionDButton.isHidden = false
+                optionDButton.setTitle(options[3], for: .normal)
+            }
         }
     }
 }

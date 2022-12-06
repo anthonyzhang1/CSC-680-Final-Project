@@ -5,8 +5,8 @@ class AddBasicCardViewController: UIViewController {
     var deck: Deck? // retrieved from the sender
     
     @IBOutlet weak var deckLabel: UILabel!
-    @IBOutlet weak var promptInput: UITextField!
-    @IBOutlet weak var solutionInput: UITextField!
+    @IBOutlet weak var promptInput: UITextView!
+    @IBOutlet weak var solutionInput: UITextView!
     
     @IBAction func addCardButtonClicked(_ sender: UIButton) {
         guard let prompt = promptInput.text,
@@ -27,8 +27,42 @@ class AddBasicCardViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        dismissKeyboardOnOutsideClick()
         
         if let deck = deck { deckLabel.text = "Deck: \(deck.title)" }
         else { return }
+        
+        /* Make the UITextViews have placeholder text and a border somewhat like UITextField does. */
+        promptInput.layer.borderColor = UIColor.systemGray.cgColor
+        promptInput.layer.borderWidth = 1.0
+        promptInput.layer.cornerRadius = 5.0
+        promptInput.textColor = .lightGray
+        promptInput.text = "Enter the card's question / prompt."
+        promptInput.delegate = self
+        
+        solutionInput.layer.borderColor = UIColor.systemGray.cgColor
+        solutionInput.layer.borderWidth = 1.0
+        solutionInput.layer.cornerRadius = 5.0
+        solutionInput.textColor = .lightGray
+        solutionInput.text = "Enter the answer to the prompt."
+        solutionInput.delegate = self
+    }
+}
+
+extension AddBasicCardViewController: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .lightGray {
+            textView.text = nil
+            textView.textColor = .black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            if textView == promptInput { textView.text = "Enter the card's question / prompt." }
+            else if textView == solutionInput { textView.text = "Enter the answer to the prompt." }
+            
+            textView.textColor = .lightGray
+        }
     }
 }
