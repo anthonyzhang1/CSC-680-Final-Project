@@ -34,11 +34,10 @@ class CardDetailsViewController: UIViewController {
             self.navigationController?.popViewController(animated: true)
         })
         
-        // show the alert
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil) // show the alert
     }
     
-    /// Display the card's details. What is displayed depends on the card's type, e.g. basic vs. multiple choice cards.
+    /// Display the card's details. What is displayed depends on the card's type, e.g. basic or multiple choice.
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -52,7 +51,7 @@ class CardDetailsViewController: UIViewController {
             return
         }
         
-        /* Display the type of the current card, e.g. true/false. */
+        /* Display the type of the current card, e.g. basic or true/false. */
         if currentCard is BasicCard { // basic card type
             cardTypeLabel.text = "Card Type: Basic"
         } else if let multipleChoiceCard = currentCard as? MultipleChoiceCard { // can be true/false or multiple choice
@@ -65,13 +64,15 @@ class CardDetailsViewController: UIViewController {
         
         promptLabel.text = "Prompt:\n\(currentCard.prompt)"
         
-        /* Display the current card's solution and multiple choice options, if there are any */
+        /* Display the current card's solution and multiple choice options, if there are any. */
         if currentCard is BasicCard { // basic card
             optionsSolutionLabel.text = "Solution:\n\(currentCard.solution)"
-        } else if let multipleChoiceCard = currentCard as? MultipleChoiceCard {
+        }
+        else if let multipleChoiceCard = currentCard as? MultipleChoiceCard {
             if multipleChoiceCard.options == Constants.TRUE_FALSE_OPTIONS { // true/false card
                 optionsSolutionLabel.text = "Solution:\n\(multipleChoiceCard.solution)"
-            } else { // multiple choice card
+            }
+            else { // multiple choice card
                 optionsSolutionLabel.text = """
                 Options:
                 \(multipleChoiceCard.options)
@@ -93,8 +94,8 @@ class CardDetailsViewController: UIViewController {
             dueOnLabel.text = "Due Date:\n\(dateFormatter.string(from: currentCard.dueDate))"
         }
         
-        numberFormatter.maximumFractionDigits = 2
-                
+        numberFormatter.maximumFractionDigits = 2 // show at most 2 fractional digits for decimals
+        
         dueDateMultiplierLabel.text = """
         Next Due Date Multiplier:
         x\(numberFormatter.string(for: currentCard.nextDueDateMultiplier) ?? "")

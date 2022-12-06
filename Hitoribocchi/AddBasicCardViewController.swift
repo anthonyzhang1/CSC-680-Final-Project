@@ -49,7 +49,9 @@ class AddBasicCardViewController: UIViewController {
     }
 }
 
+/* Handles the placeholder text logic in the TextView. */
 extension AddBasicCardViewController: UITextViewDelegate {
+    /// Changes the text color from grey to black when the user types in the text view.
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .lightGray {
             textView.text = nil
@@ -57,6 +59,7 @@ extension AddBasicCardViewController: UITextViewDelegate {
         }
     }
     
+    /// Show the placeholder text if the user clears the text view.
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             if textView == promptInput { textView.text = "Enter the card's question / prompt." }

@@ -4,12 +4,16 @@ import Foundation
 protocol Card: Codable {
     /// Should be a UUID.
     var id: String { get }
+    /// The prompt / question the user has to answer.
     var prompt: String { get }
+    /// The answer to the prompt / question.
     var solution: String { get }
+    /// The date the card was created.
     var creationDate: Date { get }
+    /// The date the card is next due.
     var dueDate: Date { get set }
     /** Determines when the next due date will be by multiplying some predetermined amount of time with this multiplier.
-        Example value: 1.5. */
+     Example values: 0.1, 0.8, 2.1. */
     var nextDueDateMultiplier: Double { get set }
 }
 
@@ -17,10 +21,11 @@ protocol Card: Codable {
 struct Deck: Codable {
     /// Should be a UUID.
     let id: String
+    /// The title of the deck.
     let title: String
 }
 
-/// A basic card with only a prompt and a solution. The user tells the app whether they were correct or not.
+/// A basic card with only a prompt and a solution. The user tells the app whether they were correct or not, and how confident they were with recalling the answer.
 struct BasicCard: Card {
     let id: String
     let prompt: String
@@ -30,14 +35,12 @@ struct BasicCard: Card {
     var nextDueDateMultiplier: Double
 }
 
-/** A card that allows for multiple options, of which only one is correct. This struct includes True or False cards.
-    The user will not be able to specify whether they were correct or not; the app determines that,
-    based on the user's selection. */
+/** A card that allows for multiple options, of which only one is correct. This struct is also used for True / False cards.
+ The user will not be able to specify whether they were correct or not; it is determined by the app. */
 struct MultipleChoiceCard: Card {
     let id: String
     let prompt: String
-    /// Should be an element in `options`.
-    let solution: String
+    let solution: String // Should be an element in `options`.
     let creationDate: Date
     var dueDate: Date
     var nextDueDateMultiplier: Double

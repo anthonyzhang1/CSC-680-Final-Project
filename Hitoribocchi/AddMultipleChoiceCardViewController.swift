@@ -17,12 +17,12 @@ class AddMultipleChoiceViewController: UIViewController {
         else { return }
         
         // Split the options into an array of options for input validation
-        let splitOptions = options.split(separator: "|").map({$0.trimmingCharacters(in: .whitespaces)})
+        let splitOptions = options.split(separator: "|").map({ $0.trimmingCharacters(in: .whitespaces) })
         
         if splitOptions.count > 4 { // Only 4 multiple choice options allowed
             showErrorAlert("Error", "Multiple choice cards can have at most 4 options, i.e. 3 '|' characters.")
             return
-        } else if !splitOptions.map({String($0)}).contains(trimmedSolution) { // the solution must be one of the provided options
+        } else if !splitOptions.map({ String($0) }).contains(trimmedSolution) { // the solution must be one of the provided options
             showErrorAlert("Error", "The solution must be one of the multiple choice options.")
             return
         }
@@ -69,12 +69,14 @@ class AddMultipleChoiceViewController: UIViewController {
         solutionInput.layer.borderWidth = 1.0
         solutionInput.layer.cornerRadius = 5.0
         solutionInput.textColor = .lightGray
-        solutionInput.text = "Enter the correct choice from the provided options."
+        solutionInput.text = "Enter the correct choice from the provided options, e.g. Tree."
         solutionInput.delegate = self
     }
 }
 
+/* Handles the placeholder text logic in the TextView. */
 extension AddMultipleChoiceViewController: UITextViewDelegate {
+    /// Changes the text color from grey to black when the user types in the text view.
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .lightGray {
             textView.text = nil
@@ -82,11 +84,12 @@ extension AddMultipleChoiceViewController: UITextViewDelegate {
         }
     }
     
+    /// Show the placeholder text if the user clears the text view.
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             if textView == promptInput { textView.text = "Enter the card's question / prompt." }
             else if textView == optionsInput { textView.text = "Enter the possible choices separated by |,\ne.g. Corn | Tree | Dog. Max 4 options." }
-            else if textView == solutionInput { textView.text = "Enter the correct choice from the provided options." }
+            else if textView == solutionInput { textView.text = "Enter the correct choice from the provided options, e.g. Tree." }
             
             textView.textColor = .lightGray
         }

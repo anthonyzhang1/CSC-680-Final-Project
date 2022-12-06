@@ -7,7 +7,7 @@ class DeckViewController: UIViewController {
     var decks: [Deck] = [] // will be displayed in the table
     
     /** Gets the decks from the CoreData store and fill the `decks` array with the retrieved decks.
-        Updates the table with the decks in case any were added since displaying the view. */
+     Updates the table with the decks in case any were added since displaying the view. */
     func getDecksFromStore() {
         do {
             decks = try store.getAllDecks()
@@ -43,20 +43,19 @@ class DeckViewController: UIViewController {
         // Add the textfield asking for the deck's title to the alert box
         alert.addTextField { textField in textField.placeholder = "Deck Title" }
         
-        // show the alert
-        present(alert, animated: true, completion: nil)
+        present(alert, animated: true, completion: nil) // show the alert
     }
     
+    /// Gets the decks to display them in the table.
     override func viewDidLoad() {
         super.viewDidLoad()
         deckTableView.delegate = self
         deckTableView.dataSource = self
         
-        // get the decks to display them in the table
         getDecksFromStore()
     }
     
-    // send the clicked on Deck to the new screen
+    /// Sends the clicked on Deck to the Cards view.
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let cardsViewController = segue.destination as? CardsViewController,
            let deckIndex = deckTableView.indexPathForSelectedRow?.row
@@ -78,7 +77,7 @@ extension DeckViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
-    /// Called when selecting a table cell. Takes the user to the card View Controller.
+    /// Called when selecting a table cell. Takes the user to the Cards view.
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "cardSegue", sender: indexPath)
         
@@ -108,15 +107,18 @@ extension UIViewController {
         // add OK button to the error
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
         
-        // show the alert
-        self.present(alert, animated: true, completion: nil)
+        self.present(alert, animated: true, completion: nil) // show the alert
     }
     
+    /// Hides the on-screen keyboard when clicking anywhere on the screen that is not the keyboard.
     func dismissKeyboardOnOutsideClick() {
         let click = UITapGestureRecognizer(target: self, action: #selector(UIViewController.dismissKeyboard))
+        
+        // Allows the user to interact with the screen even when the keyboard is active. The click will dismiss the keyboard though.
         click.cancelsTouchesInView = false
         view.addGestureRecognizer(click)
     }
     
+    /// Closes the keyboard.
     @objc func dismissKeyboard() { view.endEditing(true) }
 }

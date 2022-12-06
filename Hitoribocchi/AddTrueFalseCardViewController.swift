@@ -43,7 +43,9 @@ class AddTrueFalseCardViewController: UIViewController {
     }
 }
 
+/* Handles the placeholder text logic in the TextView. */
 extension AddTrueFalseCardViewController: UITextViewDelegate {
+    /// Changes the text color from grey to black when the user types in the text view.
     func textViewDidBeginEditing(_ textView: UITextView) {
         if textView.textColor == .lightGray {
             textView.text = nil
@@ -51,6 +53,7 @@ extension AddTrueFalseCardViewController: UITextViewDelegate {
         }
     }
     
+    /// Show the placeholder text if the user clears the text view.
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
             textView.text = "Enter the answer to the prompt."

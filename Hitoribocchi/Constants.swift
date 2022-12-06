@@ -1,33 +1,44 @@
-/// Holds constants that are used throughout the project.
+/// Holds constants that are used throughout the project. We have a lot of constants because there is a lot of numbers used to calculate the card's next due date.
 struct Constants {
-    /// Used to represent the correct solution for a true/false question card.
+    /* ----------- Card Search Values --------------- */
+    
+    /// The maximum number of cards returned for each Card entity when searching. The actual number of results can be up to N times greater than this value, where N is the number of card entities that exist.
+    static let SEARCH_FETCH_LIMIT = 50
+    
+    /* -------- True / False Card Values ---------- */
+    
+    /// Used to represent the correct solution when creating a true/false question card.
     static let TRUE_STRING = "True"
     
-    /// Used to represent the correct solution for a true/false question card.
+    /// Used to represent the correct solution when creating a true/false question card.
     static let FALSE_STRING = "False"
     
     /// The options value for true/false cards, i.e. "True | False".
     static let TRUE_FALSE_OPTIONS = "\(TRUE_STRING) | \(FALSE_STRING)"
     
-    /// The tag value for the "Retry" button in the Due Cards screen, for basic cards.
+    /* ----------- Basic Card Answer Button Tags ------------ */
+    
+    /// The tag value for the "Retry" button in the Study Cards screen, for basic cards.
     static let RETRY_BUTTON_TAG = 0
     
-    /// The tag value for the "Hard" button in the Due Cards screen, for basic cards.
+    /// The tag value for the "Hard" button in the Study Cards screen, for basic cards.
     static let HARD_BUTTON_TAG = 1
     
-    /// The tag value for the "Okay" button in the Due Cards screen, for basic cards.
+    /// The tag value for the "Okay" button in the Study Cards screen, for basic cards.
     static let OKAY_BUTTON_TAG = 2
     
-    /// The tag value for the "Easy" button in the Due Cards screen, for basic cards.
+    /// The tag value for the "Easy" button in the Study Cards screen, for basic cards.
     static let EASY_BUTTON_TAG = 3
-
+    
+    /* --------- Time Conversation Values used for showing the due date as a custom string ---------- */
+    
     /// How many seconds there are in a minute.
     static let SECONDS_IN_ONE_MINUTE = 60
     
-    /// How many hours there are in a day, roughly. Not used for precise calculations.
+    /// How many hours there are in a day, roughly.
     static let HOURS_IN_ONE_DAY = 24
     
-    /// How many days there are in a month, roughly. Not used for precise calculations.
+    /// How many days there are in a month, roughly.
     static let DAYS_IN_ONE_MONTH = 30
     
     /// How many months there are in a year.
@@ -36,66 +47,71 @@ struct Constants {
     /// How many minutes there are in an hour.
     static let MINUTES_IN_ONE_HOUR = 60
     
-    /// How many minutes there are in a day, roughly. Not used for precise calculations.
+    /// How many minutes there are in a day, roughly.
     static let MINUTES_IN_ONE_DAY: Int = MINUTES_IN_ONE_HOUR * HOURS_IN_ONE_DAY
     
-    /// How many minutes there are in a month, roughly. Not used for precise calculations.
+    /// How many minutes there are in a month, roughly.
     static let MINUTES_IN_ONE_MONTH: Int = MINUTES_IN_ONE_DAY * DAYS_IN_ONE_MONTH
     
-    /// How many minutes there are in a year, roughly. Not used for precise calculations.
+    /// How many minutes there are in a year, roughly.
     static let MINUTES_IN_ONE_YEAR: Int = MINUTES_IN_ONE_MONTH * MONTHS_IN_ONE_YEAR
     
-    /// The due date multiplier that new cards are initialized with.
+    /* ------------- Values used for calculating Due Date Multipliers ------------- */
+    
+    /// The due date multiplier that new cards are initialized with. By default, x0.10.
     static let NEW_CARD_DUE_DATE_MULTIPLIER = 0.10
     
-    /// The due date multiplier that new multiple choice cards are initialized with.
-    //static let NEW_MULTIPLE_CHOICE_CARD_DUE_DATE_MULTIPLIER = 1.00
-
-    /// Sets the card's due date interval to 20% of its orignal value when clicking "Retry". For basic cards.
+    /// Used to set a card's due date multiplier to 20% of its original value. This is used when the user clicks "Retry".
     static let RETRY_DUE_DATE_MULTIPLIER_FACTOR = 0.20
     
-    /// Sets the card's due date interval to 80% of its orignal value when clicking "Hard". For basic cards.
+    /// Used to set a card's due date multiplier to 80% of its original value. This is used when the user clicks "Hard".
     static let HARD_DUE_DATE_MULTIPLIER_FACTOR = 0.80
     
-    /// Sets the card's due date interval to 130% of its original value when clicking "Okay". For basic cards.
+    /// Used to set a card's due date multiplier to 130% of its original value. This is used when the user clicks "Okay".
     static let OKAY_DUE_DATE_MULTIPLIER_FACTOR = 1.30
     
-    /// Sets the card's due date interval to 170% of its original value when clicking "Easy". For basic cards.
+    /// Used to set a card's due date multiplier to 170% of its original value. This is used when the user clicks "Easy".
     static let EASY_DUE_DATE_MULTIPLIER_FACTOR = 1.70
     
-    /// Sets the card's due date interval to 20% of its original value when getting a multiple choice card wrong. For multiple choice cards.
+    /// Used to set a card's due date multiplier to 20% of its original value. This is used when the user gets a multiple choice card wrong.
     static let INCORRECT_DUE_DATE_MULTIPLIER_FACTOR = 0.20
-
-    /// Sets the card's due date interval to 150% of its original value when getting a multiple choice card right. For multiple choice cards.
+    
+    /// Used to set a card's due date multiplier to 150% of its original value. This is used when the user gets a multiple choice card right.
     static let CORRECT_DUE_DATE_MULTIPLIER_FACTOR = 1.50
     
-    /// Increases the card's due date interval by a flat 30% when clicking "Okay". For basic cards.
+    /// Used to increase a card's due date multiplier by a flat 0%. This is used when clicking the user clicks "Retry".
+    static let RETRY_DUE_DATE_MULTIPLIER_INCREMENT = 0.00
+    
+    /// Used to increase a card's due date multiplier by a flat 0%. This is used when clicking the user clicks "Hard".
+    static let HARD_DUE_DATE_MULTIPLIER_INCREMENT = 0.00
+    
+    /// Used to increase a card's due date multiplier by a flat 30%. This is used when clicking the user clicks "Okay".
     static let OKAY_DUE_DATE_MULTIPLIER_INCREMENT = 0.30
     
-    /// Increases the card's due date interval by a flat 80% when clicking "Easy". For basic cards.
+    /// Used to increase a card's due date multiplier by a flat 80%. This is used when clicking the user clicks "Easy".
     static let EASY_DUE_DATE_MULTIPLIER_INCREMENT = 0.80
     
-    /// Increases the card's due date interval by a flat 0% when getting a multiple choice card wrong. For multiple choice cards.
+    /// Used to increase a card's due date multiplier by a flat 0%. This is used when the user gets a multiple choice card wrong.
     static let INCORRECT_DUE_DATE_MULTIPLIER_INCREMENT = 0.00
     
-    /// Increases the card's due date interval by a flat 60% when getting a multiple choice card right. For multiple choice cards.
+    /// Used to increase a card's due date multiplier by a flat 60%. This is used when the user gets a multiple choice card right.
     static let CORRECT_DUE_DATE_MULTIPLIER_INCREMENT = 0.60
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Retry". For basic cards.
+    /// How many minutes (before applying the due date multiplier) until a card is due again after pressing "Retry".
     static let RETRY_BASE_MINUTES_UNTIL_DUE_DATE = 0.0
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Hard". For basic cards.
+    /// How many minutes (before applying the due date multiplier) until a card is due again after pressing "Hard".
     static let HARD_BASE_MINUTES_UNTIL_DUE_DATE = 20.0
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Okay". For basic cards.
+    /// How many minutes (before applying the due date multiplier) until a card is due again after pressing "Okay".
     static let OKAY_BASE_MINUTES_UNTIL_DUE_DATE = 100.0
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after pressing "Easy". For basic cards.
+    /// How many minutes (before applying the due date multiplier) until a card is due again after pressing "Easy".
     static let EASY_BASE_MINUTES_UNTIL_DUE_DATE = 300.0
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after getting a multiple choice card wrong. For multiple choice cards.
+    /// How many minutes (before applying the due date multiplier) until a multiple choice card is due again after getting it wrong.
     static let INCORRECT_BASE_MINUTES_UNTIL_DUE_DATE = 0.0
     
-    /// How many minutes (before applying the due date multiplier) until the card is due again after getting a multiple choice card right. For multiple choice cards.
+    /// How many minutes (before applying the due date multiplier) until a multiple choice card is due again after getting it right.
     static let CORRECT_BASE_MINUTES_UNTIL_DUE_DATE = 100.0
 }

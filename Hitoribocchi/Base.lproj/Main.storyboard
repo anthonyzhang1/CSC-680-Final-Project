@@ -297,7 +297,7 @@
                         <outlet property="promptLabel" destination="POj-Qg-NxV" id="cfu-Do-839"/>
                         <outlet property="retryButton" destination="f5h-MG-MD8" id="vil-yB-Kta"/>
                         <outlet property="seperatorBar" destination="BJC-MD-9de" id="u4R-QL-P4t"/>
-                        <outlet property="solutionOptionsLabel" destination="Lra-sq-n0g" id="O1r-I8-GOs"/>
+                        <outlet property="solutionLabel" destination="Lra-sq-n0g" id="IaQ-IE-YfU"/>
                         <segue destination="zgG-iL-Gwo" kind="show" identifier="addBasicCardSegue" id="9el-zZ-V5V"/>
                         <segue destination="19Y-cv-tR2" kind="show" identifier="addTrueFalseCardSegue" id="8T8-ag-L7h"/>
                         <segue destination="0Sc-ll-oDJ" kind="show" identifier="addMultipleChoiceCardSegue" id="aJz-LV-R43"/>
@@ -737,7 +737,7 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="seb-3J-Gkw"/>
+        <segue reference="Fpb-ba-mE2"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="list.bullet" catalog="system" width="128" height="87"/>

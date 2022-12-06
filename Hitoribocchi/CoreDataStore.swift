@@ -1,7 +1,7 @@
 import CoreData
 
 protocol StoreType {
-    /// Retrieves all of the decks.
+    /// Retrieves all of the decks. The results are sorted alphabetically, from A to Z.
     func getAllDecks() throws -> [Deck]
     
     /// Gets the title of the deck that a card belongs to.
@@ -36,7 +36,7 @@ protocol StoreType {
     /// Update the card's due date and due date multiplier in the store, according to the values in the Card object.
     func updateCardDueDate(_ card: Card) throws
     
-    /// Deletes a card from the store. The card can be of any type, e.g. Basic or MultipleChoice.
+    /// Deletes a card from the store.
     func deleteCard(_ card: Card) throws
 }
 
@@ -58,7 +58,7 @@ struct CoreDataStore: StoreType {
         return deckEntities.compactMap { deckEntity in
             guard let id = deckEntity.id,
                   let title = deckEntity.title
-            else { return nil }
+            else { fatalError("A deck entity in Core Data is corrupted.") }
             
             return Deck(id: id, title: title)
         }.sorted { $0.title < $1.title } // sort alphabetically, in ascending order
@@ -92,7 +92,7 @@ struct CoreDataStore: StoreType {
     func getDeckCardCount(_ deck: Deck) throws -> Int {
         let context = Self.container.viewContext
         
-        // get the deck entity for the deck provided in the argument
+        /* Get the deck entity for the deck provided in the argument. */
         let fetchRequest = DeckEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
         
@@ -103,9 +103,7 @@ struct CoreDataStore: StoreType {
         if let basicCardCount = deckEntity.basicCards?.count,
            let multipleChoiceCardCount = deckEntity.multipleChoiceCards?.count
         { return basicCardCount + multipleChoiceCardCount }
-        else {
-            return 0
-        }
+        else { return 0 }
     }
     
     func insertDeck(_ deck: Deck) throws {
@@ -119,9 +117,9 @@ struct CoreDataStore: StoreType {
     
     func deleteDeck(_ deck: Deck) throws {
         let context = Self.container.viewContext
-        let fetchRequest = DeckEntity.fetchRequest()
         
-        // Find the deck in the store with the corresponding id
+        /* Find the deck in the store with the corresponding id. */
+        let fetchRequest = DeckEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
         
         guard let entity = try context.fetch(fetchRequest).first
@@ -138,6 +136,7 @@ struct CoreDataStore: StoreType {
         // get the deck entity for the deck provided in the argument
         let fetchRequest = DeckEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
+        
         guard let deckEntity = try context.fetch(fetchRequest).first
         else { return [] }
         
@@ -219,14 +218,15 @@ struct CoreDataStore: StoreType {
             return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: multipleChoiceCardEntity.nextDueDateMultiplier, options: options)
         }
         
-        // Sorts the array such that the newest cards at the beginning, oldest cards at the end, then returns it
+        // Sorts the array by creation date, newest first, oldest last, then returns it
         return returnArray.sorted { $0.creationDate > $1.creationDate }
     }
     
     func searchCards(_ searchTerms: String, _ fetchLimit: Int) throws -> [Card] {
         let context = Self.container.viewContext
         var returnArray: [Card] // stores the cards we will return
-        /** The search algorithm. We match all cards with a prompt that contains the search terms, ignoring case and diacritics. */
+        
+        /// The search algorithm. We match all cards with a prompt that contains the search terms, ignoring case and diacritics.
         let fetchPredicate = NSPredicate(format: "prompt CONTAINS[cd] %@", searchTerms)
         
         // fetch the basic cards first
@@ -266,7 +266,7 @@ struct CoreDataStore: StoreType {
             return MultipleChoiceCard(id: id, prompt: prompt, solution: solution, creationDate: creationDate, dueDate: dueDate, nextDueDateMultiplier: multipleChoiceCardEntity.nextDueDateMultiplier, options: options)
         }
         
-        // Sorts the array such that the newest cards at the beginning, oldest cards at the end, then returns it
+        // Sorts the array by creation date, newest first, oldest last, then returns it
         return returnArray.sorted { $0.creationDate > $1.creationDate }
     }
     
@@ -277,7 +277,9 @@ struct CoreDataStore: StoreType {
         // get the deck entity that this card belongs to
         let fetchRequest = DeckEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
-        let deckEntity = try context.fetch(fetchRequest).first
+        
+        guard let deckEntity = try context.fetch(fetchRequest).first
+        else { return }
         
         let cardEntity = BasicCardEntity(context: context)
         cardEntity.id = card.id
@@ -297,7 +299,9 @@ struct CoreDataStore: StoreType {
         // get the deck entity that this card belongs to
         let fetchRequest = DeckEntity.fetchRequest()
         fetchRequest.predicate = NSPredicate(format: "id = %@", deck.id)
-        let deckEntity = try context.fetch(fetchRequest).first
+        
+        guard let deckEntity = try context.fetch(fetchRequest).first
+        else { return }
         
         let cardEntity = MultipleChoiceCardEntity(context: context)
         cardEntity.id = card.id
@@ -324,7 +328,8 @@ struct CoreDataStore: StoreType {
             
             cardEntity.dueDate = card.dueDate
             cardEntity.nextDueDateMultiplier = card.nextDueDateMultiplier
-        } else if card is MultipleChoiceCard { // multiple choice card
+        }
+        else if card is MultipleChoiceCard { // multiple choice card
             let fetchRequest = MultipleChoiceCardEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
             
@@ -344,13 +349,18 @@ struct CoreDataStore: StoreType {
         if card is BasicCard { // basic card
             let fetchRequest = BasicCardEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
-            let entity = try context.fetch(fetchRequest)[0]
+            
+            guard let entity = try context.fetch(fetchRequest).first
+            else { return }
             
             context.delete(entity) // delete the matched entity
-        } else { // multiple choice card
+        }
+        else { // multiple choice card
             let fetchRequest = MultipleChoiceCardEntity.fetchRequest()
             fetchRequest.predicate = NSPredicate(format: "id = %@", card.id) // find the card with the matching id
-            let entity = try context.fetch(fetchRequest)[0]
+            
+            guard let entity = try context.fetch(fetchRequest).first
+            else { return }
             
             context.delete(entity) // delete the matched entity
         }
