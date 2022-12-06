@@ -6,8 +6,11 @@
 | Anthony Zhang | azhang12@mail.sfsu.edu | anthonyzhang1   |
 
 ## Milestone 1 Proposal
-The application I am making, Hitoribocchi, is a flashcard app that uses spaced repetition. It is inspired by the already existing Anki flashcard app which costs $25 on the App Store.\
-Spaced repetition is a technique where incorrectly answered flashcards are shown more frequently, whereas correctly answered flashcards are shown less frequently.
+The application I am making, Hitoribocchi, is a flashcard app that uses spaced repetition. It is inspired by the already existing Anki flashcard app which costs $25 on the App Store.
+
+Spaced repetition is a technique where flashcards that the user feels more confident with are shown later than cards the user feels less confident with. Essentially, the cards the user needs the most help with are shown more often in order to help the user remember it, while cards that the user knows well are not shown as often, since the user does not need help with those.
+
+The application looks best on an iPhone 14, using the Xcode simulator.
 
 ### Must Have Features
 1.1. [DONE] The user shall be able to create flashcard decks.\
