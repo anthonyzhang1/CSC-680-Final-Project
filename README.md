@@ -10,21 +10,23 @@ The application I am making, Hitoribocchi, is a flashcard app that uses spaced r
 Spaced repetition is a technique where incorrectly answered flashcards are shown more frequently, whereas correctly answered flashcards are shown less frequently.
 
 ### Must Have Features
-[DONE] 1.1. The user shall be able to create a flashcard deck.\
-[DONE] 1.2. The user shall be able to delete a flashcard deck.\
-[DONE] 1.3. The user shall be able to create a flashcard.\
-[DONE] 1.4. The user shall be able to delete a flashcard.\
-[DONE] 1.5. The user shall be able to create basic flashcards. They simply show the question and ask the user whether they were correct or not.\
-[DONE] 1.6. The user shall be able to create true/false flashcards. They have true or false as an option, and only one of those options is correct.\
-[DONE] 1.7. The user shall be able to create multiple choice flashcards. They have multiple options, and only one of these options is correct.
+1.1. [DONE] The user shall be able to create flashcard decks.\
+1.2. [DONE] The user shall be able to delete flashcard decks.\
+1.3. [DONE] The user shall be able to create flashcards.\
+1.4. [DONE] The user shall be able to delete flashcards.\
+1.5. [DONE] The user shall be able to create basic flashcards. They show the prompt and ask the user how comfortable they felt with a flashcard, which determines how long until the card is shown again.\
+1.6. [DONE] The user shall be able to create true/false flashcards. They have true or false as an option, and only one of those options is correct. Getting the answer wrong decreases the delay until the next due date, whereas getting it right increases the delay. \
+1.7. [DONE] The user shall be able to create multiple choice flashcards. They user provides 1-4 options separated by a | character, and only one of these options is correct. Getting the answer wrong decreases the delay until the next due date, whereas getting it right increases the delay.\
+1.8. [DONE] The user shall be able to study their cards by clicking on the deck they wish to study from. The user will see the flashcard's prompt, and the user will be able to provide their answer which determines how long until the card is shown again.
 
 ### Nice to Have Features
-2.1. The user shall be able to edit a flashcard deck's name.\
-2.2. The user shall be able to edit a flashcard.\
-[DONE] 2.3. The user shall be able to search for a flashcard.\
+2.1. The user shall be able to edit the name of a flashcard deck.\
+2.2. The user shall be able to edit flashcards.\
+2.3. [DONE] The user shall be able to search for flashcards by entering search terms that will match cards' prompts.\
 2.4. The user shall be able to export their flashcard decks so that they can share them with others.\
 2.5. The user shall be able to import flashcard decks so that they can download decks from others.\
-2.6. The user shall be able to create cloze flashcards. They present the user with a phrase that has a section blanked out that the user must fill in. Correctly filling in the blank leads to the correct answer.
+2.6. The user shall be able to create cloze flashcards. They present the user with a phrase that has a section blanked out that the user must fill in. Correctly filling in the blank leads to the correct answer.\
+2.7. [DONE] The user shall be able to view the details of a card, which tells the user the card's creation date, due date, due date multiplier, and so on.
 
 ## Basic Wireframes
 The first screen the user sees: a screen with all of their decks in it:
