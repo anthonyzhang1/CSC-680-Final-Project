@@ -5,7 +5,7 @@
 | :---:         | :---:                  | :---:           |
 | Anthony Zhang | azhang12@mail.sfsu.edu | anthonyzhang1   |
 
-## Proposal
+## Milestone 1 Proposal
 The application I am making, Hitoribocchi, is a flashcard app that uses spaced repetition. It is inspired by the already existing Anki flashcard app which costs $25 on the App Store.\
 Spaced repetition is a technique where incorrectly answered flashcards are shown more frequently, whereas correctly answered flashcards are shown less frequently.
 
@@ -16,7 +16,7 @@ Spaced repetition is a technique where incorrectly answered flashcards are shown
 1.4. [DONE] The user shall be able to delete flashcards.\
 1.5. [DONE] The user shall be able to create basic flashcards. They show the prompt and ask the user how comfortable they felt with a flashcard, which determines how long until the card is shown again.\
 1.6. [DONE] The user shall be able to create true/false flashcards. They have true or false as an option, and only one of those options is correct. Getting the answer wrong decreases the delay until the next due date, whereas getting it right increases the delay. \
-1.7. [DONE] The user shall be able to create multiple choice flashcards. They user provides 1-4 options separated by a | character, and only one of these options is correct. Getting the answer wrong decreases the delay until the next due date, whereas getting it right increases the delay.\
+1.7. [DONE] The user shall be able to create multiple choice flashcards. They user provides 1-4 options separated by a `|` character, and only one of these options is correct. Getting the answer wrong decreases the delay until the next due date, whereas getting it right increases the delay.\
 1.8. [DONE] The user shall be able to study their cards by clicking on the deck they wish to study from. The user will see the flashcard's prompt, and the user will be able to provide their answer which determines how long until the card is shown again.
 
 ### Nice to Have Features
@@ -28,7 +28,7 @@ Spaced repetition is a technique where incorrectly answered flashcards are shown
 2.6. The user shall be able to create cloze flashcards. They present the user with a phrase that has a section blanked out that the user must fill in. Correctly filling in the blank leads to the correct answer.\
 2.7. [DONE] The user shall be able to view the details of a card, which tells the user the card's creation date, due date, due date multiplier, and so on.
 
-## Basic Wireframes
+## Milestone 1 Basic Wireframes
 The first screen the user sees: a screen with all of their decks in it:
 
 ![your decks](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/Milestones/Milestone%201/Basic%20Wireframes/Add%20Card.png)
