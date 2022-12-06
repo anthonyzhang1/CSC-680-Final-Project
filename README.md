@@ -31,24 +31,24 @@ Spaced repetition is a technique where incorrectly answered flashcards are shown
 ## Basic Wireframes
 The first screen the user sees: a screen with all of their decks in it:
 
-![your decks](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/.github/M1%20Basic%20Wireframes/Your%20Decks.png)
+![your decks](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/Milestones/Milestone%201/Basic%20Wireframes/Add%20Card.png)
 
 The screen showing a flashcard's prompt/question:
 
-![flashcard prompt](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/.github/M1%20Basic%20Wireframes/Flashcard%20Question.png)
+![flashcard prompt](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/Milestones/Milestone%201/Basic%20Wireframes/Flashcard%20Question.png)
 
 The screen showing a flashcard's prompt/question as well as the solution to the card. The user selects the difficulty they had with the card, which determines whether to decrease or increase the delay until the same card is shown again:
 
-![flashcard solution](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/.github/M1%20Basic%20Wireframes/Flashcard%20Answer.png)
+![flashcard solution](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/Milestones/Milestone%201/Basic%20Wireframes/Flashcard%20Answer.png)
 
 The screen that allows the user to create a deck:
 
-![add deck](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/.github/M1%20Basic%20Wireframes/Add%20Deck.png)
+![add deck](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/Milestones/Milestone%201/Basic%20Wireframes/Add%20Deck.png)
 
 The screen that allows the user to create a flashcard:
 
-![add card](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/.github/M1%20Basic%20Wireframes/Add%20Card.png)
+![add card](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/Milestones/Milestone%201/Basic%20Wireframes/Add%20Card.png)
 
 The screen that allows the user to search for cards and shows the search results:
 
-![search card](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/.github/M1%20Basic%20Wireframes/Search%20Cards.png)
+![search card](https://github.com/anthonyzhang1/CSC-680-Final-Project/blob/main/Milestones/Milestone%201/Basic%20Wireframes/Search%20Cards.png)
